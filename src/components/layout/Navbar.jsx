@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // Import โลโก้หลัก
 import logoSrc from '../../img/Vector.svg';
 
@@ -10,9 +11,9 @@ import lineIcon from '../../img/icon-navbar-2.svg';
 
 // --- Component ย่อย: โลโก้ (ยังคงแยกไว้เพื่อความเรียบร้อย) ---
 const Logo = () => (
-  <a href="/" className="h-16 w-16 flex-shrink-0">
+  <Link to="/" className="h-16 w-16 flex-shrink-0">
     <img src={logoSrc} alt="Cottonclix Logo" className="h-full w-full object-contain" />
-  </a>
+  </Link>
 );
 
 
@@ -32,16 +33,22 @@ const Navbar = () => {
       <div className="container mx-auto ">
 
         {/* --- Layout สำหรับจอ Desktop (md ขึ้นไป) --- */}
-        {/* บล็อกนี้จะแสดงผลเมื่อหน้าจอกว้างกว่าขนาด md */}
         <div className="hidden md:flex justify-center items-center space-x-[128px] ">
-            
+          
           {/* เมนูฝั่งซ้าย */}
           <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base ">
-            {leftMenuItems.map((item) => (
-              <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-amber-800 transition-colors duration-300">
-                {item}
-              </a>
-            ))}
+            {leftMenuItems.map((item) => {
+              const className = "hover:text-amber-800 transition-colors duration-300";
+              // --- ส่วนที่แก้ไข ---
+              if (item === 'Our Story') {
+                return <Link key={item} to="/about" className={className}>{item}</Link>;
+              }
+              if (item === 'Blog') {
+                return <Link key={item} to="/blog" className={className}>{item}</Link>;
+              }
+              // ถ้าไม่ใช่ ให้ใช้ <a> สำหรับ Anchor link เหมือนเดิม
+              return <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={className}>{item}</a>;
+            })}
           </nav>
 
           {/* โลโก้ตรงกลาง */}
@@ -50,6 +57,7 @@ const Navbar = () => {
           {/* เมนูฝั่งขวา */}
           <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
             {rightMenuItems.map((item) => (
+              // ส่วนนี้เป็น Anchor Link ทั้งหมด ใช้ <a> เหมือนเดิม
               <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-amber-800 transition-colors duration-300">
                 {item}
               </a>
@@ -59,28 +67,23 @@ const Navbar = () => {
           {/* ไอคอนโซเชียลฝั่งขวาสุด */}
           <div className="flex items-center space-x-4">
             {socialLinks.map((social) => (
-                <a key={social.name} href={social.href} className="h-7 w-7 text-stone-700 hover:text-amber-800 transition-colors">
+                // ส่วนนี้เป็นลิงก์ภายนอก ใช้ <a> เหมือนเดิม
+                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="h-7 w-7 text-stone-700 hover:text-amber-800 transition-colors">
                   <img src={social.icon} alt={`${social.name} icon`} className="h-full w-full" />
                 </a>
             ))}
           </div>
-
         </div>
 
         {/* --- Layout สำหรับจอ Mobile (เล็กกว่า md) --- */}
-        {/* บล็อกนี้จะแสดงผลเฉพาะบนจอมือถือ */}
         <div className="md:hidden flex justify-between items-center h-16">
-          {/* โลโก้ (ย้ายมาฝั่งซ้ายบนมือถือเพื่อความเรียบง่าย) */}
-          <a href="/" className="h-12 w-12 flex-shrink-0">
-              <img src={logoSrc} alt="Cottonclix Logo" className="h-full w-full object-contain" />
-          </a>
-
-          {/* ปุ่ม Hamburger */}
+          <Link to="/" className="h-12 w-12 flex-shrink-0">
+            <img src={logoSrc} alt="Cottonclix Logo" className="h-full w-full object-contain" />
+          </Link>
           <button className="text-amber-800 text-3xl">
             &#9776;
           </button>
         </div>
-
       </div>
     </header>
   );

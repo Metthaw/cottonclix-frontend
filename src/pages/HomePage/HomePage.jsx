@@ -5,17 +5,18 @@ import React from 'react';
 // Import ส่วนประกอบต่างๆ ของหน้า Home
 import Hero from './Hero';
 import StoryIntro from './StoryIntro';
-import ProductShowcase from './ProductShowcase';
-import CatalogSlider from './CatalogSlider';
+import ContactForm from './ContactForm';
+
 import OurStory from './OurStory'
+import BlogSlider from './BlogSlider';
 
 const HomePage = () => {
   return (
     <div>
       <Hero />
-      <CatalogSlider />
-      <ProductShowcase />
       <OurStory />
+      <BlogSlider /> 
+      <ContactForm />
     </div>
   );
 };
