@@ -64,7 +64,7 @@ export default function HomePage() {
   const handleSelectCollection = (collectionId) => {
     setSelectedCollectionId(collectionId);
     // เลื่อนหน้าจอไปที่ StoryBook section อย่างนุ่มนวล
-    storyBookRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    storyBookRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (

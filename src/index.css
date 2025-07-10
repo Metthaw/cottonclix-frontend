@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.storybook-container {
+  perspective: 2000px;
+}
+
+.turning-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  background-color: white;
+  display: none; /* ซ่อนไว้ตอนแรก */
+}
