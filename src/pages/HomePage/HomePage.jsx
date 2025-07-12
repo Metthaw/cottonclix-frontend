@@ -1,49 +1,5 @@
-// // ตำแหน่ง: src/pages/HomePage.jsx
-// import React, { useState, useRef } from 'react';
-
-
-// // Import ส่วนประกอบต่างๆ ของหน้า Home
-// import Hero from './Hero';
-// import StoryIntro from './StoryIntro';
-// import StoryBook from './StoryBook';
-// import ContactForm from './ContactForm';
-// import CatalogSlider from './CatalogSlider';
-// import OurStory from './OurStory'
-// import BlogSlider from './BlogSlider';
-
-// const HomePage = () => {
-//   // State เพื่อเก็บ ID ของ collection ที่ถูกเลือก
-//   const [selectedCollectionId, setSelectedCollectionId] = useState('spring'); // ให้ spring เป็นค่าเริ่มต้น
-
-//   // Ref สำหรับอ้างอิงถึง StoryBook section เพื่อ scroll ไปหา
-//   const storyBookRef = useRef(null);
-
-//   // ฟังก์ชันที่จะถูกเรียกเมื่อมีการคลิกเลือกหนังสือ
-//   const handleSelectCollection = (collectionId) => {
-//     setSelectedCollectionId(collectionId);
-//     // เลื่อนหน้าจอไปที่ StoryBook section อย่างนุ่มนวล
-//     storyBookRef.current?.scrollIntoView({ behavior: 'smooth' });
-//   };
-//   return (
-//     <div>
-//       <Hero />
-//       <CatalogSlider onSelectCollection={handleSelectCollection} />
-      
-//       {/* ส่ง Ref และ collection ที่เลือกไปให้ StoryBook */}
-//       <div ref={storyBookRef}>
-//         <StoryBook selectedCollectionId={selectedCollectionId} />
-//       </div>
-//       <OurStory />
-//       <BlogSlider /> 
-//       <ContactForm />
-//     </div>
-//   );
-// };
-
-// export default HomePage;
-
-// src/pages/HomePage/HomePage.jsx
 import React, { useState, useRef } from 'react';
+import { collections } from '../../data/mockData';
 
 // Import Components
 import Hero from './Hero';
@@ -54,26 +10,25 @@ import BlogSlider from './BlogSlider';
 import ContactForm from './ContactForm';
 
 export default function HomePage() {
-  // State เพื่อเก็บ ID ของ collection ที่ถูกเลือก (ให้ spring เป็นค่าเริ่มต้น)
-  const [selectedCollectionId, setSelectedCollectionId] = useState('spring');
+  // State เพื่อเก็บ ID ของ collection ที่ถูกเลือก (ใช้ slug จาก mockData เป็นค่าเริ่มต้น)
+  const [selectedCollectionId, setSelectedCollectionId] = useState(collections[0].id);
 
-  // Ref สำหรับอ้างอิงถึง StoryBook section เพื่อ scroll ไปหา
+  // Ref สำหรับอ้างอิงถึงตำแหน่งของ StoryBook เพื่อ scroll ไปหา
   const storyBookRef = useRef(null);
 
-  // ฟังก์ชันที่จะถูกเรียกเมื่อมีการคลิกเลือกหนังสือจาก CatalogSlider
-  const handleSelectCollection = (collectionId) => {
+  // ฟังก์ชันสำหรับเปิดหนังสือและเลื่อนหน้าจอ
+  const handleOpenBook = (collectionId) => {
     setSelectedCollectionId(collectionId);
-    // เลื่อนหน้าจอไปที่ StoryBook section อย่างนุ่มนวล
-    storyBookRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      storyBookRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   return (
     <div>
       <Hero />
-      {/* ส่งฟังก์ชัน handleSelectCollection ไปให้ CatalogSlider */}
-      <CatalogSlider onSelectCollection={handleSelectCollection} />
+      <CatalogSlider onOpenBook={handleOpenBook} />
       
-      {/* ส่ง Ref และ collection ที่เลือกไปให้ StoryBook */}
       <div ref={storyBookRef}>
         <StoryBook selectedCollectionId={selectedCollectionId} />
       </div>

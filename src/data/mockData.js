@@ -72,31 +72,30 @@ it became a gift full of meaning
 to someone special. 💛`
     ],
   },
-  collectionDetails: {
-    spring: {
+    collectionDetails: {
+    'spring-collection': { // จาก 'spring' เป็น 'spring-collection'
       sliderImagePairs: [
-        { id: 1, leftImg: storyImg1, rightImg: storyImg2 }, // ✅ ใช้ตัวแปรที่ import
-        { id: 2, leftImg: storyImg3, rightImg: storyImg4 }, // ✅ ใช้ตัวแปรที่ import
+        { id: 's1', leftImg: storyImg1, rightImg: storyImg2 },
+        { id: 's2', leftImg: storyImg3, rightImg: storyImg4 },
       ],
-      shopNowUrl: '#',
     },
-    summer: {
+    'summer-collection': { // จาก 'summer' เป็น 'summer-collection'
       sliderImagePairs: [
-        { id: 1, leftImg: storyImg1, rightImg: storyImg4 }, // ✅ ใช้ตัวแปรที่ import
+        { id: 'su1', leftImg: storyImg4, rightImg: blogCover1 },
+        { id: 'su2', leftImg: storyImg2, rightImg: storyImg3 },
       ],
-      shopNowUrl: '#',
     },
-    autumn: {
+    'autumn-collection': { // จาก 'autumn' เป็น 'autumn-collection'
       sliderImagePairs: [
-        { id: 1, leftImg: storyImg2, rightImg: storyImg3 }, // ✅ ใช้ตัวแปรที่ import
+        { id: 'a1', leftImg: collectionCover, rightImg: storyImg1 },
+        { id: 'a2', leftImg: blogCover2, rightImg: storyImg4 },
       ],
-      shopNowUrl: '#',
     },
-    winter: {
+    'winter-collection': { // จาก 'winter' เป็น 'winter-collection'
       sliderImagePairs: [
-        { id: 1, leftImg: collectionCover, rightImg: storyImg1 }, // ✅ ใช้ตัวแปรที่ import
+        { id: 'w1', leftImg: blogCover3, rightImg: aboutHeroImage },
+        { id: 'w2', leftImg: storyImg1, rightImg: storyImg3 },
       ],
-      shopNowUrl: '#',
     },
   },
 };
