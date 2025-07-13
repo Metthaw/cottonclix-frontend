@@ -60,6 +60,7 @@ import HomePage from './pages/HomePage/HomePage.jsx'; // Path ที่ถูก
 import AboutPage from './pages/AboutPage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
 import BlogDetailsPage from './pages/BlogDetailsPage.jsx';
+import LinktreePage from './pages/LinktreePage.jsx';
 
 // สร้าง Router และกำหนดเส้นทาง
 const router = createBrowserRouter([
@@ -84,6 +85,8 @@ const router = createBrowserRouter([
         path: '/blog/:blogId', // Dynamic route สำหรับ Blog Details
         element: <BlogDetailsPage />,
       },
+       { path: '/index',
+        element: <LinktreePage /> },
       // สามารถเพิ่มหน้าอื่นๆ ที่นี่ได้ในอนาคต เช่น Linktree, Privacy Policy
     ],
   },

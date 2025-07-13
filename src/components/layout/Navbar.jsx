@@ -23,9 +23,9 @@ const Navbar = () => {
   const leftMenuItems = ['Our Story', 'Blog', 'Contact'];
   const rightMenuItems = ['Subscribe', 'Index'];
   const socialLinks = [
-    { name: 'Facebook', href: '#', icon: facebookIcon },
-    { name: 'Instagram', href: '#', icon: instagramIcon },
-    { name: 'Line', href: '#', icon: lineIcon },
+    { name: 'Facebook', href: 'https://www.facebook.com/', icon: facebookIcon },
+    { name: 'Instagram', href: 'https://www.instagram.com', icon: instagramIcon },
+    { name: 'Line', href: 'https://line.me', icon: lineIcon },
   ];
 
   return (
@@ -46,6 +46,12 @@ const Navbar = () => {
               if (item === 'Blog') {
                 return <Link key={item} to="/blog" className={className}>{item}</Link>;
               }
+              if (item === 'Contact') {
+              return <a key={item} href="/#contact-form" className={className}>{item}</a>;
+              }
+              if (item === 'Subscribe') {
+              return <a key={item} href="/#subscribe-form" className={className}>{item}</a>;
+            }
               // ถ้าไม่ใช่ ให้ใช้ <a> สำหรับ Anchor link เหมือนเดิม
               return <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={className}>{item}</a>;
             })}
@@ -55,14 +61,37 @@ const Navbar = () => {
           <Logo />
 
           {/* เมนูฝั่งขวา */}
-          <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
+          {/* <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
+            
             {rightMenuItems.map((item) => (
+              
               // ส่วนนี้เป็น Anchor Link ทั้งหมด ใช้ <a> เหมือนเดิม
+              
               <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-amber-800 transition-colors duration-300">
                 {item}
               </a>
             ))}
-          </nav>
+          </nav> */}
+          <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
+  {rightMenuItems.map((item) => {
+    const className = "hover:text-amber-800 transition-colors duration-300";
+    
+    // --- เพิ่มเงื่อนไขสำหรับ 'Subscribe' ---
+    if (item === 'Subscribe') {
+      return <a key={item} href="/#subscribe-form" className={className}>{item}</a>;
+    }
+    // --- ------------------------- ---
+
+     if (item === 'Index') {
+              return <Link key={item} to="/index" className={className}>{item}</Link>;
+            }
+    return (
+      <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={className}>
+        {item}
+      </a>
+    );
+  })}
+</nav>
 
           {/* ไอคอนโซเชียลฝั่งขวาสุด */}
           <div className="flex items-center space-x-4">
