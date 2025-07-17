@@ -8,7 +8,7 @@ import 'swiper/css/effect-fade';
 import { storyContent } from '../../data/mockData';
 import openBookImage from '../../img/13.svg';
 
-export default function StoryBook({ selectedCollectionId }) {
+export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   // ใช้ ID ที่ได้รับมา หรือใช้ 'spring-collection' เป็นค่าเริ่มต้นถ้าไม่มี
   const collectionId = selectedCollectionId || 'spring-collection';
   const currentContent = storyContent.collectionDetails[collectionId];
@@ -50,6 +50,11 @@ export default function StoryBook({ selectedCollectionId }) {
               ))}
             </Swiper>
           </div>
+          <div
+            ref={flowerLocatorRef}
+            className="absolute pointer-events-none"
+            style={{ bottom: '10%', left: '10%' }}
+          />
         </div>
       </div>
     </section>

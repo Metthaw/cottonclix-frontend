@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 // รับ props: collections, loading, และ onOpenBook
-export default function CatalogSlider({ collections, loading, onOpenBook }) {
+export default function CatalogSlider({ collections, loading, onOpenBook, flowerLocatorRef }) {
   const [activeCollection, setActiveCollection] = useState(null);
 
   // เมื่อ collections ที่รับมาเปลี่ยนไป ให้อัปเดต activeCollection
@@ -46,7 +46,7 @@ export default function CatalogSlider({ collections, loading, onOpenBook }) {
               ))}
             </Swiper>
           </div>
-          <div className="text-center md:text-left">
+          <div className="relative text-center md:text-left">
             {activeCollection && (
               <>
                 <h2 className="text-4xl md:text-5xl font-serif text-gray-800">{activeCollection.name}</h2>
@@ -59,6 +59,11 @@ export default function CatalogSlider({ collections, loading, onOpenBook }) {
                 </button>
               </>
             )}
+            <div
+              ref={flowerLocatorRef}
+              className="absolute bottom-0 right-0 pointer-events-none"
+              style={{ transform: 'translate(-15.5rem, 2rem)' }}
+            />
           </div>
         </div>
       </div>
