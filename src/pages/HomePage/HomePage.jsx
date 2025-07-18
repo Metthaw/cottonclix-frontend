@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 // Import Components
@@ -11,6 +11,9 @@ import Hero from "../HomePage/Hero.jsx";
 import AnimatedCottonFlower from "../../components/AnimatedCottonFlower";
 import SocialInfo from "../../components/layout/SocialInfo.jsx";
 
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
 
 export default function HomePage() {
@@ -18,6 +21,11 @@ export default function HomePage() {
   const [collections, setCollections] = React.useState([]);
   const [selectedCollectionId, setSelectedCollectionId] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+
+  const [activeSection, setActiveSection] = useState("hero");
+  const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
+  const [containerReady, setContainerReady] = useState(false);
+
   const heroContainerRef = useRef(null);
   const flowerLocatorRef = useRef(null);
   const catalogFlowerLocatorRef = useRef(null);
@@ -34,9 +42,10 @@ export default function HomePage() {
   const contactFormRef = useRef(null);
   const socialInfoRef = useRef(null);
 
-  const [flowerStyle, setFlowerStyle] = useState(null);
-  const [activeSection, setActiveSection] = useState("hero");
-  const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
+  const rootRef = useRef(null);
+  const flowerRef = useRef(null);
+  const lastIndexRef = useRef(activeLocatorIndex);
+  const isInitialRender = useRef(true);
 
   // ดึงข้อมูล Collection ที่นี่ที่เดียว
   useEffect(() => {
@@ -64,6 +73,12 @@ export default function HomePage() {
     fetchCollections();
   }, []);
 
+  useEffect(() => {
+    if (heroContainerRef.current) {
+      setContainerReady(true);
+    }
+  }, [heroContainerRef.current]);
+
   const locatorRefMap = {
     hero: [flowerLocatorRef],
     catalog: [catalogFlowerLocatorRef],
@@ -74,26 +89,89 @@ export default function HomePage() {
     social: [socialInfoFlowerLocatorRef], // Add blog section with its locator
   };
 
-  useLayoutEffect(() => {
-    const targetLocatorRefs = locatorRefMap[activeSection] || [];
-    const currentLocatorRef =
-      targetLocatorRefs[activeLocatorIndex] || targetLocatorRefs[0];
+  const getRelativePosition = (curRef, containerRef) => {
+    if (!curRef?.current || !containerRef.current) return { x: 0, y: 0 };
 
-    if (currentLocatorRef?.current && heroContainerRef.current) {
-      const locatorRect = currentLocatorRef.current.getBoundingClientRect();
-      const containerRect = heroContainerRef.current.getBoundingClientRect();
+    const loc = curRef.current.getBoundingClientRect();
+    const cont = containerRef.current.getBoundingClientRect();
 
-      setFlowerStyle({
-        position: "absolute",
-        top: locatorRect.top - containerRect.top,
-        left: locatorRect.left - containerRect.left,
-        zIndex: 50,
-        pointerEvents: "none",
-        transform: "translate(-50%, -50%)",
-        transition: "top 0.8s ease-in-out, left 0.8s ease-in-out",
+    return {
+      x: loc.left - cont.left,
+      y: loc.top - cont.top,
+    };
+  };
+
+  // Initial "falling flower" animation - runs only once on the main wrapper
+  useGSAP(
+    () => {
+      const timer = setTimeout(() => {
+        const flower = flowerRef.current;
+        const target = flowerLocatorRef.current;
+        const container = heroContainerRef.current;
+
+        if (!flower || !target || !container) return;
+
+        const { x: targetX, y: targetY } = getRelativePosition(
+          flowerLocatorRef,
+          heroContainerRef
+        );
+
+        const { width: containerWidth } = container.getBoundingClientRect();
+
+        // Initial position: top center with slight rotation
+        gsap.set(flower, {
+          x: containerWidth / 2,
+          y: "-100vh",
+          opacity: 0,
+          rotation: -60,
+        });
+
+        // Animate fall: with drift and rotation
+        gsap.to(flower, {
+          x: targetX,
+          y: targetY,
+          opacity: 1,
+          rotation: 0,
+          duration: 2.2,
+          ease: "power2.out",
+        });
+      }, 10);
+
+      return () => clearTimeout(timer);
+    },
+    { scope: rootRef }
+  );
+
+  useGSAP(
+    () => {
+      // Prevent this animation from running on the initial render,
+      // as the "falling flower" animation handles the initial state.
+      if (isInitialRender.current) {
+        isInitialRender.current = false;
+        return;
+      }
+
+      const locRefs = locatorRefMap[activeSection] || [];
+      const curRef = locRefs[activeLocatorIndex] || locRefs[0];
+      const direction = activeLocatorIndex > lastIndexRef.current ? 1 : -1;
+      const angle = 90 * direction;
+      lastIndexRef.current = activeLocatorIndex;
+
+      if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
+        return;
+
+      const { x, y } = getRelativePosition(curRef, heroContainerRef);
+
+      gsap.to(flowerRef.current, {
+        x,
+        y,
+        rotation: `+=${angle}`,
+        duration: 1.2, // Slightly faster for a snappier feel
+        ease: "slow(0.7, 0.7)",
       });
-    }
-  }, [activeSection, activeLocatorIndex]);
+    },
+    { scope: rootRef, dependencies: [activeSection, activeLocatorIndex] }
+  );
 
   useEffect(() => {
     const sections = [
@@ -160,16 +238,25 @@ export default function HomePage() {
   };
 
   return (
-    <div>
-      {heroContainerRef.current &&
-        flowerStyle &&
+    <div ref={rootRef}>
+      {containerReady &&
         createPortal(
-          <AnimatedCottonFlower
-            style={flowerStyle}
-            activeSection={activeSection}
-          />,
+          <div
+            ref={flowerRef}
+            style={{
+              position: "absolute",
+              opacity: 0,
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
+              zIndex: 50,
+              willChange: "transform, opacity",
+            }}
+          >
+            <AnimatedCottonFlower />
+          </div>,
           heroContainerRef.current
         )}
+
       <Hero
         heroContainerRef={heroContainerRef}
         flowerLocatorRef={flowerLocatorRef}
