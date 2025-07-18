@@ -11,6 +11,9 @@ import Hero from "../HomePage/Hero.jsx";
 import AnimatedCottonFlower from "../../components/AnimatedCottonFlower";
 import SocialInfo from "../../components/layout/SocialInfo.jsx";
 
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
 
 export default function HomePage() {
@@ -18,6 +21,10 @@ export default function HomePage() {
   const [collections, setCollections] = React.useState([]);
   const [selectedCollectionId, setSelectedCollectionId] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+
+  const [activeSection, setActiveSection] = useState("hero");
+  const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
+
   const heroContainerRef = useRef(null);
   const flowerLocatorRef = useRef(null);
   const catalogFlowerLocatorRef = useRef(null);
@@ -34,9 +41,9 @@ export default function HomePage() {
   const contactFormRef = useRef(null);
   const socialInfoRef = useRef(null);
 
-  const [flowerStyle, setFlowerStyle] = useState(null);
-  const [activeSection, setActiveSection] = useState("hero");
-  const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
+  const rootRef = useRef(null);
+  const flowerRef = useRef(null);
+  const lastIndexRef = useRef(activeLocatorIndex);
 
   // ดึงข้อมูล Collection ที่นี่ที่เดียว
   useEffect(() => {
@@ -75,25 +82,44 @@ export default function HomePage() {
   };
 
   useLayoutEffect(() => {
-    const targetLocatorRefs = locatorRefMap[activeSection] || [];
-    const currentLocatorRef =
-      targetLocatorRefs[activeLocatorIndex] || targetLocatorRefs[0];
-
-    if (currentLocatorRef?.current && heroContainerRef.current) {
-      const locatorRect = currentLocatorRef.current.getBoundingClientRect();
-      const containerRect = heroContainerRef.current.getBoundingClientRect();
-
-      setFlowerStyle({
-        position: "absolute",
-        top: locatorRect.top - containerRect.top,
-        left: locatorRect.left - containerRect.left,
-        zIndex: 50,
-        pointerEvents: "none",
-        transform: "translate(-50%, -50%)",
-        transition: "top 0.8s ease-in-out, left 0.8s ease-in-out",
+    if (flowerRef.current) {
+      gsap.from(flowerRef.current, {
+        y: -200,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power4.out",
+        immediateRender: false, // Prevents flicker by not rendering immediately
       });
     }
-  }, [activeSection, activeLocatorIndex]);
+  }, []);
+
+  useGSAP(
+    () => {
+      const locRefs = locatorRefMap[activeSection] || [];
+      const curRef = locRefs[activeLocatorIndex] || locRefs[0];
+      const direction = activeLocatorIndex > lastIndexRef.current ? 1 : -1;
+      const angle = 90 * direction;
+      lastIndexRef.current = activeLocatorIndex;
+
+      if (!curRef?.current || !heroContainerRef.current || !flowerRef.current)
+        return;
+
+      const loc = curRef.current.getBoundingClientRect();
+      const cont = heroContainerRef.current.getBoundingClientRect();
+
+      const dx = loc.left - cont.left;
+      const dy = loc.top - cont.top;
+
+      gsap.to(flowerRef.current, {
+        x: dx,
+        y: dy,
+        rotation: `+=${angle}`,
+        duration: 1.5, // slower smoother animation
+        ease: "slow(0.7, 0.7)",
+      });
+    },
+    { scope: rootRef, dependencies: [activeSection, activeLocatorIndex] }
+  );
 
   useEffect(() => {
     const sections = [
@@ -160,14 +186,21 @@ export default function HomePage() {
   };
 
   return (
-    <div>
+    <div ref={rootRef}>
       {heroContainerRef.current &&
-        flowerStyle &&
         createPortal(
-          <AnimatedCottonFlower
-            style={flowerStyle}
-            activeSection={activeSection}
-          />,
+          <div
+            ref={flowerRef}
+            style={{
+              position: "absolute",
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
+              zIndex: 50,
+              willChange: "transform, opacity",
+            }}
+          >
+            <AnimatedCottonFlower activeSection={activeSection} />
+          </div>,
           heroContainerRef.current
         )}
       <Hero
