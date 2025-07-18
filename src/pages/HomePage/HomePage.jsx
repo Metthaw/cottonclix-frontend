@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 // Import Components
@@ -24,6 +24,7 @@ export default function HomePage() {
 
   const [activeSection, setActiveSection] = useState("hero");
   const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
+  const [containerReady, setContainerReady] = useState(false);
 
   const heroContainerRef = useRef(null);
   const flowerLocatorRef = useRef(null);
@@ -44,6 +45,7 @@ export default function HomePage() {
   const rootRef = useRef(null);
   const flowerRef = useRef(null);
   const lastIndexRef = useRef(activeLocatorIndex);
+  const isInitialRender = useRef(true);
 
   // ดึงข้อมูล Collection ที่นี่ที่เดียว
   useEffect(() => {
@@ -71,6 +73,12 @@ export default function HomePage() {
     fetchCollections();
   }, []);
 
+  useEffect(() => {
+    if (heroContainerRef.current) {
+      setContainerReady(true);
+    }
+  }, [heroContainerRef.current]);
+
   const locatorRefMap = {
     hero: [flowerLocatorRef],
     catalog: [catalogFlowerLocatorRef],
@@ -81,40 +89,84 @@ export default function HomePage() {
     social: [socialInfoFlowerLocatorRef], // Add blog section with its locator
   };
 
-  useLayoutEffect(() => {
-    if (flowerRef.current) {
-      gsap.from(flowerRef.current, {
-        y: -200,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power4.out",
-        immediateRender: false, // Prevents flicker by not rendering immediately
-      });
-    }
-  }, []);
+  const getRelativePosition = (curRef, containerRef) => {
+    if (!curRef?.current || !containerRef.current) return { x: 0, y: 0 };
+
+    const loc = curRef.current.getBoundingClientRect();
+    const cont = containerRef.current.getBoundingClientRect();
+
+    return {
+      x: loc.left - cont.left,
+      y: loc.top - cont.top,
+    };
+  };
+
+  // Initial "falling flower" animation - runs only once on the main wrapper
+  useGSAP(
+    () => {
+      const timer = setTimeout(() => {
+        const flower = flowerRef.current;
+        const target = flowerLocatorRef.current;
+        const container = heroContainerRef.current;
+
+        if (!flower || !target || !container) return;
+
+        const { x: targetX, y: targetY } = getRelativePosition(
+          flowerLocatorRef,
+          heroContainerRef
+        );
+
+        const { width: containerWidth } = container.getBoundingClientRect();
+
+        // Initial position: top center with slight rotation
+        gsap.set(flower, {
+          x: containerWidth / 2,
+          y: "-100vh",
+          opacity: 0,
+          rotation: -60,
+        });
+
+        // Animate fall: with drift and rotation
+        gsap.to(flower, {
+          x: targetX,
+          y: targetY,
+          opacity: 1,
+          rotation: 0,
+          duration: 2.2,
+          ease: "power2.out",
+        });
+      }, 10);
+
+      return () => clearTimeout(timer);
+    },
+    { scope: rootRef }
+  );
 
   useGSAP(
     () => {
+      // Prevent this animation from running on the initial render,
+      // as the "falling flower" animation handles the initial state.
+      if (isInitialRender.current) {
+        isInitialRender.current = false;
+        return;
+      }
+
       const locRefs = locatorRefMap[activeSection] || [];
       const curRef = locRefs[activeLocatorIndex] || locRefs[0];
       const direction = activeLocatorIndex > lastIndexRef.current ? 1 : -1;
       const angle = 90 * direction;
       lastIndexRef.current = activeLocatorIndex;
 
-      if (!curRef?.current || !heroContainerRef.current || !flowerRef.current)
+      if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
         return;
 
-      const loc = curRef.current.getBoundingClientRect();
-      const cont = heroContainerRef.current.getBoundingClientRect();
-
-      const dx = loc.left - cont.left;
-      const dy = loc.top - cont.top;
+      const { x, y } = getRelativePosition(curRef, heroContainerRef);
 
       gsap.to(flowerRef.current, {
-        x: dx,
-        y: dy,
+        x,
+        y,
         rotation: `+=${angle}`,
-        duration: 1.5, // slower smoother animation
+        duration: 1.2, // Slightly faster for a snappier feel
         ease: "slow(0.7, 0.7)",
       });
     },
@@ -187,22 +239,24 @@ export default function HomePage() {
 
   return (
     <div ref={rootRef}>
-      {heroContainerRef.current &&
+      {containerReady &&
         createPortal(
           <div
             ref={flowerRef}
             style={{
               position: "absolute",
+              opacity: 0,
               transform: "translate(-50%, -50%)",
               pointerEvents: "none",
               zIndex: 50,
               willChange: "transform, opacity",
             }}
           >
-            <AnimatedCottonFlower activeSection={activeSection} />
+            <AnimatedCottonFlower />
           </div>,
           heroContainerRef.current
         )}
+
       <Hero
         heroContainerRef={heroContainerRef}
         flowerLocatorRef={flowerLocatorRef}
