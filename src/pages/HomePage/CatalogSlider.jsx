@@ -30,7 +30,7 @@ export default function CatalogSlider({ collections, loading, onOpenBook, flower
               modules={[Navigation, Pagination, EffectFade]}
               navigation
               pagination={{ clickable: true }}
-              effect="fade"
+              effect=""
               loop={true}
               onSlideChange={(swiper) => {
                 if (collections.length > 0) {
