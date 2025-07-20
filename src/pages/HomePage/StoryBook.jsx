@@ -1,20 +1,39 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectFade } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
+import React, { useRef } from "react";
+import HTMLFlipBook from "react-pageflip";
+import { storyContent } from "../../data/mockData";
 
-import { storyContent } from '../../data/mockData';
-import openBookImage from '../../img/13.svg';
+// Helper component for the book cover
+const PageCover = React.forwardRef((props, ref) => {
+  return (
+    <div
+      className="flex items-center justify-center bg-gradient-to-br from-[#6d4c41] to-[#4e342e] text-stone-100 shadow-md border border-black/20"
+      ref={ref}
+      data-density="hard"
+    >
+      <div className="text-center p-4">
+        <h2 className="text-4xl font-serif tracking-wider">{props.children}</h2>
+      </div>
+    </div>
+  );
+});
+PageCover.displayName = "PageCover";
+
+// Helper component for individual pages
+const Page = React.forwardRef((props, ref) => {
+  return (
+    <div className="bg-stone-50 p-4 shadow-inner" ref={ref}>
+      {props.children}
+    </div>
+  );
+});
+Page.displayName = "Page";
 
 export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
-  // ใช้ ID ที่ได้รับมา หรือใช้ 'spring-collection' เป็นค่าเริ่มต้นถ้าไม่มี
-  const collectionId = selectedCollectionId || 'spring-collection';
+  const bookRef = useRef(null);
+  const collectionId = selectedCollectionId || "spring-collection";
   const currentContent = storyContent.collectionDetails[collectionId];
   const storyText = storyContent.storyText;
 
-  // ป้องกัน Error หากหา collection ไม่เจอ
   if (!currentContent) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center bg-stone-100">
@@ -24,36 +43,68 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   }
 
   return (
-    <section className="w-full flex items-center bg-stone-100 py-20">
+    <section className="w-full flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20">
       <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        {/* ส่วนเนื้อเรื่อง */}
+        {/* Text side */}
         <div className="text-left p-4">
-          <h2 className="text-4xl font-serif text-primary mb-6">{storyText.heading}</h2>
+          <h2 className="text-4xl font-serif text-primary mb-6">
+            {storyText.heading}
+          </h2>
           <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-y-auto pr-4">
             {storyText.paragraphs.map((p, i) => (
-              <p key={i} style={{ whiteSpace: 'pre-wrap' }}>{p}</p>
+              <p key={i} style={{ whiteSpace: "pre-wrap" }}>
+                {p}
+              </p>
             ))}
           </div>
         </div>
-        {/* ส่วนหนังสือ */}
+
+        {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
-          <img src={openBookImage} alt="Open Story Book" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="absolute inset-0 px-[10%] py-[12%]">
-            <Swiper modules={[Navigation, EffectFade]} navigation effect={'fade'} className="w-full h-full">
-              {currentContent.sliderImagePairs.map(pair => (
-                <SwiperSlide key={pair.id}>
-                  <div className="grid grid-cols-2 gap-4 h-full">
-                    <div className="bg-white"><img src={pair.leftImg} alt="" className="w-full h-full object-cover"/></div>
-                    <div className="bg-white"><img src={pair.rightImg} alt="" className="w-full h-full object-cover"/></div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          {currentContent?.sliderImagePairs?.length > 0 && (
+            <HTMLFlipBook
+              key={collectionId}
+              width={400}
+              height={500} // Increased height for a more book-like ratio
+              size="stretch"
+              minWidth={200}
+              maxWidth={600}
+              minHeight={250} // Adjusted min/max height
+              maxHeight={750}
+              drawShadow={true}
+              // showCover={true} // Enable the cover
+              mobileScrollSupport={false}
+              ref={bookRef}
+              // maxShadowOpacity={0.5}
+              // className="shadow-[0_10px_20px_rgba(0,0,0,0.19),_0_6px_6px_rgba(0,0,0,0.23)] "
+            >
+              {/* <PageCover>CottonClix</PageCover> */}
+
+              {currentContent?.sliderImagePairs?.flatMap((pair) => [
+                <Page key={`${pair.id}-left`}>
+                  <img
+                    src={pair.leftImg}
+                    alt="Story page - left"
+                    className="w-full h-full object-contain"
+                  />
+                </Page>,
+                <Page key={`${pair.id}-right`}>
+                  <img
+                    src={pair.rightImg}
+                    alt="Story page - right"
+                    className="w-full h-full object-contain"
+                  />
+                </Page>,
+              ])}
+
+              {/* <PageCover>The End</PageCover> */}
+            </HTMLFlipBook>
+          )}
+
           <div
             ref={flowerLocatorRef}
             className="absolute pointer-events-none"
-            style={{ bottom: '10%', left: '10%' }}
+            style={{ bottom: "10%", left: "10%" }}
           />
         </div>
       </div>
