@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { storyContent } from "../../data/mockData";
+import openBookImage from "../../img/13.svg";
 
 // Helper component for the book cover
 const PageCover = React.forwardRef((props, ref) => {
@@ -62,43 +63,44 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
         {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
           {currentContent?.sliderImagePairs?.length > 0 && (
-            <HTMLFlipBook
-              key={collectionId}
-              width={400}
-              height={500} // Increased height for a more book-like ratio
-              size="stretch"
-              minWidth={200}
-              maxWidth={600}
-              minHeight={250} // Adjusted min/max height
-              maxHeight={750}
-              drawShadow={true}
-              // showCover={true} // Enable the cover
-              mobileScrollSupport={false}
-              ref={bookRef}
-              // maxShadowOpacity={0.5}
-              // className="shadow-[0_10px_20px_rgba(0,0,0,0.19),_0_6px_6px_rgba(0,0,0,0.23)] "
-            >
-              {/* <PageCover>CottonClix</PageCover> */}
-
-              {currentContent?.sliderImagePairs?.flatMap((pair) => [
-                <Page key={`${pair.id}-left`}>
-                  <img
-                    src={pair.leftImg}
-                    alt="Story page - left"
-                    className="w-full h-full object-contain"
-                  />
-                </Page>,
-                <Page key={`${pair.id}-right`}>
-                  <img
-                    src={pair.rightImg}
-                    alt="Story page - right"
-                    className="w-full h-full object-contain"
-                  />
-                </Page>,
-              ])}
-
-              {/* <PageCover>The End</PageCover> */}
-            </HTMLFlipBook>
+            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+              <img
+                src={openBookImage}
+                alt="Open Story Book"
+                className="w-full h-full object-contain"
+              />
+              <div className="absolute top-8 left-8 inset-0 w-[91%] h-[87%] flex items-center justify-center">
+                <div className="w-full h-full">
+                  <HTMLFlipBook
+                    key={collectionId}
+                    width={620}
+                    height={880}
+                    size="stretch"
+                    drawShadow={true}
+                    mobileScrollSupport={false}
+                    ref={bookRef}
+                    className="w-full h-full"
+                  >
+                    {currentContent?.sliderImagePairs?.flatMap((pair) => [
+                      <Page key={`${pair.id}-left`}>
+                        <img
+                          src={pair.leftImg}
+                          alt="Story page - left"
+                          className="w-full h-full object-cover"
+                        />
+                      </Page>,
+                      <Page key={`${pair.id}-right`}>
+                        <img
+                          src={pair.rightImg}
+                          alt="Story page - right"
+                          className="w-full h-full object-cover"
+                        />
+                      </Page>,
+                    ])}
+                  </HTMLFlipBook>
+                </div>
+              </div>
+            </div>
           )}
 
           <div
