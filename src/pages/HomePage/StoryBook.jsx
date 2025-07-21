@@ -63,18 +63,18 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
         {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
           {currentContent?.sliderImagePairs?.length > 0 && (
-            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full">
               <img
                 src={openBookImage}
                 alt="Open Story Book"
                 className="w-full h-full object-contain"
               />
-              <div className="absolute top-8 left-8 inset-0 w-[91%] h-[87%] flex items-center justify-center">
-                <div className="w-full h-full">
+              <div className="absolute inset-0 w-full h-full overflow-hidden">
+                <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%]">
                   <HTMLFlipBook
                     key={collectionId}
-                    width={620}
-                    height={880}
+                    width={600}
+                    height={850}
                     size="stretch"
                     drawShadow={true}
                     mobileScrollSupport={false}
