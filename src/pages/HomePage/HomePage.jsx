@@ -232,7 +232,7 @@ export default function HomePage() {
     setTimeout(() => {
       storyBookRef.current?.scrollIntoView({
         behavior: "smooth",
-        block: "start",
+        block: "center",
       });
     }, 100);
   };

@@ -17,3 +17,8 @@
   background-color: white;
   display: none; /* ซ่อนไว้ตอนแรก */
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none;
+}

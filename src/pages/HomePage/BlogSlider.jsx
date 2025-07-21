@@ -20,7 +20,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
       />
       <div className="container mx-auto px-6 relative">
         <div className="relative z-50">
-          <h2 className="text-4xl md:text-5xl font-serif text-gray-800 text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-serif text-ิblack text-center mb-12">
             From Our Journal
           </h2>
 
@@ -41,7 +41,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
               <SwiperSlide key={post.id}>
                 {/* 3. ทำให้แต่ละสไลด์เป็นลิงก์ไปยังหน้ารายละเอียดที่ถูกต้อง */}
                 <Link to={`/blog/${post.id}`} className="group block">
-                  <div className="overflow-hidden rounded-lg shadow-sm border border-gray-200">
+                  <div className="overflow-hidden rounded-lg shadow-sm ">
                     <img
                       // 4. ใช้ key "imageUrl" จากข้อมูลชุดใหม่
                       src={post.imageUrl}
