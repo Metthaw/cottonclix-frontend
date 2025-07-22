@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // Import โลโก้หลัก
-import logoSrc from '../../img/Vector.svg';
+import logoSrc from '../../img/Group 8.svg';
 
 // Import ไอคอน Social Media ทั้งสามไฟล์เข้ามา
 import facebookIcon from '../../img/icon-navbar.svg';
@@ -29,7 +29,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="w-full h-[10px] bg-white py-4 px-6 pt-10 rounded-lg ">
+    <header className="w-full h-[10px] bg-white  mx-0 pt-10 rounded-lg ">
       <div className="container mx-auto ">
 
         {/* --- Layout สำหรับจอ Desktop (md ขึ้นไป) --- */}

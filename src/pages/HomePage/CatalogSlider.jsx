@@ -49,8 +49,8 @@ export default function CatalogSlider({ collections, loading, onOpenBook, flower
           <div className="relative text-center md:text-left">
             {activeCollection && (
               <>
-                <h2 className="text-4xl md:text-5xl font-serif text-gray-800">{activeCollection.name}</h2>
-                <p className="text-lg text-gray-500 mt-4">{activeCollection.subtitle}</p>
+                <h2 className="text-4xl md:text-5xl font-serif text-primary">{activeCollection.name}</h2>
+                <p className="text-lg text-secondary mt-4">{activeCollection.subtitle}</p>
                 <button
                   onClick={() => onOpenBook(activeCollection.id)}
                   className="text-primary mt-6 inline-block font-semibold hover:underline text-lg"
