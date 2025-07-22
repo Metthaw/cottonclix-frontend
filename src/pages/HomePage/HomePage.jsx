@@ -77,7 +77,7 @@ export default function HomePage() {
     if (heroContainerRef.current) {
       setContainerReady(true);
     }
-  }, [heroContainerRef.current]);
+  }, []);
 
   const locatorRefMap = {
     hero: [flowerLocatorRef],
@@ -151,10 +151,28 @@ export default function HomePage() {
         return;
       }
 
+      console.log("activeSection", activeSection);
+
       const locRefs = locatorRefMap[activeSection] || [];
       const curRef = locRefs[activeLocatorIndex] || locRefs[0];
-      const direction = activeLocatorIndex > lastIndexRef.current ? 1 : -1;
-      const angle = 90 * direction;
+
+      // Define fixed rotation degrees for each section
+      const sectionRotations = {
+        hero: 0,
+        catalog: 90,
+        storybook: 180,
+        ourstory: activeSection === "ourstory" ? 270 : 0, // Special handling for OurStory
+        blog: 90,
+        contact: 180,
+        social: 270,
+      };
+
+      // For OurStory section, we'll use the activeLocatorIndex to determine rotation
+      if (activeSection === "ourstory") {
+        sectionRotations.ourstory = activeLocatorIndex === 0 ? 270 : 0;
+      }
+
+      const targetRotation = sectionRotations[activeSection] || 0;
       lastIndexRef.current = activeLocatorIndex;
 
       if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
@@ -165,8 +183,8 @@ export default function HomePage() {
       gsap.to(flowerRef.current, {
         x,
         y,
-        rotation: `+=${angle}`,
-        duration: 1.2, // Slightly faster for a snappier feel
+        rotation: targetRotation,
+        duration: 1.2,
         ease: "slow(0.7, 0.7)",
       });
     },
