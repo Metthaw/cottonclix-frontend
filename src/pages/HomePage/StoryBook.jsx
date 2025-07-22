@@ -4,6 +4,7 @@ import { Navigation, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
+import { LeftCircleFilled, RightCircleFilled } from '@ant-design/icons';
 
 import { storyContent } from "../../data/mockData";
 import openBookImage from "../../img/13.svg";
@@ -17,21 +18,21 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   // ป้องกัน Error หากหา collection ไม่เจอ
   if (!currentContent) {
     return (
-      <div className="w-full min-h-screen flex items-center justify-center bg-stone-100">
+      <div className="w-full min-h-screen flex items-center justify-center ">
         <p>Loading collection content...</p>
       </div>
     );
   }
 
   return (
-    <section className="w-full flex items-center bg-stone-100 py-20">
-      <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <section className="w-full flex items-center  p-20">
+      <div className="container  flex grid-cols-1 md:grid-cols-2 items-center">
         {/* ส่วนเนื้อเรื่อง */}
-        <div className="text-left p-4">
-          <h2 className="text-4xl font-serif text-primary mb-6">
+        <div className="text-left mx-4 w-[50%] h-full">
+          <h2 className="text-4xl font-serif text-brand-black ">
             {storyText.heading}
           </h2>
-          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-y-auto pr-4">
+          <div className="text-base text-brand-black h-full overflow-y-automy my-5 ">
             {storyText.paragraphs.map((p, i) => (
               <p key={i} style={{ whiteSpace: "pre-wrap" }}>
                 {p}
@@ -49,7 +50,10 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
           <div className="absolute inset-0 px-[10%] py-[12%]">
             <Swiper
               modules={[Navigation, EffectFade]}
-              navigation
+              navigation={{
+                prevEl: '.storybook-prev-arrow',
+                nextEl: '.storybook-next-arrow',
+              }}
               effect={"fade"}
               className="w-full h-full"
             >
@@ -70,18 +74,26 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <a
+                    
+                  </div>
+                </SwiperSlide>
+                
+              ))}
+            </Swiper>
+            <a
                       href="https://lin.ee/iv9KnOe"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="absolute bottom-5 right-5 z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+                      className="absolute mt-3 mr-5 right-10 z-10 bg-primary text-secondary font-semibold px-6 py-1 rounded-lg hover:bg-secondary hover:text-primary transition-colors"
                     >
-                      Line OA
+                      Shop Now
                     </a>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                     <button className="storybook-prev-arrow  absolute top-1/2 -translate-y-1/2 left-[5%] z-20 text-primary hover:text-secondary text-4xl rounded-full m-2 ">
+             <LeftCircleFilled />
+          </button>
+          <button className="storybook-next-arrow absolute top-1/2 -translate-y-1/2 right-[5%] z-20 text-primary hover:text-secondary  text-4xl rounded-full">
+             <RightCircleFilled />
+          </button>
           </div>
           <div
             ref={flowerLocatorRef}

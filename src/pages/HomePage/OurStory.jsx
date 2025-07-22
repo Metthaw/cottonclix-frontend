@@ -44,14 +44,18 @@ export default function OurStory({
   lowerFlowerLocatorRef,
 }) {
   return (
-    <section className="w-full bg-white py-20 md:py-32">
+    <section className="w-full bg-white  py-20 md:py-32">
       <div className="container mx-auto px-8">
         {/* ====================================================== */}
         {/* === ส่วนบน (ตามโค้ดที่คุณทำมา) === */}
         {/* ====================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ">
-          <div className="md:col-span-2 text-lg text-[#8D8D8D] leading-relaxed ">
-            <p className="px-28">{storyData.part1.leftParagraph}</p>
+          <div className="md:col-span-2 text-lg text-black leading-relaxed ">
+            <p className="px-28 text-black">
+  {"In a world that moves faster every day, small gifts made with care have become more meaningful than we often realize. And that... is the inspiration behind "}
+  <span className="font-bold text-primary">Cottonclix</span>
+  {"."}
+</p>
             <img
               src={element1}
               alt="Branch Decoration"
@@ -79,9 +83,10 @@ export default function OurStory({
                 </h2>
               </div>
             </div>
-            <p className="text-lg text-[#8D8D8D] leading-relaxed mt-48 ">
-              {storyData.part1.rightParagraph}
-            </p>
+            <p className="text-lg text-black leading-relaxed mt-48">
+    <span className="font-bold text-primary">Cottonclix</span>
+    {" was born from a love for fabric, a passion for nature-inspired patterns, and the belief that “a good gift doesn't have to be big , it just has to be meaningful.”"}
+</p>
           </div>
         </div>
 
@@ -94,11 +99,11 @@ export default function OurStory({
         <div className="relative grid grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed">
           <div className="grid grid-cols-2 md:grid-cols-2 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed">
             {/* คอลัมน์ซ้าย */}
-            <div className="space-y-6">
-              {storyData.bottomSection.leftParagraphs.map((text, i) => (
-                <p key={i}>{text}</p>
-              ))}
-            </div>
+           <p className="px-28 text-black">
+  {"In a world that moves faster every day, small gifts made with care have become more meaningful than we often realize. And that... is the inspiration behind "}
+  <span className="font-bold text-primary">Cottonclix</span>
+  {"."}
+</p>
 
             {/* คอลัมน์ขวา */}
             <div className="relative ">
@@ -109,12 +114,12 @@ export default function OurStory({
               />
               <div className="space-y-2 text-lg text-[#111000] font-medium">
                 {storyData.bottomSection.rightList.map((item, i) => (
-                  <p key={i}>{item}</p>
+                  <p key={i} className="text-black">{item}</p>
                 ))}
               </div>
 
               {storyData.bottomSection.rightParagraphs.map((text, i) => (
-                <p key={i}>{text}</p>
+                <p key={i} className="text-black">{text}</p>
               ))}
             </div>
           </div>

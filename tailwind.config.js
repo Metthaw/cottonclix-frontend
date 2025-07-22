@@ -1,5 +1,4 @@
 // tailwind.config.js
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -7,15 +6,17 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        // เราจะตั้งให้ฟอนต์ sans-serif หลักของเว็บคือ IBM Plex Sans Thai
-        // พร้อมมีฟอนต์สำรองเป็น sans-serif ทั่วไป
-        sans: ['IBM Plex Sans Thai', 'sans-serif'],
-
-        // ฟอนต์ serif ที่เราเคยคุยกันไว้ก็ยังอยู่
-        serif: ['Playfair Display', 'serif'],
+      colors: {
+        'primary': '#8C5F31',
+        'secondary': '#F8E3C3',
+        'natural': '#BDBDBD',
+        'brand-black': '#110000',
+        'brand-white': '#FFFFFF',
       },
-      // ... (โค้ดสีที่คุณอาจจะเคยเพิ่มไว้)
+      fontFamily: {
+        'serif': ['"Playfair Display"', 'serif'],
+        'sans': ['"IBM Plex Sans Thai"', 'sans-serif'],
+      },
     },
   },
   plugins: [],

@@ -32,63 +32,63 @@ export default function SocialInfo({ flowerLocatorRef, className = "" }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
           {/* Left Column: Contact Information */}
           <div className="max-w-xl mx-auto lg:mx-0">
-            <h2 className="text-2xl font-semibold text-stone-800 mb-8 text-center lg:text-left">
+            <h2 className="text-2xl font-semibold text-black mb-8 text-center lg:text-left">
               Contact Us
             </h2>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <img
                   src={LocationIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-7 h-7 flex-shrink-0 "
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Address</h3>
-                  <p className="text-stone-600">{socialInfoData.address}</p>
+                
+                  <p className="text-black ">{socialInfoData.address}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <img
                   src={TimeIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-7 h-7 flex-shrink-0 "
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Opening Hours</h3>
-                  <p className="text-stone-600">
+                  
+                  <p className="text-black">
                     {socialInfoData.openingHours}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <img
                   src={TelIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-7 h-7 flex-shrink-0 "
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Phone</h3>
-                  <p className="text-stone-600">{socialInfoData.phone}</p>
+                  
+                  <p className="text-black">{socialInfoData.phone}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 <img
                   src={EmailIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-7 h-7 flex-shrink-0 "
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Email</h3>
-                  <p className="text-stone-600">{socialInfoData.email}</p>
+                  
+                  <p className="text-black">{socialInfoData.email}</p>
                 </div>
               </div>
 
               <div className="pt-4">
-                <h3 className="font-medium text-stone-700 mb-3">Follow Us</h3>
+                
                 <div className="flex items-center gap-5">
                   {[
                     {
