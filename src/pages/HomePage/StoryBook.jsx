@@ -95,6 +95,14 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
                           alt="Story page - right"
                           className="w-full h-full object-cover"
                         />
+                        <a
+                          href="https://lin.ee/iv9KnOe"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-5 right-5 z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+                        >
+                          Shop Now
+                        </a>
                       </Page>,
                     ])}
                   </HTMLFlipBook>
