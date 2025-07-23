@@ -13,6 +13,8 @@ import SocialInfo from "../../components/layout/SocialInfo.jsx";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
 
@@ -104,40 +106,48 @@ export default function HomePage() {
   // Initial "falling flower" animation - runs only once on the main wrapper
   useGSAP(
     () => {
+      let tl;
+      let onScroll;
+
+      // small timeout so Hero and portal have rendered
       const timer = setTimeout(() => {
         const flower = flowerRef.current;
+        const heroEl = heroContainerRef.current;
         const target = flowerLocatorRef.current;
-        const container = heroContainerRef.current;
+        if (!flower || !heroEl || !target) return;
 
-        if (!flower || !target || !container) return;
+        // compute drop target
+        const { x: tx, y: ty } = getRelativePosition(flowerLocatorRef, heroContainerRef);
+        const { width: w } = heroEl.getBoundingClientRect();
 
-        const { x: targetX, y: targetY } = getRelativePosition(
-          flowerLocatorRef,
-          heroContainerRef
-        );
+        // build the intro timeline
+        tl = gsap.timeline({
+          defaults: { duration: 2.2, ease: "power2.out" },
+        });
 
-        const { width: containerWidth } = container.getBoundingClientRect();
-
-        // Initial position: top center with slight rotation
-        gsap.set(flower, {
-          x: containerWidth / 2,
+        tl.set(flower, {
+          x: w / 2,
           y: "-100vh",
-          opacity: 0,
+          opacity: 1,
           rotation: -60,
         });
+        tl.to(flower, { x: tx, y: ty, rotation: 0, opacity: 1 });
 
-        // Animate fall: with drift and rotation
-        gsap.to(flower, {
-          x: targetX,
-          y: targetY,
-          opacity: 1,
-          rotation: 0,
-          duration: 2.2,
-          ease: "power2.out",
-        });
-      }, 10);
+        // scroll interrupt: if running and user scrolls, jump to end
+        onScroll = () => {
+          if (tl && tl.isActive()) {
+            tl.progress(1, false);
+            window.removeEventListener("scroll", onScroll);
+          }
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }, 50);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        if (onScroll) window.removeEventListener("scroll", onScroll);
+        if (tl) tl.kill();
+      };
     },
     { scope: rootRef }
   );
@@ -151,7 +161,7 @@ export default function HomePage() {
         return;
       }
 
-      console.log("activeSection", activeSection);
+      // console.log("activeSection", activeSection);
 
       const locRefs = locatorRefMap[activeSection] || [];
       const curRef = locRefs[activeLocatorIndex] || locRefs[0];
@@ -212,7 +222,7 @@ export default function HomePage() {
       },
       {
         root: null, // relative to the viewport
-        threshold: 0.5, // Trigger when 50% of a section is visible
+        threshold: 0.4, // Trigger when 50% of a section is visible
       }
     );
 
@@ -257,7 +267,7 @@ export default function HomePage() {
 
   return (
     <div ref={rootRef}>
-      {containerReady &&
+      {heroContainerRef.current &&
         createPortal(
           <div
             ref={flowerRef}
@@ -276,9 +286,10 @@ export default function HomePage() {
         )}
 
       <Hero
-        heroContainerRef={heroContainerRef}
+        containerRef={heroContainerRef}
         flowerLocatorRef={flowerLocatorRef}
       />
+
       <div ref={catalogSliderRef}>
         <CatalogSlider
           collections={collections}

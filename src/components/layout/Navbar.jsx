@@ -29,7 +29,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="w-full h-[10px] bg-white py-4 px-6 pt-10 rounded-lg ">
+    <header className="w-full h-fit bg-white py-4 px-6 pt-10 rounded-lg ">
       <div className="container mx-auto ">
 
         {/* --- Layout สำหรับจอ Desktop (md ขึ้นไป) --- */}
