@@ -23,9 +23,9 @@ const Navbar = () => {
   const leftMenuItems = ['Our Story', 'Blog', 'Contact'];
   const rightMenuItems = ['Subscribe', 'Index'];
   const socialLinks = [
-    { name: 'Facebook', href: 'https://www.facebook.com/', icon: facebookIcon },
-    { name: 'Instagram', href: 'https://www.instagram.com', icon: instagramIcon },
-    { name: 'Line', href: 'https://line.me', icon: lineIcon },
+    { name: 'Facebook', href: 'https://facebook.com/cottonclix', icon: facebookIcon },
+    { name: 'Instagram', href: '  https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr', icon: instagramIcon },
+    { name: 'Line', href: ' https://lin.ee/iv9KnOe', icon: lineIcon },
   ];
 
   return (
