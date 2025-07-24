@@ -9,7 +9,7 @@ import lineArtImg from '../../img/element2.svg';
 
 const Hero = forwardRef((props) => (
   <section className="w-full flex justify-center items-center py-16 md:py-24 bg-white">
-    <div className="w-full min-h-screen flex justify-center items-center bg-gray-100 p-8 ">
+    <div className="w-full min-h-screen flex justify-center items-center  p-8 ">
       <div ref={props.heroContainerRef} className="relative w-full max-w-5xl h-[500px]">
         <img
           src={leavesImg}

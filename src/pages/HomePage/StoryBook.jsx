@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import { LeftCircleFilled, RightCircleFilled } from '@ant-design/icons';
+import branchImage from "../../img/16.svg";
 
 import { storyContent } from "../../data/mockData";
 import openBookImage from "../../img/13.svg";
@@ -25,8 +26,13 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   }
 
   return (
-    <section className="w-full flex items-center  p-20">
+    <section className="w-full flex items-center  p-20 relative ">
       <div className="container  flex grid-cols-1 md:grid-cols-2 items-center">
+         <img 
+        src={branchImage} 
+        alt="Decorative background leaves"
+        className="absolute -top-[25%] right-0 h-auto w-[30%] -z-10 pointer-events-none"
+      />
         {/* ส่วนเนื้อเรื่อง */}
         <div className="text-left mx-4 w-[50%] h-full">
           <h2 className="text-4xl font-serif text-brand-black ">
