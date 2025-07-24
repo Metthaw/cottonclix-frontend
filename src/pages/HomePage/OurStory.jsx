@@ -136,7 +136,7 @@ export default function OurStory({
               }}
             />
             <div className="relative z-10">
-              <p className="font-serif font-semibold text-[#BC9F31] text-3xl pt-4">
+              <p className=" text-primary font-bold text-3xl ">
                 {storyData.bottomSection.quote}
               </p>
               <img src={Vector} alt="Logo" className="h-[50%]" />

@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
+import branchImage from '../../img/element4.png'; // รูปกิ่งไม้ที่ใช้ใน CatalogSlider
 
 // รับ props: collections, loading, และ onOpenBook
 export default function CatalogSlider({ collections, loading, onOpenBook, flowerLocatorRef }) {
@@ -18,11 +19,16 @@ export default function CatalogSlider({ collections, loading, onOpenBook, flower
   }, [collections]);
 
   if (loading) {
-    return <section className="w-full bg-white py-20 md:py-24 text-center">Loading...</section>;
+    return <section className="w-full bg-white p-20 md:py-24 text-center">Loading...</section>;
   }
 
   return (
-    <section className="w-full bg-white py-20 md:py-24">
+    <section className="w-full bg-white py-20 md:py-24 relative my-10 ">
+      <img 
+        src={branchImage} 
+        alt="Decorative background leaves"
+        className="absolute top-0 left-0 w-1/3 h-auto z-0 scale-x-[-1]"
+      />
       <div className="container mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="w-full">
@@ -47,6 +53,7 @@ export default function CatalogSlider({ collections, loading, onOpenBook, flower
             </Swiper>
           </div>
           <div className="relative text-center md:text-left">
+            <h1 className="text-4xl md:text-5xl font-serif text-primary mb-4"> Cottonclix </h1>
             {activeCollection && (
               <>
                 <h2 className="text-4xl md:text-5xl font-serif text-primary">{activeCollection.name}</h2>
