@@ -117,7 +117,10 @@ export default function HomePage() {
         if (!flower || !heroEl || !target) return;
 
         // compute drop target
-        const { x: tx, y: ty } = getRelativePosition(flowerLocatorRef, heroContainerRef);
+        const { x: tx, y: ty } = getRelativePosition(
+          flowerLocatorRef,
+          heroContainerRef
+        );
         const { width: w } = heroEl.getBoundingClientRect();
 
         // build the intro timeline

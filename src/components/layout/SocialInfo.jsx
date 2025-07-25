@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 // --- Import Social Media Icons ---
 import FacebookIcon from "../../img/icon-navbar.svg";
@@ -18,22 +20,117 @@ const socialInfoData = {
   email: "cottonclix.official@gmail.com",
   socialLinks: {
     facebook: "https://facebook.com/cottonclix",
-    instagram: "https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr",
+    instagram:
+      "https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr",
     line: " https://lin.ee/iv9KnOe",
   },
   mapLocation:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
 };
 
-export default function SocialInfo({ flowerLocatorRef, className = "" }) {
+export default function SocialInfo({ flowerLocatorRef }) {
+  const mainRef = useRef(null);
+  const headerRef = useRef(null);
+  const mapRef = useRef(null);
+
+  useGSAP(
+    () => {
+      const mainEl = mainRef.current;
+      if (!mainEl) return;
+
+      const handleFocus = () => {
+        gsap.fromTo(
+          headerRef.current,
+          {
+            x: 80,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          mapRef.current,
+          {
+            x: 200,
+            opacity: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const handleBlur = () => {
+        gsap.fromTo(
+          headerRef.current,
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 80,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          mapRef.current,
+          {
+            x: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 200,
+            opacity: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            handleFocus();
+          } else {
+            handleBlur();
+          }
+        },
+        { threshold: 0.2 } // fire when 20% of element is visible
+      );
+
+      observer.observe(mainEl);
+
+      return () => observer.disconnect();
+    },
+    { scope: mainRef }
+  ); // ✅ no dependencies
+
   return (
-    <section className={`w-full bg-white py-16 ${className}`}>
+    <section ref={mainRef} className={`w-full bg-white py-16 overflow-hidden`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
           {/* Left Column: Contact Information */}
           <div className="max-w-xl mx-auto lg:mx-0">
-            <h2 className="text-2xl font-semibold text-stone-800 mb-8 text-center lg:text-left">
-              Contact Us
+            <h2
+              ref={headerRef}
+              className="text-4xl font-semibold text-stone-800 mb-8 text-center lg:text-left"
+            >
+              Contact
             </h2>
 
             <div className="space-y-6">
@@ -132,7 +229,10 @@ export default function SocialInfo({ flowerLocatorRef, className = "" }) {
           />
 
           {/* Right Column: Map */}
-          <div className="h-96 w-full rounded-xl overflow-hidden shadow-lg">
+          <div
+            ref={mapRef}
+            className="h-96 w-full rounded-xl overflow-hidden shadow-lg"
+          >
             <iframe
               src={socialInfoData.mapLocation}
               width="100%"

@@ -2,6 +2,9 @@ import React, { useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { storyContent } from "../../data/mockData";
 import openBookImage from "../../img/13.svg";
+import leaves2Img from "../../img/16.svg";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 // Helper component for the book cover
 const PageCover = React.forwardRef((props, ref) => {
@@ -30,29 +33,165 @@ const Page = React.forwardRef((props, ref) => {
 Page.displayName = "Page";
 
 export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
+  const mainRef = useRef(null);
   const bookRef = useRef(null);
+  const leavesRef = useRef(null);
+  const detailRef = useRef(null);
+
   const collectionId = selectedCollectionId || "spring-collection";
   const currentContent = storyContent.collectionDetails[collectionId];
   const storyText = storyContent.storyText;
 
-  if (!currentContent) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center bg-stone-100">
-        <p>Loading collection content...</p>
-      </div>
-    );
-  }
+  useGSAP(
+    () => {
+      const mainEl = mainRef.current;
+      if (!mainEl) return;
+
+      const handleFocus = () => {
+        gsap.fromTo(
+          leavesRef.current,
+          {
+            x: 80,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          bookRef.current,
+          {
+            x: 200,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          detailRef.current,
+          {
+            // x: 100,
+            y: 200,
+            opacity: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            y:0,
+            opacity: 1,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const handleBlur = () => {
+        gsap.fromTo(
+          leavesRef.current,
+          {
+            x: 0,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 80,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          bookRef.current,
+          {
+            x: 0,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 200,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          detailRef.current,
+          {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            // x: 100,
+            y: 200,
+            opacity: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            handleFocus();
+          } else {
+            handleBlur();
+          }
+        },
+        { threshold: 0.3 } // fire when 20% of element is visible
+      );
+
+      observer.observe(mainEl);
+
+      return () => observer.disconnect();
+    },
+    { scope: mainRef }
+  ); // ✅ no dependencies
+
+  // if (!currentContent) {
+  //   return (
+  //     <div className="w-full min-h-screen flex items-center justify-center bg-stone-100">
+  //       <p>Loading collection content...</p>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <section className="w-full flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20">
+    <section
+      ref={mainRef}
+      className="w-full relative flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20 overflow-hidden"
+    >
+      <img
+        ref={leavesRef}
+        src={leaves2Img}
+        alt="Decorative Leaves"
+        className="absolute right-[-10%] top-[25%] -translate-y-1/2 w-2/5 h-[100vh] object-contain z-0 rotate-[18deg] pointer-events-none"
+      />
       <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
-        <div className="text-left p-4">
+        <div ref={detailRef} className="text-left p-4">
           <h2 className="text-4xl font-serif text-primary mb-6">
-            {storyText.heading}
+            {storyText?.heading}
           </h2>
-          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-y-auto pr-4">
-            {storyText.paragraphs.map((p, i) => (
+          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-hidden pr-4">
+            {storyText?.paragraphs?.map((p, i) => (
               <p key={i} style={{ whiteSpace: "pre-wrap" }}>
                 {p}
               </p>
@@ -63,7 +202,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
         {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
           {currentContent?.sliderImagePairs?.length > 0 && (
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full" ref={bookRef}>
               <img
                 src={openBookImage}
                 alt="Open Story Book"
@@ -78,7 +217,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
                     size="stretch"
                     drawShadow={true}
                     mobileScrollSupport={false}
-                    ref={bookRef}
+                    // ref={bookRef}
                     className="w-full h-full"
                   >
                     {currentContent?.sliderImagePairs?.flatMap((pair) => [
@@ -110,7 +249,6 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
               </div>
             </div>
           )}
-
           <div
             ref={flowerLocatorRef}
             className="absolute pointer-events-none"
