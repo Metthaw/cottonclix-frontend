@@ -1,17 +1,16 @@
 // import Navbar from './components/layout/Navbar';
 // import './App.css'
-// import HomePage from '../src/pages/HomePage/HomePage'; 
+// import HomePage from '../src/pages/HomePage/HomePage';
 // import Footer from './components/layout/Footer';
 
 // function App() {
- 
 
 //   return (
 //     <>
 //       <Navbar />
 //       <HomePage />
 //       <Footer />
-      
+
 //     </>
 //   )
 // }
@@ -39,16 +38,16 @@
 
 // export default App;
 
-
 // src/App.jsx
 
 // src/App.jsx
 
-import React from 'react';
-import { Outlet } from 'react-router-dom'; // Import Outlet
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import ScrollToTop from './components/ScrollToTop';
+import React from "react";
+import { Outlet } from "react-router-dom"; // Import Outlet
+import { AnimatePresence } from "motion/react";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -57,7 +56,9 @@ function App() {
       <Navbar />
       <main>
         {/* Outlet คือพื้นที่ที่เนื้อหาของแต่ละหน้าจะถูกนำมาแสดงผล */}
-        <Outlet />
+        <AnimatePresence mode="wait">
+          <Outlet />
+        </AnimatePresence>
       </main>
 
       <Footer />

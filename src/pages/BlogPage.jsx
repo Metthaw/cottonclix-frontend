@@ -1,8 +1,17 @@
 // src/pages/BlogPage.jsx
 
-import React, { useState, useEffect } from "react"; // 1. Import useState และ useEffect
+import React, { useState, useEffect, useRef } from "react"; // 1. Import useState และ useEffect
 import { Link } from "react-router-dom";
 import SocialInfo from "../components/layout/SocialInfo";
+import element2 from "../img/element2.svg";
+import element5 from "../img/element5.svg";
+
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ConfigProvider, Pagination } from "antd";
+
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "motion/react";
 
 // URL ของ API ที่เราจะไปดึงข้อมูล
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/posts";
@@ -11,7 +20,76 @@ export default function BlogPage() {
   // 2. สร้าง State เพื่อเก็บข้อมูลบทความและสถานะการโหลด
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAnimatedIn, setIsAnimatedIn] = useState(false);
 
+  const mainRef = useRef(null);
+  const flowerRef = useRef(null);
+
+  useGSAP(
+    () => {
+      if (!(mainRef.current && flowerRef.current)) return;
+
+      const handleFocus = () => {
+        gsap.fromTo(
+          flowerRef.current,
+          {
+            x: -600,
+            y: 200,
+            rotate: 180,
+            opacity: 0,
+            duration: 0.7,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            y: 0,
+            rotate: 90,
+            opacity: 1,
+            duration: 0.7,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const handleBlur = () => {
+        gsap.fromTo(
+          flowerRef.current,
+          {
+            x: 0,
+            y: 0,
+            rotate: 90,
+            opacity: 1,
+            duration: 0.7,
+            ease: "sine.inOut",
+          },
+          {
+            x: -600,
+            y: 200,
+            rotate: 180,
+            opacity: 0,
+            duration: 0.7,
+            ease: "sine.inOut",
+          }
+        );
+      };
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            handleFocus();
+          } else {
+            handleBlur();
+          }
+        },
+        { threshold: 0.4 }
+      );
+
+      observer.observe(mainRef.current);
+
+      return () => observer.disconnect();
+    },
+    { dependencies: [isAnimatedIn], scope: mainRef }
+  );
   // 3. ใช้ useEffect เพื่อดึงข้อมูลจาก API แค่ครั้งเดียวเมื่อเปิดหน้า
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,54 +107,79 @@ export default function BlogPage() {
     fetchPosts();
   }, []); // [] ว่างๆ หมายถึงให้ทำงานแค่ครั้งเดียว
 
-  // 4. แสดงข้อความ "Loading..." ขณะที่กำลังดึงข้อมูล
-  if (loading) {
-    return <div className="text-center py-40">Loading...</div>;
-  }
-
   return (
-    <div className="bg-white">
-      <div className="container mx-auto px-6 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900">
-            Our Journal
-          </h1>
-          <p className="mt-4 text-lg text-natural">
-            เรื่องราว แรงบันดาลใจ และเกร็ดความรู้จากโลกของ Cottonclix
-          </p>
-        </div>
+    <motion.div
+      // ref={mainRef}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 1 }}
+      className="bg-white overflow-hidden"
+    >
+      <AnimatePresence mode="wait">
+        {!loading && (
+          <motion.div
+            ref={mainRef}
+            key="blog-grid"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            onAnimationComplete={() => setIsAnimatedIn(true)}
+            className="container relative mx-auto px-6 py-16 z-50"
+          >
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900">
+                Our Journal
+              </h1>
+              <p className="mt-4 text-lg text-natural">
+                เรื่องราว แรงบันดาลใจ และเกร็ดความรู้จากโลกของ Cottonclix
+              </p>
+            </div>
+            <img
+              src={element2}
+              ref={flowerRef}
+              alt="Cotton Flower"
+              className="absolute right-[-25%] opacity-0 top-0 rotate-[90deg] scale-y-[-1]  w-2/5 h-[40vh] object-contain -z-10 pointer-events-none"
+            />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-          {/* 5. เปลี่ยนมา map ข้อมูลจาก State 'posts' แทน */}
-          {posts.map((post) => (
-            <Link to={`/blog/${post.id}`} key={post.id} className="group block">
-              <div className="overflow-hidden rounded-lg">
-                <img
-                  className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
-                  src={post.acf.cover_image} // 6. เข้าถึงข้อมูลรูปภาพผ่าน acf
-                  alt={post.title.rendered}
-                />
+            {!loading && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 z-50">
+                {posts?.map((post) => (
+                  <Link
+                    to={`/blog/${post?.id}`}
+                    key={post?.id}
+                    className="group block"
+                  >
+                    <div className="overflow-hidden rounded-lg">
+                      <img
+                        className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        src={post?.acf?.cover_image}
+                        alt={post?.title?.rendered}
+                      />
+                    </div>
+                    <div className="pt-4">
+                      <h3 className="mt-2 text-xl font-serif text-gray-800 group-hover:text-primary">
+                        {post?.title?.rendered}
+                      </h3>
+                      <p
+                        className="mt-2 text-natural text-sm h-12 overflow-hidden"
+                        dangerouslySetInnerHTML={{
+                          __html: post?.acf?.excerpt,
+                        }}
+                      />
+                      <p className="mt-3 text-sm text-gray-400">
+                        {new Date(post?.date).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
-              <div className="pt-4">
-                {/* Categories ยังไม่ได้ดึงมา จะทำในขั้นต่อไป */}
-                <h3 className="mt-2 text-xl font-serif text-gray-800 group-hover:text-primary">
-                  {post.title.rendered}
-                </h3>
-                <p
-                  className="mt-2 text-natural text-sm h-12 overflow-hidden"
-                  dangerouslySetInnerHTML={{ __html: post.acf.excerpt }} // 7. ใช้ excerpt จาก acf
-                />
-                <p className="mt-3 text-sm text-gray-400">
-                  {new Date(post.date).toLocaleDateString()}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
+            )}
 
-        {/* Pagination */}
-        <div className="flex justify-center items-center space-x-2 mt-16">
-          <span className="px-4 py-2 text-gray-500 cursor-not-allowed">
+            {/* Pagination */}
+            <div className="flex justify-center items-center space-x-2 mt-16 z-10 py-28">
+              {/* <span className="px-4 py-2 text-gray-500 cursor-not-allowed">
             {"<"}
           </span>
           <span className="px-4 py-2 bg-primary text-white rounded-md">1</span>
@@ -88,13 +191,36 @@ export default function BlogPage() {
           </span>
           <span className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer">
             {">"}
-          </span>
-        </div>
-      </div>
-
+          </span> */}
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Pagination: {
+                      colorPrimary: "#856647",
+                      colorPrimaryHover: "#BC9F31",
+                      colorPrimaryActive: "#BC9F31",
+                    },
+                  },
+                }}
+              >
+                <Pagination
+                  defaultCurrent={1}
+                  pageSize={9}
+                  total={posts?.length ?? 0}
+                />
+              </ConfigProvider>
+              <img
+                src={element5}
+                alt="Branch2 Decoration"
+                className="absolute left-[-15%] bottom-[-15%] -translate-y-1/2 w-2/5 h-[50vh] rotate-[45deg] object-contain -z-10 pointer-events-none"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div>
         <SocialInfo />
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -16,6 +16,9 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react";
+
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
 
 export default function HomePage() {
@@ -26,7 +29,7 @@ export default function HomePage() {
 
   const [activeSection, setActiveSection] = useState("hero");
   const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
-  const [containerReady, setContainerReady] = useState(false);
+  const [isHeroReady, setIsHeroReady] = useState(false);
 
   const heroContainerRef = useRef(null);
   const flowerLocatorRef = useRef(null);
@@ -50,36 +53,6 @@ export default function HomePage() {
   const isInitialRender = useRef(true);
 
   // ดึงข้อมูล Collection ที่นี่ที่เดียว
-  useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const formattedData = data.map((item) => ({
-          id: item.slug,
-          name: item.title.rendered,
-          subtitle: item.acf.subtitle,
-          coverImage: item.acf.cover_image,
-        }));
-        setCollections(formattedData);
-        // --- จุดสำคัญ: ตั้งค่า ID แรกที่เจอเป็น default value ---
-        if (formattedData.length > 0) {
-          setSelectedCollectionId(formattedData[0].id);
-        }
-      } catch (error) {
-        console.error("Error fetching collections:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCollections();
-  }, []);
-
-  useEffect(() => {
-    if (heroContainerRef.current) {
-      setContainerReady(true);
-    }
-  }, []);
 
   const locatorRefMap = {
     hero: [flowerLocatorRef],
@@ -101,6 +74,16 @@ export default function HomePage() {
       x: loc.left - cont.left,
       y: loc.top - cont.top,
     };
+  };
+
+  const handleOpenBook = (collectionId) => {
+    setSelectedCollectionId(collectionId);
+    setTimeout(() => {
+      storyBookRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   };
 
   // Initial "falling flower" animation - runs only once on the main wrapper
@@ -205,6 +188,31 @@ export default function HomePage() {
   );
 
   useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        const formattedData = data.map((item) => ({
+          id: item.slug,
+          name: item.title.rendered,
+          subtitle: item.acf.subtitle,
+          coverImage: item.acf.cover_image,
+        }));
+        setCollections(formattedData);
+        // --- จุดสำคัญ: ตั้งค่า ID แรกที่เจอเป็น default value ---
+        if (formattedData.length > 0) {
+          setSelectedCollectionId(formattedData[0].id);
+        }
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCollections();
+  }, []);
+
+  useEffect(() => {
     const sections = [
       { ref: heroContainerRef, name: "hero" },
       { ref: catalogSliderRef, name: "catalog" },
@@ -258,19 +266,22 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
 
-  const handleOpenBook = (collectionId) => {
-    setSelectedCollectionId(collectionId);
-    setTimeout(() => {
-      storyBookRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  };
+  useEffect(() => {
+    if (heroContainerRef.current) {
+      setIsHeroReady(true);
+    }
+  }, []);
 
   return (
-    <div ref={rootRef}>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 1 }}
+      ref={rootRef}
+    >
       {heroContainerRef.current &&
+        isHeroReady &&
         createPortal(
           <div
             ref={flowerRef}
@@ -324,6 +335,6 @@ export default function HomePage() {
       <div ref={socialInfoRef}>
         <SocialInfo flowerLocatorRef={socialInfoFlowerLocatorRef} />
       </div>
-    </div>
+    </motion.div>
   );
 }
