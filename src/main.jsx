@@ -61,6 +61,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
 import BlogDetailsPage from './pages/BlogDetailsPage.jsx';
 import LinktreePage from './pages/LinktreePage.jsx';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage.jsx';
 
 // สร้าง Router และกำหนดเส้นทาง
 const router = createBrowserRouter([
@@ -87,6 +88,8 @@ const router = createBrowserRouter([
       },
        { path: '/index',
         element: <LinktreePage /> },
+        { path: '/privacy-policy',
+         element: <PrivacyPolicyPage /> }
       // สามารถเพิ่มหน้าอื่นๆ ที่นี่ได้ในอนาคต เช่น Linktree, Privacy Policy
     ],
   },

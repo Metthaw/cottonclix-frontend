@@ -13,6 +13,11 @@ import SocialInfo from "../../components/layout/SocialInfo.jsx";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react";
 
 const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
 
@@ -24,7 +29,7 @@ export default function HomePage() {
 
   const [activeSection, setActiveSection] = useState("hero");
   const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
-  const [containerReady, setContainerReady] = useState(false);
+  const [isHeroReady, setIsHeroReady] = useState(false);
 
   const heroContainerRef = useRef(null);
   const flowerLocatorRef = useRef(null);
@@ -48,6 +53,140 @@ export default function HomePage() {
   const isInitialRender = useRef(true);
 
   // ดึงข้อมูล Collection ที่นี่ที่เดียว
+
+  const locatorRefMap = {
+    hero: [flowerLocatorRef],
+    catalog: [catalogFlowerLocatorRef],
+    storybook: [storybookFlowerLocatorRef],
+    ourstory: [ourStoryUpperFlowerLocatorRef, ourStoryLowerFlowerLocatorRef],
+    blog: [blogSliderFlowerLocatorRef],
+    contact: [contactFormFlowerLocatorRef],
+    social: [socialInfoFlowerLocatorRef], // Add blog section with its locator
+  };
+
+  const getRelativePosition = (curRef, containerRef) => {
+    if (!curRef?.current || !containerRef.current) return { x: 0, y: 0 };
+
+    const loc = curRef.current.getBoundingClientRect();
+    const cont = containerRef.current.getBoundingClientRect();
+
+    return {
+      x: loc.left - cont.left,
+      y: loc.top - cont.top,
+    };
+  };
+
+  const handleOpenBook = (collectionId) => {
+    setSelectedCollectionId(collectionId);
+    setTimeout(() => {
+      storyBookRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
+  // Initial "falling flower" animation - runs only once on the main wrapper
+  useGSAP(
+    () => {
+      let tl;
+      let onScroll;
+
+      // small timeout so Hero and portal have rendered
+      const timer = setTimeout(() => {
+        const flower = flowerRef.current;
+        const heroEl = heroContainerRef.current;
+        const target = flowerLocatorRef.current;
+        if (!flower || !heroEl || !target) return;
+
+        // compute drop target
+        const { x: tx, y: ty } = getRelativePosition(
+          flowerLocatorRef,
+          heroContainerRef
+        );
+        const { width: w } = heroEl.getBoundingClientRect();
+
+        // build the intro timeline
+        tl = gsap.timeline({
+          defaults: { duration: 2.2, ease: "power2.out" },
+        });
+
+        tl.set(flower, {
+          x: w / 2,
+          y: "-100vh",
+          opacity: 1,
+          rotation: -60,
+        });
+        tl.to(flower, { x: tx, y: ty, rotation: 0, opacity: 1 });
+
+        // scroll interrupt: if running and user scrolls, jump to end
+        onScroll = () => {
+          if (tl && tl.isActive()) {
+            tl.progress(1, false);
+            window.removeEventListener("scroll", onScroll);
+          }
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }, 50);
+
+      return () => {
+        clearTimeout(timer);
+        if (onScroll) window.removeEventListener("scroll", onScroll);
+        if (tl) tl.kill();
+      };
+    },
+    { scope: rootRef }
+  );
+
+  useGSAP(
+    () => {
+      // Prevent this animation from running on the initial render,
+      // as the "falling flower" animation handles the initial state.
+      if (isInitialRender.current) {
+        isInitialRender.current = false;
+        return;
+      }
+
+      // console.log("activeSection", activeSection);
+
+      const locRefs = locatorRefMap[activeSection] || [];
+      const curRef = locRefs[activeLocatorIndex] || locRefs[0];
+
+      // Define fixed rotation degrees for each section
+      const sectionRotations = {
+        hero: 0,
+        catalog: 90,
+        storybook: 180,
+        ourstory: activeSection === "ourstory" ? 270 : 0, // Special handling for OurStory
+        blog: 90,
+        contact: 180,
+        social: 270,
+      };
+
+      // For OurStory section, we'll use the activeLocatorIndex to determine rotation
+      if (activeSection === "ourstory") {
+        sectionRotations.ourstory = activeLocatorIndex === 0 ? 270 : 0;
+      }
+
+      const targetRotation = sectionRotations[activeSection] || 0;
+      lastIndexRef.current = activeLocatorIndex;
+
+      if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
+        return;
+
+      const { x, y } = getRelativePosition(curRef, heroContainerRef);
+
+      gsap.to(flowerRef.current, {
+        x,
+        y,
+        rotation: targetRotation,
+        duration: 1.2,
+        ease: "slow(0.7, 0.7)",
+      });
+    },
+    { scope: rootRef, dependencies: [activeSection, activeLocatorIndex] }
+  );
+
   useEffect(() => {
     const fetchCollections = async () => {
       try {
@@ -74,106 +213,6 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (heroContainerRef.current) {
-      setContainerReady(true);
-    }
-  }, [heroContainerRef.current]);
-
-  const locatorRefMap = {
-    hero: [flowerLocatorRef],
-    catalog: [catalogFlowerLocatorRef],
-    storybook: [storybookFlowerLocatorRef],
-    ourstory: [ourStoryUpperFlowerLocatorRef, ourStoryLowerFlowerLocatorRef],
-    blog: [blogSliderFlowerLocatorRef],
-    contact: [contactFormFlowerLocatorRef],
-    social: [socialInfoFlowerLocatorRef], // Add blog section with its locator
-  };
-
-  const getRelativePosition = (curRef, containerRef) => {
-    if (!curRef?.current || !containerRef.current) return { x: 0, y: 0 };
-
-    const loc = curRef.current.getBoundingClientRect();
-    const cont = containerRef.current.getBoundingClientRect();
-
-    return {
-      x: loc.left - cont.left,
-      y: loc.top - cont.top,
-    };
-  };
-
-  // Initial "falling flower" animation - runs only once on the main wrapper
-  useGSAP(
-    () => {
-      const timer = setTimeout(() => {
-        const flower = flowerRef.current;
-        const target = flowerLocatorRef.current;
-        const container = heroContainerRef.current;
-
-        if (!flower || !target || !container) return;
-
-        const { x: targetX, y: targetY } = getRelativePosition(
-          flowerLocatorRef,
-          heroContainerRef
-        );
-
-        const { width: containerWidth } = container.getBoundingClientRect();
-
-        // Initial position: top center with slight rotation
-        gsap.set(flower, {
-          x: containerWidth / 2,
-          y: "-100vh",
-          opacity: 0,
-          rotation: -60,
-        });
-
-        // Animate fall: with drift and rotation
-        gsap.to(flower, {
-          x: targetX,
-          y: targetY,
-          opacity: 1,
-          rotation: 0,
-          duration: 2.2,
-          ease: "power2.out",
-        });
-      }, 10);
-
-      return () => clearTimeout(timer);
-    },
-    { scope: rootRef }
-  );
-
-  useGSAP(
-    () => {
-      // Prevent this animation from running on the initial render,
-      // as the "falling flower" animation handles the initial state.
-      if (isInitialRender.current) {
-        isInitialRender.current = false;
-        return;
-      }
-
-      const locRefs = locatorRefMap[activeSection] || [];
-      const curRef = locRefs[activeLocatorIndex] || locRefs[0];
-      const direction = activeLocatorIndex > lastIndexRef.current ? 1 : -1;
-      const angle = 90 * direction;
-      lastIndexRef.current = activeLocatorIndex;
-
-      if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
-        return;
-
-      const { x, y } = getRelativePosition(curRef, heroContainerRef);
-
-      gsap.to(flowerRef.current, {
-        x,
-        y,
-        rotation: `+=${angle}`,
-        duration: 1.2, // Slightly faster for a snappier feel
-        ease: "slow(0.7, 0.7)",
-      });
-    },
-    { scope: rootRef, dependencies: [activeSection, activeLocatorIndex] }
-  );
-
-  useEffect(() => {
     const sections = [
       { ref: heroContainerRef, name: "hero" },
       { ref: catalogSliderRef, name: "catalog" },
@@ -194,7 +233,7 @@ export default function HomePage() {
       },
       {
         root: null, // relative to the viewport
-        threshold: 0.5, // Trigger when 50% of a section is visible
+        threshold: 0.4, // Trigger when 50% of a section is visible
       }
     );
 
@@ -227,6 +266,7 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
 
+<<<<<<< HEAD
   const handleOpenBook = (collectionId) => {
     setSelectedCollectionId(collectionId);
     setTimeout(() => {
@@ -236,10 +276,24 @@ export default function HomePage() {
       });
     }, 100);
   };
+=======
+  useEffect(() => {
+    if (heroContainerRef.current) {
+      setIsHeroReady(true);
+    }
+  }, []);
+>>>>>>> ce6aac52077053d905ba4e842b4857f89c4fbece
 
   return (
-    <div ref={rootRef}>
-      {containerReady &&
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 1 }}
+      ref={rootRef}
+    >
+      {heroContainerRef.current &&
+        isHeroReady &&
         createPortal(
           <div
             ref={flowerRef}
@@ -258,9 +312,10 @@ export default function HomePage() {
         )}
 
       <Hero
-        heroContainerRef={heroContainerRef}
+        containerRef={heroContainerRef}
         flowerLocatorRef={flowerLocatorRef}
       />
+
       <div ref={catalogSliderRef}>
         <CatalogSlider
           collections={collections}
@@ -292,6 +347,6 @@ export default function HomePage() {
       <div ref={socialInfoRef}>
         <SocialInfo flowerLocatorRef={socialInfoFlowerLocatorRef} />
       </div>
-    </div>
+    </motion.div>
   );
 }
