@@ -1,117 +1,197 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-// Import โลโก้หลัก
-import logoSrc from '../../img/Vector.svg';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import logoSrc from "../../img/Group 8.svg";
+import facebookIcon from "../../img/icon-navbar.svg";
+import instagramIcon from "../../img/icon-navbar-1.svg";
+import lineIcon from "../../img/icon-navbar-2.svg";
 
-// Import ไอคอน Social Media ทั้งสามไฟล์เข้ามา
-import facebookIcon from '../../img/icon-navbar.svg';
-import instagramIcon from '../../img/icon-navbar-1.svg';
-import lineIcon from '../../img/icon-navbar-2.svg';
-
-
-// --- Component ย่อย: โลโก้ (ยังคงแยกไว้เพื่อความเรียบร้อย) ---
-const Logo = () => (
-  <Link to="/" className="h-16 w-16 flex-shrink-0">
-    <img src={logoSrc} alt="Cottonclix Logo" className="h-full w-full object-contain" />
+const Logo = ({ className = "" }) => (
+  <Link to="/" className={`flex-shrink-0 ${className}`}>
+    <img
+      src={logoSrc}
+      alt="Cottonclix Logo"
+      className="h-full w-full object-contain"
+    />
   </Link>
 );
 
-
-// --- Navbar Component หลัก (ปรับแก้โครงสร้างทั้งหมด) ---
 const Navbar = () => {
-  // ข้อมูลสำหรับเมนูและโซเชียลมีเดีย
-  const leftMenuItems = ['Our Story', 'Blog', 'Contact'];
-  const rightMenuItems = ['Subscribe', 'Index'];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const leftMenuItems = ["Our Story", "Blog", "Contact"];
+  const rightMenuItems = ["Subscribe", "Index"];
   const socialLinks = [
-    { name: 'Facebook', href: 'https://facebook.com/cottonclix', icon: facebookIcon },
-    { name: 'Instagram', href: '  https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr', icon: instagramIcon },
-    { name: 'Line', href: ' https://lin.ee/iv9KnOe', icon: lineIcon },
+    {
+      name: "Facebook",
+      href: "https://facebook.com/cottonclix",
+      icon: facebookIcon,
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr",
+      icon: instagramIcon,
+    },
+    { name: "Line", href: "https://lin.ee/iv9KnOe", icon: lineIcon },
   ];
 
-  return (
-    <header className="w-full h-fit bg-white py-4 px-6 pt-10 rounded-lg ">
-      <div className="container mx-auto ">
+  const renderMenuItem = (item) => {
+    const className = "hover:text-amber-800 transition-colors duration-300";
 
-        {/* --- Layout สำหรับจอ Desktop (md ขึ้นไป) --- */}
-        <div className="hidden md:flex justify-center items-center space-x-[128px] ">
-          
-          {/* เมนูฝั่งซ้าย */}
-          <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base ">
-            {leftMenuItems.map((item) => {
-              const className = "hover:text-amber-800 transition-colors duration-300";
-              // --- ส่วนที่แก้ไข ---
-              if (item === 'Our Story') {
-                return <Link key={item} to="/about" className={className}>{item}</Link>;
-              }
-              if (item === 'Blog') {
-                return <Link key={item} to="/blog" className={className}>{item}</Link>;
-              }
-              if (item === 'Contact') {
-              return <a key={item} href="/#contact-form" className={className}>{item}</a>;
-              }
-              if (item === 'Subscribe') {
-              return <a key={item} href="/#subscribe-form" className={className}>{item}</a>;
-            }
-              // ถ้าไม่ใช่ ให้ใช้ <a> สำหรับ Anchor link เหมือนเดิม
-              return <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={className}>{item}</a>;
-            })}
+    switch (item) {
+      case "Our Story":
+        return (
+          <Link key={item} to="/about" className={className}>
+            {item}
+          </Link>
+        );
+      case "Blog":
+        return (
+          <Link key={item} to="/blog" className={className}>
+            {item}
+          </Link>
+        );
+      case "Contact":
+        return (
+          <a key={item} href="/#contact-form" className={className}>
+            {item}
+          </a>
+        );
+      case "Subscribe":
+        return (
+          <a key={item} href="/#subscribe-form" className={className}>
+            {item}
+          </a>
+        );
+      case "Index":
+        return (
+          <Link key={item} to="/index" className={className}>
+            {item}
+          </Link>
+        );
+      default:
+        return (
+          <a
+            key={item}
+            href={`#${item.toLowerCase().replace(" ", "-")}`}
+            className={className}
+          >
+            {item}
+          </a>
+        );
+    }
+  };
+
+  return (
+    <header className="w-full bg-white py-2 sm:py-3 px-3 sm:px-4 md:px-6 lg:px-8 relative z-50">
+      <div className="container mx-auto">
+        {/* Desktop/Tablet Layout */}
+        <div className="hidden md:flex items-center justify-between">
+          {/* Left Menu */}
+          <nav className="flex-1 flex justify-center">
+            <div className="flex space-x-4 sm:space-x-6 lg:space-x-10 xl:space-x-12 text-sm sm:text-base lg:text-lg">
+              {leftMenuItems.map((item) => renderMenuItem(item))}
+            </div>
           </nav>
 
-          {/* โลโก้ตรงกลาง */}
-          <Logo />
+          {/* Center Logo */}
+          <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8">
+            <Logo className="block h-14 w-14 sm:h-16 sm:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24" />
+          </div>
 
-          {/* เมนูฝั่งขวา */}
-          {/* <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
-            
-            {rightMenuItems.map((item) => (
-              
-              // ส่วนนี้เป็น Anchor Link ทั้งหมด ใช้ <a> เหมือนเดิม
-              
-              <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-amber-800 transition-colors duration-300">
-                {item}
-              </a>
-            ))}
-          </nav> */}
-          <nav className="flex items-center space-x-[128px] text-stone-700 font-semibold text-base">
-  {rightMenuItems.map((item) => {
-    const className = "hover:text-amber-800 transition-colors duration-300";
-    
-    // --- เพิ่มเงื่อนไขสำหรับ 'Subscribe' ---
-    if (item === 'Subscribe') {
-      return <a key={item} href="/#subscribe-form" className={className}>{item}</a>;
-    }
-    // --- ------------------------- ---
+          {/* Right Content */}
+          <div className="flex-1 flex justify-center">
+            <div className="flex items-center">
+              {/* Right Menu */}
+              <nav className="flex space-x-4 sm:space-x-6 lg:space-x-10 xl:space-x-12 text-sm sm:text-base lg:text-lg">
+                {rightMenuItems.map((item) => renderMenuItem(item))}
+              </nav>
 
-     if (item === 'Index') {
-              return <Link key={item} to="/index" className={className}>{item}</Link>;
-            }
-    return (
-      <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={className}>
-        {item}
-      </a>
-    );
-  })}
-</nav>
-
-          {/* ไอคอนโซเชียลฝั่งขวาสุด */}
-          <div className="flex items-center space-x-4">
-            {socialLinks.map((social) => (
-                // ส่วนนี้เป็นลิงก์ภายนอก ใช้ <a> เหมือนเดิม
-                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="h-7 w-7 text-stone-700 hover:text-amber-800 transition-colors">
-                  <img src={social.icon} alt={`${social.name} icon`} className="h-full w-full" />
-                </a>
-            ))}
+              {/* Social Icons */}
+              <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6 ml-4 sm:ml-6 lg:ml-8">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-stone-700 hover:text-amber-800 transition-colors"
+                  >
+                    <img
+                      src={social.icon}
+                      alt={`${social.name} icon`}
+                      className="h-full w-full object-contain"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* --- Layout สำหรับจอ Mobile (เล็กกว่า md) --- */}
-        <div className="md:hidden flex justify-between items-center h-16">
-          <Link to="/" className="h-12 w-12 flex-shrink-0">
-            <img src={logoSrc} alt="Cottonclix Logo" className="h-full w-full object-contain" />
-          </Link>
-          <button className="text-amber-800 text-3xl">
-            &#9776;
+        {/* Mobile Layout */}
+        <div className="md:hidden flex items-center justify-between relative z-10 bg-white">
+          <Logo className="h-12 w-12" />
+
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-amber-800 text-3xl focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? "×" : "☰"}
           </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden absolute left-0 right-0 w-full bg-white transition-all duration-300 ease-in-out ${
+            isMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-2 pointer-events-none"
+          }`}
+          style={{
+            boxShadow:
+              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <div className="container mx-auto px-4 pt-2 pb-6 border-t border-gray-200">
+            <nav className="flex flex-col space-y-4 text-lg">
+              {[...leftMenuItems, ...rightMenuItems].map((item) => (
+                <div key={item} className="py-2">
+                  {renderMenuItem(item)}
+                </div>
+              ))}
+            </nav>
+
+            <div className="flex justify-center space-x-6 mt-6 pt-4 border-t border-gray-200">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 w-10 text-stone-700 hover:text-amber-800"
+                >
+                  <img
+                    src={social.icon}
+                    alt={`${social.name} icon`}
+                    className="h-full w-full"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </header>
