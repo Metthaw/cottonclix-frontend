@@ -176,7 +176,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
-      className="w-full relative flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20 overflow-hidden"
+      className="w-full relative flex items-center py-20 overflow-hidden"
     >
       <img
         ref={leavesRef}
@@ -190,7 +190,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
           <h2 className="text-4xl font-serif text-primary mb-6">
             {storyText?.heading}
           </h2>
-          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-hidden pr-4">
+          <div className="space-y-4 text-base text-natural max-h-[60vh]  pr-4">
             {storyText?.paragraphs?.map((p, i) => (
               <p key={i} style={{ whiteSpace: "pre-wrap" }}>
                 {p}
