@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logoSrc from "../../img/Group 8.svg";
 import facebookIcon from "../../img/icon-navbar.svg";
 import instagramIcon from "../../img/icon-navbar-1.svg";
 import lineIcon from "../../img/icon-navbar-2.svg";
+import { gsap } from "gsap";
 
 const Logo = ({ className = "" }) => (
   <Link to="/" className={`flex-shrink-0 ${className}`}>
@@ -17,6 +18,38 @@ const Logo = ({ className = "" }) => (
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const menuTl = useRef();
+
+  useEffect(() => {
+    // Create the animation timeline
+    menuTl.current = gsap.timeline({ paused: true }).fromTo(
+      menuRef.current,
+      {
+        opacity: 0,
+        y: -20,
+        display: "none",
+        duration: 0.3,
+        ease: "power2.out",
+      },
+      {
+        opacity: 1,
+        y: 0,
+        display: "block",
+        duration: 0.3,
+        ease: "power2.out",
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    // Play or reverse the animation based on menu state
+    if (isMenuOpen) {
+      menuTl.current.play();
+    } else {
+      menuTl.current.reverse();
+    }
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -155,14 +188,12 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden absolute left-0 right-0 w-full bg-white transition-all duration-300 ease-in-out ${
-            isMenuOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-2 pointer-events-none"
-          }`}
+          ref={menuRef}
+          className="md:hidden absolute left-0 right-0 w-full bg-white"
           style={{
             boxShadow:
               "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+            display: "none", // Start hidden, GSAP will handle the display
           }}
         >
           <div className="container mx-auto px-4 pt-2 pb-6 border-t border-gray-200">

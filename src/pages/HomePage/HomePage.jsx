@@ -290,7 +290,7 @@ export default function HomePage() {
               opacity: 0,
               transform: "translate(-50%, -50%)",
               pointerEvents: "none",
-              zIndex: 50,
+              zIndex: 40,
               willChange: "transform, opacity",
             }}
           >

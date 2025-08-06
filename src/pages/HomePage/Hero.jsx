@@ -85,7 +85,7 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
           />
           <div
             ref={flowerLocatorRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 z-30"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 z-40"
             style={{ transform: "translate(-50%, -70px)" }}
           />
           <img
