@@ -9,7 +9,7 @@ const AnimatedCottonFlower = ({
 }) => {
   return (
     <div 
-      className={`relative w-[10rem] sm:w-[16rem] md:w-[20rem] lg:w-[24rem] xl:w-[28rem] h-auto ${className}`} 
+      className={`relative w-[12rem] md:w-[16rem] lg:w-[24rem] xl:w-[28rem] h-auto ${className}`} 
       {...props}
     >
       <img
