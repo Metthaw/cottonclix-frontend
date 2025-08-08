@@ -200,7 +200,7 @@ const CatalogSlider = ({
   return (
     <section
       ref={mainRef}
-      className="w-full h-[90vh] bg-white flex items-center relative z-0 overflow-hidden"
+      className="w-full min-h-[50vh] md:min-h-screen bg-white flex items-center relative z-0 overflow-hidden"
     >
       {!loading && (
         <div className="flex items-center w-full h-full">
@@ -208,33 +208,11 @@ const CatalogSlider = ({
             ref={leavesRef}
             src={leavesImg}
             alt="Decorative Leaves"
-            className="absolute left-[-10%] top-[50%] -translate-y-1/2 w-2/5 scale-x-[-1] h-[80vh] object-contain z-0 rotate-[18deg] pointer-events-none"
+            className="absolute left-[-10%] top-[35%] -translate-y-1/2 w-2/5 scale-x-[-1] h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
           />
           <div className="px-14 py-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div ref={carouselRef} className="w-full h-full">
-                {/* <Swiper
-                  modules={[Navigation, Pagination, EffectFade]}
-                  navigation
-                  pagination={{ clickable: true }}
-                  loop={true}
-                  onSlideChange={(swiper) => {
-                    if (collections?.length > 0) {
-                      setActiveCollection(collections[swiper.realIndex]);
-                    }
-                  }}
-                  className="w-full h-auto z-30"
-                >
-                  {collections?.map((collection) => (
-                    <SwiperSlide key={collection?.id}>
-                      <img
-                        src={collection?.coverImage}
-                        alt={collection?.name}
-                        className="w-auto h-auto object-contain mx-auto"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper> */}
                 <Carousel
                   autoplay={false}
                   draggable
@@ -281,8 +259,7 @@ const CatalogSlider = ({
                 )}
                 <div
                   ref={flowerLocatorRef}
-                  className="absolute bottom-60 right-36 pointer-events-none"
-                  style={{ transform: "translate(-15.5rem, 2rem)" }}
+                  className="absolute bottom-[60%] right-[80%] pointer-events-none"
                 />
               </div>
             </div>

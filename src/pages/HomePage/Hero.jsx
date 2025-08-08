@@ -82,36 +82,37 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
   ); // ✅ no dependencies
 
   return (
-    <section className="w-full flex justify-center items-center bg-white">
+    <section className="w-full min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen flex justify-center items-center bg-white">
       <div
         ref={mainRef}
-        className="w-full min-h-full md:min-h-screen flex justify-center items-center bg-gray-100 p-4 lg:p-8"
+        className="w-full min-h-full flex justify-center items-center bg-gray-100 p-4 lg:p-8"
       >
         <div
           ref={containerRef}
-          className="relative w-full max-w-5xl h-[35vh] md:h-[45vh] lg:h-[50vh] xl:h-[50vh]"
+          className="relative w-full max-w-5xl aspect-[3/1]" // or whatever your image aspect ratio is
         >
           <img
             ref={leavesRef}
             src={leavesImg}
             alt="Decorative Leaves"
-            className="absolute left-[-5%] md:left-[7%] lg:left-[-2%] top-[35%] md:top-[-5%] lg:top-[30%] xl:top-[15%] 2xl:top-[10%] -translate-y-1/2 w-2/5 md:w-[30%] lg:w-[40%] h-auto object-contain z-10 rotate-[25deg]"
+            className="absolute left-[0%] top-[-60%] w-[35%] h-auto object-contain z-10 rotate-[25deg]"
           />
+
           <img
             src={smallBookImg}
             alt="Book"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[70%] lg:w-4/5 h-auto z-20"
+            className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[80%] h-auto z-20"
           />
           <div
             ref={flowerLocatorRef}
-            className="absolute top-[60%] left-1/2 md:top-[25%] lg:top-[30%] xl:top-[50%] lg:left-1/2 -translate-x-1/2 z-40"
-            style={{ transform: "translate(-50%, -70px)" }}
+            className="absolute left-[30%] top-[-5%] -translate-x-1/2 z-40"
+            // style={{ transform: "translate(-50%, -70px)" }}
           />
           <img
             ref={flowerRef}
             src={lineArtImg}
             alt="Cotton Flower"
-            className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-1/4 lg:w-1/5 h-full z-10 right-[-15%] md:right-[5%] lg:right-[-5%] rotate-[25deg]"
+            className="absolute top-[20%] right-[5%] w-[20%] h-auto z-10 rotate-[45deg]"
           />
         </div>
       </div>

@@ -121,7 +121,10 @@ export default function SocialInfo({ flowerLocatorRef }) {
   ); // ✅ no dependencies
 
   return (
-    <section ref={mainRef} className={`w-full bg-white py-16 overflow-hidden`}>
+    <section
+      ref={mainRef}
+      className={`w-full bg-white py-[5%] min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen overflow-hidden`}
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
           {/* Left Column: Contact Information */}
@@ -203,9 +206,9 @@ export default function SocialInfo({ flowerLocatorRef }) {
                       url: socialInfoData.socialLinks.line,
                       alt: "Line",
                     },
-                  ].map((social, index) => (
+                  ].map((social) => (
                     <a
-                      key={index}
+                      key={social.url}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -225,7 +228,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
           </div>
           <div
             ref={flowerLocatorRef}
-            className="absolute pointer-events-none bottom-8 left-[38rem]"
+            className="absolute pointer-events-none bottom-[15%] left-[10%]"
           />
 
           {/* Right Column: Map */}

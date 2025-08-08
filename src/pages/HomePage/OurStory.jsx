@@ -309,31 +309,22 @@ export default function OurStory({
   ); // ✅
 
   return (
-    <section
-      ref={mainRef}
-      className="w-full bg-white py-20 md:py-32 overflow-hidden"
-    >
+    <section ref={mainRef} className="w-full bg-white py-20 overflow-hidden">
       <div className="container mx-auto px-8">
         {/* ====================================================== */}
         {/* === ส่วนบน (ตามโค้ดที่คุณทำมา) === */}
         {/* ====================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ">
+
+        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[50vh] md:min-h-[90vh]">
           <div className="md:col-span-2 text-lg text-[#8D8D8D] leading-relaxed ">
             <p className="px-28 pt-32">{storyData.part1.leftParagraph}</p>
-            <img
-              ref={branchRef}
-              src={element1}
-              alt="Branch Decoration"
-              className="bottom-0 left-0 w-full h-auto opacity-100 z-0 pointer-events-none drop-shadow-2xl"
-            />
           </div>
-          <div className="relative md:col-span-2 text-left ">
+          <div className="relative md:col-span-2 text-left h-full">
             <div className=" grid grid-cols-1 md:grid-cols-1 items-center justify-end ">
               {/* This is the new, correctly placed locator */}
               <div
                 ref={upperFlowerLocatorRef}
-                className="absolute w-32 h-32"
-                style={{ right: "70%", top: "40%" }}
+                className="absolute left-[-20%] top-[15%]"
               />
               <div className="grid grid-cols-1 md:grid-cols-1 items-center justify-end">
                 <div className="flex items-center justify-end gap-4 ">
@@ -341,7 +332,7 @@ export default function OurStory({
                     ref={headerRef}
                     src={logo}
                     alt="Cottonclix Logo"
-                    className="h-32 w-auto "
+                    className="h-32 w-auto"
                   />
                 </div>
                 <h2
@@ -352,19 +343,25 @@ export default function OurStory({
                 </h2>
               </div>
             </div>
-            <p className="text-lg text-[#8D8D8D] leading-relaxed mt-48 ">
+            <p className="text-xl text-[#8D8D8D] leading-relaxed mt-48">
               {storyData.part1.rightParagraph}
             </p>
           </div>
+          <img
+            ref={branchRef}
+            src={element1}
+            alt="Branch Decoration"
+            className="absolute bottom-0 left-0 w-[60%] h-auto opacity-100 z-0 pointer-events-none drop-shadow-2xl"
+          />
         </div>
+
+        <hr ref={lineRef} className=" mb-10 border-stone-200" />
 
         {/* ====================================================== */}
         {/* === ส่วนล่าง (ตามดีไซน์ล่าสุด) === */}
         {/* ====================================================== */}
 
-        <hr ref={lineRef} className=" mb-10 border-stone-200" />
-
-        <div className="relative grid grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed">
+        <div className="relative grid grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed min-h-[50vh] md:min-h-[90vh]">
           <div className="grid grid-cols-2 md:grid-cols-2 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed">
             {/* คอลัมน์ซ้าย */}
             <div className="space-y-6">
@@ -379,9 +376,9 @@ export default function OurStory({
                 ref={singleBranchRef}
                 src={lineArt}
                 alt="Line Art"
-                className="absolute  -top-[45%] scale-y-[-1] right-0 w-48 h-auto opacity-100 hidden md:block rotate-90 drop-shadow-2xl"
+                className="absolute top-[-25%] scale-y-[-1] right-[-10%] w-48 h-auto opacity-100 hidden md:block rotate-90 drop-shadow-2xl"
               />
-              <div className="space-y-2 text-lg text-[#111000] font-medium">
+              <div className="space-y-2 text-[#111000] text-xl">
                 {storyData.bottomSection.rightList.map((item, i) => (
                   <p key={i}>{item}</p>
                 ))}
@@ -397,12 +394,7 @@ export default function OurStory({
             {/* Lower flower locator - positioned relative to the quote section */}
             <div
               ref={lowerFlowerLocatorRef}
-              className="absolute w-32 h-32"
-              style={{
-                left: "35%",
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
+              className="absolute left-[15%] top-[10%]"
             />
             <div className="relative z-10">
               <p className="font-serif font-semibold text-[#BC9F31] text-3xl pt-4">

@@ -286,9 +286,10 @@ export default function HomePage() {
           <div
             ref={flowerRef}
             style={{
+              width: "40%",
+              height: "auto",
               position: "absolute",
               opacity: 0,
-              transform: "translate(-50%, -50%)",
               pointerEvents: "none",
               zIndex: 40,
               willChange: "transform, opacity",
