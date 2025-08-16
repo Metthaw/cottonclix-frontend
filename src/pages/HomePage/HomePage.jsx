@@ -233,7 +233,7 @@ export default function HomePage() {
       },
       {
         root: null, // relative to the viewport
-        threshold: 0.4, // Trigger when 50% of a section is visible
+        threshold: 0.4, // Trigger when 40% of a section is visible
       }
     );
 
@@ -285,13 +285,8 @@ export default function HomePage() {
         createPortal(
           <div
             ref={flowerRef}
+            className="w-[25%] h-auto absolute opacity-0 pointer-events-none z-40"
             style={{
-              width: "40%",
-              height: "auto",
-              position: "absolute",
-              opacity: 0,
-              pointerEvents: "none",
-              zIndex: 40,
               willChange: "transform, opacity",
             }}
           >
