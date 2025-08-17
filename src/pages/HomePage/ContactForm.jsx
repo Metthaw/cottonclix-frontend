@@ -119,12 +119,12 @@ export default function ContactForm({ flowerLocatorRef }) {
     <section
       ref={mainRef}
       id="contact-form"
-      className="w-full bg-white py-20 md:py-32 overflow-hidden"
+      className="w-full min-h-[50vh] h-[50vh] my-[5%] md:min-h-screen md:h-screen bg-white overflow-hidden"
     >
       <div className="container relative mx-auto px-4 flex justify-center">
         <div
           ref={flowerLocatorRef}
-          className="absolute pointer-events-none top-8 right-[30rem] -z-50"
+          className="absolute pointer-events-none top-[-10%] right-[40%] -z-50"
         />
         <div
           ref={formRef}

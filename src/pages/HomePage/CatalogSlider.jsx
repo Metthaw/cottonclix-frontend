@@ -76,82 +76,101 @@ const CatalogSlider = ({
   const detailRef = useRef(null);
   const mainRef = useRef(null);
 
-  useEffect(() => {
-    console.log("Component mounted, mainRef:", mainRef.current);
-    console.log("leavesRef:", leavesRef.current);
-  }, []);
-
   useGSAP(
     () => {
       const mainEl = mainRef.current;
       if (!mainEl) return;
 
       const handleFocus = () => {
-        gsap.fromTo(leavesRef.current, {
-          x: -80,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: 0,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          leavesRef.current,
+          {
+            x: -80,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
 
-        gsap.fromTo(carouselRef.current, {
-          x: -80,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: 0,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          carouselRef.current,
+          {
+            x: -80,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
 
-        gsap.fromTo(detailRef.current, {
-          x: 100,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: 0,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          detailRef.current,
+          {
+            x: 100,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
       };
 
       const handleBlur = () => {
-        gsap.fromTo(leavesRef.current, {
-          x: 0,
-          // y: -20,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: -80,
-          // y: -20,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          leavesRef.current,
+          {
+            x: 0,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: -80,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
 
-        gsap.fromTo(carouselRef.current, {
-          x: 0,
-          // y: -20,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: -80,
-          // y: -20,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          carouselRef.current,
+          {
+            x: 0,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: -80,
+            // y: -20,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
 
-        gsap.fromTo(detailRef.current, {
-          x: 0,
-          duration: 1,
-          ease: "sine.inOut",
-        }, {
-          x: 100,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        gsap.fromTo(
+          detailRef.current,
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 100,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
       };
 
       const observer = new IntersectionObserver(
@@ -181,7 +200,7 @@ const CatalogSlider = ({
 
   // if (loading) {
   //   return (
-  //     <section className="w-full bg-white py-20 md:py-24 text-center">
+  //     <section className="w-full bg-white py-20 lg:py-24 text-center">
   //       Loading...
   //     </section>
   //   );
@@ -200,41 +219,25 @@ const CatalogSlider = ({
   return (
     <section
       ref={mainRef}
-      className="w-full h-[90vh] bg-white flex items-center relative z-0 overflow-hidden"
+      className="w-full max-w-full min-h-[50vh] md:min-h-screen bg-white flex md:items-center z-0 overflow-hidden"
     >
-      {!loading && (
-        <div className="flex items-center w-full h-full">
-          <img
-            ref={leavesRef}
-            src={leavesImg}
-            alt="Decorative Leaves"
-            className="absolute left-[-10%] top-[50%] -translate-y-1/2 w-2/5 scale-x-[-1] h-[80vh] object-contain z-0 rotate-[18deg] pointer-events-none"
-          />
-          <div className="px-14 py-12 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div ref={carouselRef} className="w-full h-full">
-                {/* <Swiper
-                  modules={[Navigation, Pagination, EffectFade]}
-                  navigation
-                  pagination={{ clickable: true }}
-                  loop={true}
-                  onSlideChange={(swiper) => {
-                    if (collections?.length > 0) {
-                      setActiveCollection(collections[swiper.realIndex]);
-                    }
-                  }}
-                  className="w-full h-auto z-30"
-                >
-                  {collections?.map((collection) => (
-                    <SwiperSlide key={collection?.id}>
-                      <img
-                        src={collection?.coverImage}
-                        alt={collection?.name}
-                        className="w-auto h-auto object-contain mx-auto"
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper> */}
+      <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
+        <div className="flex relative md:items-center w-full md:aspect-[3/1]">
+          <div className="absolute left-[-10%] inset-0 flex justify-start items-center pointer-events-none">
+            <img
+              ref={leavesRef}
+              src={leavesImg}
+              alt="Decorative Leaves"
+              className="w-[40%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+            />
+          </div>
+          <div className="w-full px-4 md:px-14 py-8 md:py-12">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div
+                ref={carouselRef}
+                className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
+              >
                 <Carousel
                   autoplay={false}
                   draggable
@@ -246,34 +249,37 @@ const CatalogSlider = ({
                       setActiveCollection(collections[current]);
                     }
                   }}
-                  className="w-full h-auto z-30 custom-carousel"
+                  className="z-30 custom-carousel w-full"
                 >
                   {collections?.map((collection) => (
                     <div
                       key={collection?.id}
-                      className="flex items-center justify-center"
+                      className="!flex items-center justify-center"
                     >
                       <img
                         src={collection?.coverImage}
                         alt={collection?.name}
-                        className="w-auto max-h-[500px]  object-contain mx-auto"
+                        className="w-full h-auto max-h-[80vh] object-contain"
                       />
                     </div>
                   ))}
                 </Carousel>
               </div>
-              <div ref={detailRef} className="relative text-center md:text-left w-full h-full">
+              <div
+                ref={detailRef}
+                className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2"
+              >
                 {activeCollection?.id && (
-                  <div className="flex flex-col h-fit">
-                    <h2 className="text-9xl md:text-6xl font-serif text-amber-800">
+                  <div className="flex flex-col">
+                    <h2 className="text-3xl md:text-6xl lg:text-7xl font-serif text-amber-800 break-words">
                       {activeCollection?.name}
                     </h2>
-                    <p className="text-3xl text-amber-600 mt-4">
+                    <p className="text-xl lg:text-2xl text-amber-600 mt-4 break-words">
                       {activeCollection?.subtitle}
                     </p>
                     <button
                       onClick={() => onOpenBook(activeCollection?.id)}
-                      className="text-left mt-6 inline-block text-amber-800  hover:underline text-4xl py-8"
+                      className="mt-6 inline-block text-amber-800 hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
                     >
                       {"<<< Open"}
                     </button>
@@ -281,14 +287,14 @@ const CatalogSlider = ({
                 )}
                 <div
                   ref={flowerLocatorRef}
-                  className="absolute bottom-60 right-36 pointer-events-none"
-                  style={{ transform: "translate(-15.5rem, 2rem)" }}
+                  className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
                 />
               </div>
             </div>
+
           </div>
         </div>
-      )}
+      </div>
     </section>
   );
 };

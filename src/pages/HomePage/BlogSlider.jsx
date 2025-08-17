@@ -127,19 +127,23 @@ useEffect(() => {
   return (
     <section
       ref={mainRef}
+<<<<<<< HEAD
       className="relative w-full  py-20 overflow-hidden"
+=======
+      className="relative w-full min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen bg-gray-50 py-20 overflow-hidden"
+>>>>>>> main
     >
       
       <img
         ref={leavesRef}
         src={leaves2Img}
         alt="Decorative Leaves"
-        className="absolute left-[-10%] top-[40%] scale-x-[-1] -translate-y-1/2 w-2/5 h-[100vh] object-contain z-0 rotate-[18deg] pointer-events-none"
+        className="absolute left-[-10%] top-[40%] scale-x-[-1] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
       />
       {/* Flower locator - positioned in upper right corner */}
       <div
         ref={flowerLocatorRef}
-        className="absolute pointer-events-none top-48 right-96 -z-50"
+        className="absolute pointer-events-none top-[10%] right-[40%] -z-50"
       />
       <div className="container mx-auto px-6 relative">
         <div className="relative z-50">

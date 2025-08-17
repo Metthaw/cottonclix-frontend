@@ -176,13 +176,17 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
+<<<<<<< HEAD
       className="w-full relative flex items-center py-20 overflow-hidden"
+=======
+      className="w-full min-h-[50vh] md:min-h-screen relative flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20 overflow-hidden"
+>>>>>>> main
     >
       <img
         ref={leavesRef}
         src={leaves2Img}
         alt="Decorative Leaves"
-        className="absolute right-[-10%] top-[25%] -translate-y-1/2 w-2/5 h-[100vh] object-contain z-0 rotate-[18deg] pointer-events-none"
+        className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
       />
       <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
@@ -251,8 +255,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
           )}
           <div
             ref={flowerLocatorRef}
-            className="absolute pointer-events-none"
-            style={{ bottom: "10%", left: "10%" }}
+            className="absolute bottom-[20%] left-[-30%] pointer-events-none"
           />
         </div>
       </div>
