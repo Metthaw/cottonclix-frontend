@@ -127,11 +127,7 @@ useEffect(() => {
   return (
     <section
       ref={mainRef}
-<<<<<<< HEAD
-      className="relative w-full  py-20 overflow-hidden"
-=======
       className="relative w-full min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen bg-gray-50 py-20 overflow-hidden"
->>>>>>> main
     >
       
       <img
