@@ -37,10 +37,6 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
   const detailRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  const collectionId = selectedCollectionId || "spring-collection";
-  const currentContent = storyContent.collectionDetails[collectionId];
-  const storyText = storyContent.storyText;
-
   // Check if screen is mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -58,51 +54,9 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
       const mainEl = mainRef.current;
       if (!mainEl) return;
       const handleFocus = () => {
-        gsap.fromTo(
-          leavesRef.current,
-          {
-            x: 80,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          bookRef.current,
-          {
-            x: 200,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          detailRef.current,
-          {
-            // x: 100,
-            y: 200,
-            opacity: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            y:0,
-            opacity: 1,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        gsap.fromTo( leavesRef.current, { x: 80, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( bookRef.current, { x: 200, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( detailRef.current, { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }, { x: 0, y:0, opacity: 1, duration: 1, ease: "sine.inOut" } );
       };
       const handleBlur = () => {
         gsap.fromTo( leavesRef.current, { x: 0, duration: 1, ease: "sine.inOut" }, { x: 80, duration: 1, ease: "sine.inOut" } );
@@ -138,16 +92,13 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
       <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4">
-          {/* ✅ แสดง Heading จาก WordPress */}
           <h2 className="text-4xl font-serif text-primary mb-6">
             {collectionData.storyHeading}
           </h2>
           <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-auto pr-4">
-            {storyText?.paragraphs?.map((p, i) => (
-              <p key={i} style={{ whiteSpace: "pre-wrap" }}>
-                {p}
-              </p>
-            ))}
+            <p style={{ whiteSpace: "pre-wrap" }}>
+              {collectionData.storyParagraphs}
+            </p>
           </div>
         </div>
 
@@ -163,11 +114,15 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
                 />
                 <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%]">
                   <HTMLFlipBook
-                    key={collectionId}
-                    // ref={bookRef}
+                    key={collectionData.id}
+                    width={600}
+                    height={850}
+                    size="stretch"
+                    drawShadow={true}
+                    mobileScrollSupport={false}
                     className="w-full h-full"
                   >
-                    {currentContent?.sliderImagePairs?.flatMap((pair) => [
+                    {collectionData.sliderImagePairs.flatMap((pair) => [
                       <Page key={`${pair.id}-left`}>
                         <img
                           src={pair.leftImg}

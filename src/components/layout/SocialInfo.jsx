@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -13,25 +13,49 @@ import TimeIcon from "../../img/Group 51.svg";
 import TelIcon from "../../img/Group 52.svg";
 import EmailIcon from "../../img/Group 53.svg";
 
-const socialInfoData = {
+const API_URL = "https://cottonclix.com/wp-json/wp/v2/linktree_link";
+
+const staticInfo = {
   address: "3 Floor, Terminal 21 Asoke Bangkok, Thailand",
   openingHours: "10:00 am - 10:00 pm",
   phone: "+66 123 4568",
   email: "cottonclix.official@gmail.com",
-  socialLinks: {
-    facebook: "https://facebook.com/cottonclix",
-    instagram:
-      "https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr",
-    line: " https://lin.ee/iv9KnOe",
-  },
-  mapLocation:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
+  mapLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
 };
 
 export default function SocialInfo({ flowerLocatorRef }) {
   const mainRef = useRef(null);
   const headerRef = useRef(null);
   const mapRef = useRef(null);
+  const [socialLinks, setSocialLinks] = useState([]);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        const iconMap = {
+          Facebook: FacebookIcon,
+          Instagram: InstagramIcon,
+          "Line Official": LineIcon,
+        };
+
+        const formattedLinks = data
+          .filter(link => iconMap[link.title.rendered])
+          .map(link => ({
+            icon: iconMap[link.title.rendered],
+            url: link.acf.link_url,
+            alt: link.title.rendered,
+          }));
+        
+        setSocialLinks(formattedLinks);
+      } catch (error) {
+        console.error("Failed to fetch social links for SocialInfo:", error);
+      }
+    };
+    fetchLinks();
+  }, []);
 
   useGSAP(
     () => {
@@ -110,7 +134,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
             handleBlur();
           }
         },
-        { threshold: 0.2 } // fire when 20% of element is visible
+        { threshold: 0.2 }
       );
 
       observer.observe(mainEl);
@@ -118,7 +142,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
       return () => observer.disconnect();
     },
     { scope: mainRef }
-  ); // ✅ no dependencies
+  );
 
   return (
     <section
@@ -145,7 +169,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 />
                 <div>
                   <h3 className="font-medium text-stone-700">Address</h3>
-                  <p className="text-stone-600">{socialInfoData.address}</p>
+                  <p className="text-stone-600">{staticInfo.address}</p>
                 </div>
               </div>
 
@@ -158,7 +182,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <div>
                   <h3 className="font-medium text-stone-700">Opening Hours</h3>
                   <p className="text-stone-600">
-                    {socialInfoData.openingHours}
+                    {staticInfo.openingHours}
                   </p>
                 </div>
               </div>
@@ -171,7 +195,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 />
                 <div>
                   <h3 className="font-medium text-stone-700">Phone</h3>
-                  <p className="text-stone-600">{socialInfoData.phone}</p>
+                  <p className="text-stone-600">{staticInfo.phone}</p>
                 </div>
               </div>
 
@@ -183,30 +207,14 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 />
                 <div>
                   <h3 className="font-medium text-stone-700">Email</h3>
-                  <p className="text-stone-600">{socialInfoData.email}</p>
+                  <p className="text-stone-600">{staticInfo.email}</p>
                 </div>
               </div>
 
               <div className="pt-4">
                 <h3 className="font-medium text-stone-700 mb-3">Follow Us</h3>
                 <div className="flex items-center gap-5">
-                  {[
-                    {
-                      icon: FacebookIcon,
-                      url: socialInfoData.socialLinks.facebook,
-                      alt: "Facebook",
-                    },
-                    {
-                      icon: InstagramIcon,
-                      url: socialInfoData.socialLinks.instagram,
-                      alt: "Instagram",
-                    },
-                    {
-                      icon: LineIcon,
-                      url: socialInfoData.socialLinks.line,
-                      alt: "Line",
-                    },
-                  ].map((social) => (
+                  {socialLinks.map((social) => (
                     <a
                       key={social.url}
                       href={social.url}
@@ -237,7 +245,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
             className="h-96 w-full rounded-xl overflow-hidden shadow-lg"
           >
             <iframe
-              src={socialInfoData.mapLocation}
+              src={staticInfo.mapLocation}
               width="100%"
               height="100%"
               style={{ border: 0 }}

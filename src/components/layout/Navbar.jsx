@@ -6,6 +6,8 @@ import instagramIcon from "../../img/icon-navbar-1.svg";
 import lineIcon from "../../img/icon-navbar-2.svg";
 import { gsap } from "gsap";
 
+const API_URL = "https://cottonclix.com/wp-json/wp/v2/linktree_link";
+
 const Logo = ({ className = "" }) => (
   <Link to="/" className={`flex-shrink-0 ${className}`}>
     <img
@@ -18,8 +20,37 @@ const Logo = ({ className = "" }) => (
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]);
   const menuRef = useRef(null);
   const menuTl = useRef();
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        const iconMap = {
+          Facebook: facebookIcon,
+          Instagram: instagramIcon,
+          "Line Official": lineIcon,
+        };
+        
+        const formattedLinks = data
+          .filter(link => iconMap[link.title.rendered])
+          .map(link => ({
+            name: link.title.rendered,
+            href: link.acf.link_url,
+            icon: iconMap[link.title.rendered]
+          }));
+        
+        setSocialLinks(formattedLinks);
+      } catch (error) {
+        console.error("Failed to fetch social links for Navbar:", error);
+      }
+    };
+    fetchLinks();
+  }, []);
 
   useEffect(() => {
     // Create the animation timeline
@@ -65,19 +96,6 @@ const Navbar = () => {
 
   const leftMenuItems = ["Our Story", "Blog", "Contact"];
   const rightMenuItems = ["Subscribe", "Index"];
-  const socialLinks = [
-    {
-      name: "Facebook",
-      href: "https://facebook.com/cottonclix",
-      icon: facebookIcon,
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/cottonclix.official?igsh=OXkyMGY1dXl2aHRl&utm_source=qr",
-      icon: instagramIcon,
-    },
-    { name: "Line", href: "https://lin.ee/iv9KnOe", icon: lineIcon },
-  ];
 
   const renderMenuItem = (item) => {
     const className = "hover:text-amber-800 transition-colors duration-300";
@@ -193,7 +211,7 @@ const Navbar = () => {
           style={{
             boxShadow:
               "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-            display: "none", // Start hidden, GSAP will handle the display
+            display: "none",
           }}
         >
           <div className="container mx-auto px-4 pt-2 pb-6 border-t border-gray-200">
