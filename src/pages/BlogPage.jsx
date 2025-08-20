@@ -153,13 +153,13 @@ export default function BlogPage() {
                   >
                     <div className="overflow-hidden rounded-lg">
                       <img
-                        className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-80 object-cover object-center transform group-hover:scale-105 transition-transform duration-300"
                         src={post?.acf?.cover_image}
                         alt={post?.title?.rendered}
                       />
                     </div>
                     <div className="pt-4">
-                      <h3 className="mt-2 text-xl font-serif text-gray-800 group-hover:text-primary">
+                      <h3 className="mt-2 text-xl font-serif text-black group-hover:text-primary">
                         {post?.title?.rendered}
                       </h3>
                       <p

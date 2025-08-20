@@ -1,6 +1,6 @@
 // src/pages/HomePage/BlogSlider.jsx
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
@@ -11,13 +11,32 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 // 1. นำเข้าข้อมูลจาก mockData.js และ Link จาก react-router-dom
-import { blogPosts } from "../../data/mockData";
+const API_URL = 'https://cottonclix.com/wp-json/wp/v2/posts?per_page=6&_embed';
 import { Link } from "react-router-dom";
+
 
 export default function BlogSlider({ flowerLocatorRef }) {
   const mainRef = useRef(null);
   const leavesRef = useRef(null);
   const sliderRef = useRef(null);
+
+  const [posts, setPosts] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Error fetching posts for slider:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchPosts();
+}, []);
 
   useGSAP(
     () => {
@@ -101,12 +120,16 @@ export default function BlogSlider({ flowerLocatorRef }) {
     },
     { scope: mainRef }
   ); // ✅ no dependencies
+  if (loading) {
+  return <section className="w-full py-20 text-center">Loading...</section>;
+}
 
   return (
     <section
       ref={mainRef}
       className="relative w-full min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen bg-gray-50 py-20 overflow-hidden"
     >
+      
       <img
         ref={leavesRef}
         src={leaves2Img}
@@ -138,20 +161,20 @@ export default function BlogSlider({ flowerLocatorRef }) {
             className="pb-12"
           >
             {/* 2. ใช้ข้อมูล "blogPosts" ชุดใหม่ที่ import เข้ามา */}
-            {blogPosts.map((post) => (
+            {posts.map((post) => (
               <SwiperSlide key={post.id}>
                 {/* 3. ทำให้แต่ละสไลด์เป็นลิงก์ไปยังหน้ารายละเอียดที่ถูกต้อง */}
                 <Link to={`/blog/${post.id}`} className="group block">
-                  <div className="overflow-hidden rounded-lg shadow-sm border border-gray-200">
+                  <div className="overflow-hidden rounded-lg shadow-sm  ">
                     <img
                       // 4. ใช้ key "imageUrl" จากข้อมูลชุดใหม่
-                      src={post.imageUrl}
-                      alt={post.title}
+                      src={post.acf.cover_image} 
+                      alt={post.title.rendered}
                       className="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <h3 className="text-lg font-serif text-amber-800 mt-4 group-hover:text-primary transition-colors duration-300">
-                    {post.title}
+                    {post.title.rendered}
                   </h3>
                 </Link>
               </SwiperSlide>

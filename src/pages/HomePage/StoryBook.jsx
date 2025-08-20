@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { storyContent } from "../../data/mockData";
 import openBookImage from "../../img/13.svg";
 import leaves2Img from "../../img/16.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-// Helper component for the book cover
+// Helper components remain unchanged
 const PageCover = React.forwardRef((props, ref) => {
   return (
     <div
@@ -22,7 +21,6 @@ const PageCover = React.forwardRef((props, ref) => {
 });
 PageCover.displayName = "PageCover";
 
-// Helper component for individual pages
 const Page = React.forwardRef((props, ref) => {
   return (
     <div className="bg-stone-50 p-4 shadow-inner" ref={ref}>
@@ -32,16 +30,12 @@ const Page = React.forwardRef((props, ref) => {
 });
 Page.displayName = "Page";
 
-export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
+export default function StoryBook({ collectionData, flowerLocatorRef }) {
   const mainRef = useRef(null);
   const bookRef = useRef(null);
   const leavesRef = useRef(null);
   const detailRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-
-  const collectionId = selectedCollectionId || "spring-collection";
-  const currentContent = storyContent.collectionDetails[collectionId];
-  const storyText = storyContent.storyText;
 
   // Check if screen is mobile
   useEffect(() => {
@@ -59,132 +53,30 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
     () => {
       const mainEl = mainRef.current;
       if (!mainEl) return;
-
       const handleFocus = () => {
-        gsap.fromTo(
-          leavesRef.current,
-          {
-            x: 80,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          bookRef.current,
-          {
-            x: 200,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          detailRef.current,
-          {
-            // x: 100,
-            y: 200,
-            opacity: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        gsap.fromTo( leavesRef.current, { x: 80, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( bookRef.current, { x: 200, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( detailRef.current, { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }, { x: 0, y:0, opacity: 1, duration: 1, ease: "sine.inOut" } );
       };
-
       const handleBlur = () => {
-        gsap.fromTo(
-          leavesRef.current,
-          {
-            x: 0,
-            // y: -20,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 80,
-            // y: -20,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          bookRef.current,
-          {
-            x: 0,
-            // y: -20,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 200,
-            // y: -20,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
-
-        gsap.fromTo(
-          detailRef.current,
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            // x: 100,
-            y: 200,
-            opacity: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        gsap.fromTo( leavesRef.current, { x: 0, duration: 1, ease: "sine.inOut" }, { x: 80, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( bookRef.current, { x: 0, duration: 1, ease: "sine.inOut" }, { x: 200, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo( detailRef.current, { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }, { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" } );
       };
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            handleFocus();
-          } else {
-            handleBlur();
-          }
-        },
-        { threshold: 0.3 } // fire when 20% of element is visible
-      );
-
+      const observer = new IntersectionObserver( ([entry]) => { if (entry.isIntersecting) handleFocus(); else handleBlur(); }, { threshold: 0.3 } );
       observer.observe(mainEl);
-
       return () => observer.disconnect();
     },
     { scope: mainRef }
-  ); // ✅ no dependencies
+  );
 
-  // if (!currentContent) {
-  //   return (
-  //     <div className="w-full min-h-screen flex items-center justify-center bg-stone-100">
-  //       <p>Loading collection content...</p>
-  //     </div>
-  //   );
-  // }
+  if (!collectionData) {
+    return (
+      <section ref={mainRef} className="w-full min-h-screen flex items-center justify-center bg-stone-100">
+        <p>Select a collection to read the story.</p>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -201,20 +93,18 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4">
           <h2 className="text-4xl font-serif text-primary mb-6">
-            {storyText?.heading}
+            {collectionData.storyHeading}
           </h2>
           <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-auto pr-4">
-            {storyText?.paragraphs?.map((p, i) => (
-              <p key={i} style={{ whiteSpace: "pre-wrap" }}>
-                {p}
-              </p>
-            ))}
+            <p style={{ whiteSpace: "pre-wrap" }}>
+              {collectionData.storyParagraphs}
+            </p>
           </div>
         </div>
 
         {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
-          {currentContent?.sliderImagePairs?.length > 0 && (
+          {collectionData?.sliderImagePairs?.length > 0 && (
             <div className="relative w-full h-full" ref={bookRef}>
               <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <img
@@ -224,25 +114,15 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
                 />
                 <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%]">
                   <HTMLFlipBook
-                    key={collectionId}
-                    // ref={bookRef}
-                    className="w-full h-full"
-                    width={isMobile ? 400 : 600}
-                    height={isMobile ? 500 : 850}
+                    key={collectionData.id}
+                    width={600}
+                    height={850}
                     size="stretch"
-                    minWidth={300}
-                    maxWidth={600}
-                    // minHeight={isMobile ? 500 : 500}
-                    maxHeight={isMobile ? 600 : 850}
                     drawShadow={true}
-                    flippingTime={1000}
-                    usePortrait={isMobile}
-                    startPage={0}
-                    autoSize={true}
-                    maxShadowOpacity={0.2}
-                    mobileScrollSupport={true}
+                    mobileScrollSupport={false}
+                    className="w-full h-full"
                   >
-                    {currentContent?.sliderImagePairs?.flatMap((pair) => [
+                    {collectionData.sliderImagePairs.flatMap((pair) => [
                       <Page key={`${pair.id}-left`}>
                         <img
                           src={pair.leftImg}

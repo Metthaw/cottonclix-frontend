@@ -16,17 +16,14 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection";
+const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection?_embed";
 
 export default function HomePage() {
-  // State สำหรับเก็บข้อมูลทั้งหมด
-  const [collections, setCollections] = React.useState([]);
-  const [selectedCollectionId, setSelectedCollectionId] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-
+  const [collections, setCollections] = useState([]);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("hero");
   const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
   const [isHeroReady, setIsHeroReady] = useState(false);
@@ -51,8 +48,60 @@ export default function HomePage() {
   const flowerRef = useRef(null);
   const lastIndexRef = useRef(activeLocatorIndex);
   const isInitialRender = useRef(true);
+  
+  useEffect(() => {
+    const fetchCollections = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        const formattedData = data.map((item) => {
+          const acf = item.acf;
+          const imagePairs = [];
 
-  // ดึงข้อมูล Collection ที่นี่ที่เดียว
+          if (acf.book_image_1_left && acf.book_image_1_right) {
+            imagePairs.push({
+              id: `${item.slug}-p1`,
+              leftImg: acf.book_image_1_left,
+              rightImg: acf.book_image_1_right,
+            });
+          }
+          if (acf.book_image_2_left && acf.book_image_2_right) {
+            imagePairs.push({
+              id: `${item.slug}-p2`,
+              leftImg: acf.book_image_2_left,
+              rightImg: acf.book_image_2_right,
+            });
+          }
+
+          return {
+            id: item.slug,
+            name: item.title.rendered,
+            subtitle: acf.subtitle,
+            coverImage: acf.cover_image,
+            sliderImagePairs: imagePairs,
+            // ✅ เปลี่ยนเป็นดึงข้อมูล 2 fields ใหม่นี้
+            storyHeading: acf.story_heading, 
+            storyParagraphs: acf.story_paragraphs,
+          };
+        });
+        
+        // console.log("Formatted Data Check:", formattedData);
+        setCollections(formattedData);
+
+        if (formattedData.length > 0) {
+          setSelectedCollectionId(formattedData[0].id);
+        }
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCollections();
+  }, []);
 
   const locatorRefMap = {
     hero: [flowerLocatorRef],
@@ -61,19 +110,14 @@ export default function HomePage() {
     ourstory: [ourStoryUpperFlowerLocatorRef, ourStoryLowerFlowerLocatorRef],
     blog: [blogSliderFlowerLocatorRef],
     contact: [contactFormFlowerLocatorRef],
-    social: [socialInfoFlowerLocatorRef], // Add blog section with its locator
+    social: [socialInfoFlowerLocatorRef],
   };
 
   const getRelativePosition = (curRef, containerRef) => {
     if (!curRef?.current || !containerRef.current) return { x: 0, y: 0 };
-
     const loc = curRef.current.getBoundingClientRect();
     const cont = containerRef.current.getBoundingClientRect();
-
-    return {
-      x: loc.left - cont.left,
-      y: loc.top - cont.top,
-    };
+    return { x: loc.left - cont.left, y: loc.top - cont.top };
   };
 
   const handleOpenBook = (collectionId) => {
@@ -86,31 +130,23 @@ export default function HomePage() {
     }, 100);
   };
 
-  // Initial "falling flower" animation - runs only once on the main wrapper
   useGSAP(
     () => {
       let tl;
       let onScroll;
-
-      // small timeout so Hero and portal have rendered
       const timer = setTimeout(() => {
         const flower = flowerRef.current;
         const heroEl = heroContainerRef.current;
         const target = flowerLocatorRef.current;
         if (!flower || !heroEl || !target) return;
-
-        // compute drop target
         const { x: tx, y: ty } = getRelativePosition(
           flowerLocatorRef,
           heroContainerRef
         );
         const { width: w } = heroEl.getBoundingClientRect();
-
-        // build the intro timeline
         tl = gsap.timeline({
           defaults: { duration: 2.2, ease: "power2.out" },
         });
-
         tl.set(flower, {
           x: w / 2,
           y: "-100vh",
@@ -118,8 +154,6 @@ export default function HomePage() {
           rotation: -60,
         });
         tl.to(flower, { x: tx, y: ty, rotation: 0, opacity: 1 });
-
-        // scroll interrupt: if running and user scrolls, jump to end
         onScroll = () => {
           if (tl && tl.isActive()) {
             tl.progress(1, false);
@@ -128,7 +162,6 @@ export default function HomePage() {
         };
         window.addEventListener("scroll", onScroll, { passive: true });
       }, 50);
-
       return () => {
         clearTimeout(timer);
         if (onScroll) window.removeEventListener("scroll", onScroll);
@@ -140,42 +173,29 @@ export default function HomePage() {
 
   useGSAP(
     () => {
-      // Prevent this animation from running on the initial render,
-      // as the "falling flower" animation handles the initial state.
       if (isInitialRender.current) {
         isInitialRender.current = false;
         return;
       }
-
-      // console.log("activeSection", activeSection);
-
       const locRefs = locatorRefMap[activeSection] || [];
       const curRef = locRefs[activeLocatorIndex] || locRefs[0];
-
-      // Define fixed rotation degrees for each section
       const sectionRotations = {
         hero: 0,
         catalog: 90,
         storybook: 180,
-        ourstory: activeSection === "ourstory" ? 270 : 0, // Special handling for OurStory
+        ourstory: activeSection === "ourstory" ? 270 : 0,
         blog: 90,
         contact: 180,
         social: 270,
       };
-
-      // For OurStory section, we'll use the activeLocatorIndex to determine rotation
       if (activeSection === "ourstory") {
         sectionRotations.ourstory = activeLocatorIndex === 0 ? 270 : 0;
       }
-
       const targetRotation = sectionRotations[activeSection] || 0;
       lastIndexRef.current = activeLocatorIndex;
-
       if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
         return;
-
       const { x, y } = getRelativePosition(curRef, heroContainerRef);
-
       gsap.to(flowerRef.current, {
         x,
         y,
@@ -188,31 +208,6 @@ export default function HomePage() {
   );
 
   useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        const formattedData = data.map((item) => ({
-          id: item.slug,
-          name: item.title.rendered,
-          subtitle: item.acf.subtitle,
-          coverImage: item.acf.cover_image,
-        }));
-        setCollections(formattedData);
-        // --- จุดสำคัญ: ตั้งค่า ID แรกที่เจอเป็น default value ---
-        if (formattedData.length > 0) {
-          setSelectedCollectionId(formattedData[0].id);
-        }
-      } catch (error) {
-        console.error("Error fetching collections:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCollections();
-  }, []);
-
-  useEffect(() => {
     const sections = [
       { ref: heroContainerRef, name: "hero" },
       { ref: catalogSliderRef, name: "catalog" },
@@ -222,7 +217,6 @@ export default function HomePage() {
       { ref: contactFormRef, name: "contact" },
       { ref: socialInfoRef, name: "social" },
     ];
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -231,20 +225,14 @@ export default function HomePage() {
           }
         });
       },
-      {
-        root: null, // relative to the viewport
-        threshold: 0.4, // Trigger when 40% of a section is visible
-      }
+      { root: null, threshold: 0.4 }
     );
-
     sections.forEach((section) => {
       if (section.ref.current) {
         section.ref.current.dataset.sectionName = section.name;
         observer.observe(section.ref.current);
       }
     });
-
-    // Cleanup function to unobserve the element when the component unmounts
     return () => observer.disconnect();
   }, []);
 
@@ -256,12 +244,9 @@ export default function HomePage() {
         const scrollPosition = -ourStoryRect.top;
         const scrollRatio =
           scrollPosition / (ourStoryRect.height - viewportHeight);
-
-        // Switch to lower locator when scrolled past 50% of the section
         setActiveLocatorIndex(scrollRatio > 0.5 ? 1 : 0);
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
@@ -271,6 +256,8 @@ export default function HomePage() {
       setIsHeroReady(true);
     }
   }, []);
+
+  const selectedCollectionData = collections.find(c => c.id === selectedCollectionId) || null;
 
   return (
     <motion.div
@@ -286,9 +273,7 @@ export default function HomePage() {
           <div
             ref={flowerRef}
             className="w-[25%] h-auto absolute opacity-0 pointer-events-none z-40"
-            style={{
-              willChange: "transform, opacity",
-            }}
+            style={{ willChange: "transform, opacity" }}
           >
             <AnimatedCottonFlower />
           </div>,
@@ -311,11 +296,11 @@ export default function HomePage() {
 
       <div ref={storyBookRef}>
         <StoryBook
-          selectedCollectionId={selectedCollectionId}
+          collectionData={selectedCollectionData}
           flowerLocatorRef={storybookFlowerLocatorRef}
         />
       </div>
-
+      
       <div ref={ourStoryRef}>
         <OurStory
           upperFlowerLocatorRef={ourStoryUpperFlowerLocatorRef}

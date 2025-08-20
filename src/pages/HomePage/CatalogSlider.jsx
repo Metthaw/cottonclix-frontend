@@ -260,7 +260,7 @@ const CatalogSlider = ({
                       <img
                         src={collection?.coverImage}
                         alt={collection?.name}
-                        className="w-full h-[60vh] object-contain"
+                        className="w-full h-auto max-h-[60vh] object-contain"
                       />
                     </div>
                   ))}

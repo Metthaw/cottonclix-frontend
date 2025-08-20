@@ -65,9 +65,17 @@ export default function BlogDetailsPage() {
       className="bg-gray-50"
     >
       <div
-        className="w-full h-80 md:h-[500px] bg-cover bg-center"
+      className="flex  w-full justify-center  "
+        // className="w-[80%]  h-80 md:h-[500px] bg-cover bg-center"
+        // style={{ backgroundImage: `url(${post.acf.cover_image})` }}
+        
+      >
+        
+        <div
+        className="flex w-[90%]  h-full md:h-[500px]   bg-origin-border  bg-center bg-cover rounded-lg "
         style={{ backgroundImage: `url(${post.acf.cover_image})` }}
-      ></div>
+      ></div> 
+      </div>
 
       <article className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
@@ -80,14 +88,14 @@ export default function BlogDetailsPage() {
         </div>
 
         <div
-          className="prose lg:prose-xl max-w-none mx-auto text-natural space-y-6"
+          className=" max-w-none mx-auto text-natural space-y-6"
           dangerouslySetInnerHTML={{ __html: post.acf.main_content }}
         />
       </article>
 
       {/* 3. เพิ่ม Section สำหรับ Recent Posts */}
       {recentPosts.length > 0 && (
-        <section className="border-t border-gray-200">
+        <section className="">
           <div className="container mx-auto px-6 py-16">
             <h2 className="text-3xl font-serif text-center mb-8 text-gray-800">
               Recent Posts
