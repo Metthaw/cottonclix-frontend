@@ -315,7 +315,7 @@ export default function OurStory({
         {/* === ส่วนบน (ตามโค้ดที่คุณทำมา) === */}
         {/* ====================================================== */}
 
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[50vh] md:min-h-[90vh]">
+        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[50vh] md:min-h-[90vh] isolate">
           <div className="md:col-span-2 text-lg text-[#8D8D8D] leading-relaxed ">
             <p className="px-28 pt-32">{storyData.part1.leftParagraph}</p>
           </div>
@@ -332,7 +332,7 @@ export default function OurStory({
                     ref={headerRef}
                     src={logo}
                     alt="Cottonclix Logo"
-                    className="h-32 w-auto"
+                    className="h-28 w-auto"
                   />
                 </div>
                 <h2
@@ -351,7 +351,7 @@ export default function OurStory({
             ref={branchRef}
             src={element1}
             alt="Branch Decoration"
-            className="absolute bottom-0 left-0 w-[60%] h-auto opacity-100 z-0 pointer-events-none drop-shadow-2xl"
+            className="absolute bottom-0 left-0 w-[50%] h-auto opacity-100 -z-10 pointer-events-none drop-shadow-2xl"
           />
         </div>
 
@@ -396,11 +396,11 @@ export default function OurStory({
               ref={lowerFlowerLocatorRef}
               className="absolute left-[15%] top-[10%]"
             />
-            <div className="relative z-10">
+            <div className="relative z-10 flex flex-col items-center justify-center">
               <p className="font-serif font-semibold text-[#BC9F31] text-3xl pt-4">
                 {storyData.bottomSection.quote}
               </p>
-              <img ref={logoRef} src={Vector} alt="Logo" className="h-[50%]" />
+              <img ref={logoRef} src={Vector} alt="Logo" className="w-24 h-auto" />
             </div>
           </div>
         </div>

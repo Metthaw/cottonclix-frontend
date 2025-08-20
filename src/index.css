@@ -24,18 +24,18 @@ html {
 
 @media (min-width: 768px) {
   html {
-    font-size: 17px;
+    font-size: 16px;
   }
 }
 
 @media (min-width: 1024px) {
   html {
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 
 @media (min-width: 1440px) {
   html {
-    font-size: 19px;
+    font-size: 18px;
   }
 }

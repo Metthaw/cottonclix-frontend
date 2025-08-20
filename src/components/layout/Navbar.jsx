@@ -127,20 +127,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full bg-white py-2 sm:py-3 px-3 sm:px-4 md:px-6 lg:px-8 relative z-50">
+    <header className="w-full bg-white py-2 sm:py-3 px-3 sm:px-2 md:px-4 lg:px-6 relative z-50">
       <div className="container mx-auto">
         {/* Desktop/Tablet Layout */}
         <div className="hidden md:flex items-center justify-between">
           {/* Left Menu */}
           <nav className="flex-1 flex justify-center">
-            <div className="flex space-x-4 sm:space-x-6 lg:space-x-10 xl:space-x-12 text-sm sm:text-base lg:text-lg">
+            <div className="flex space-x-4 sm:space-x-6 lg:space-x-8 xl:space-x-10 text-sm sm:text-base lg:text-lg">
               {leftMenuItems.map((item) => renderMenuItem(item))}
             </div>
           </nav>
 
           {/* Center Logo */}
           <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8">
-            <Logo className="block h-14 w-14 sm:h-16 sm:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24" />
+            <Logo className="block h-14 w-14 sm:h-16 sm:w-16 lg:h-18 lg:w-18 xl:h-20 xl:w-20" />
           </div>
 
           {/* Right Content */}
