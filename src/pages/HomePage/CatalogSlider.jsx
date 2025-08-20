@@ -223,14 +223,7 @@ const CatalogSlider = ({
     >
       <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
         <div className="flex relative md:items-center w-full md:aspect-[3/1]">
-          <div className="absolute left-[-10%] inset-0 flex justify-start items-center pointer-events-none">
-            <img
-              ref={leavesRef}
-              src={leavesImg}
-              alt="Decorative Leaves"
-              className="w-[40%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
-            />
-          </div>
+
           <div className="w-full px-4 md:px-14 py-8 md:py-12">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -238,6 +231,14 @@ const CatalogSlider = ({
                 ref={carouselRef}
                 className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
               >
+                <div className="absolute left-[-20%] inset-0 flex justify-start items-center pointer-events-none">
+                  <img
+                    ref={leavesRef}
+                    src={leavesImg}
+                    alt="Decorative Leaves"
+                    className="w-[60%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+                  />
+                </div>
                 <Carousel
                   autoplay={false}
                   draggable
@@ -259,7 +260,7 @@ const CatalogSlider = ({
                       <img
                         src={collection?.coverImage}
                         alt={collection?.name}
-                        className="w-full h-auto max-h-[80vh] object-contain"
+                        className="w-full h-[60vh] object-contain"
                       />
                     </div>
                   ))}
@@ -271,7 +272,7 @@ const CatalogSlider = ({
               >
                 {activeCollection?.id && (
                   <div className="flex flex-col">
-                    <h2 className="text-3xl md:text-6xl lg:text-7xl font-serif text-amber-800 break-words">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-amber-800 break-words">
                       {activeCollection?.name}
                     </h2>
                     <p className="text-xl lg:text-2xl text-amber-600 mt-4 break-words">

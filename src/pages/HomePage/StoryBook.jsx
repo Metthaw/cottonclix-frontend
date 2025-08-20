@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { storyContent } from "../../data/mockData";
 import openBookImage from "../../img/13.svg";
@@ -37,10 +37,23 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
   const bookRef = useRef(null);
   const leavesRef = useRef(null);
   const detailRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const collectionId = selectedCollectionId || "spring-collection";
   const currentContent = storyContent.collectionDetails[collectionId];
   const storyText = storyContent.storyText;
+
+  // Check if screen is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useGSAP(
     () => {
@@ -87,7 +100,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
           },
           {
             x: 0,
-            y:0,
+            y: 0,
             opacity: 1,
             duration: 1,
             ease: "sine.inOut",
@@ -190,7 +203,7 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
           <h2 className="text-4xl font-serif text-primary mb-6">
             {storyText?.heading}
           </h2>
-          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-hidden pr-4">
+          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-auto pr-4">
             {storyText?.paragraphs?.map((p, i) => (
               <p key={i} style={{ whiteSpace: "pre-wrap" }}>
                 {p}
@@ -203,22 +216,31 @@ export default function StoryBook({ selectedCollectionId, flowerLocatorRef }) {
         <div className="relative w-full aspect-[4/3]">
           {currentContent?.sliderImagePairs?.length > 0 && (
             <div className="relative w-full h-full" ref={bookRef}>
-              <img
-                src={openBookImage}
-                alt="Open Story Book"
-                className="w-full h-full object-contain"
-              />
               <div className="absolute inset-0 w-full h-full overflow-hidden">
+                <img
+                  src={openBookImage}
+                  alt="Open Story Book"
+                  className="w-full h-full object-contain"
+                />
                 <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%]">
                   <HTMLFlipBook
                     key={collectionId}
-                    width={600}
-                    height={850}
-                    size="stretch"
-                    drawShadow={true}
-                    mobileScrollSupport={false}
                     // ref={bookRef}
                     className="w-full h-full"
+                    width={isMobile ? 400 : 600}
+                    height={isMobile ? 500 : 850}
+                    size="stretch"
+                    minWidth={300}
+                    maxWidth={600}
+                    // minHeight={isMobile ? 500 : 500}
+                    maxHeight={isMobile ? 600 : 850}
+                    drawShadow={true}
+                    flippingTime={1000}
+                    usePortrait={isMobile}
+                    startPage={0}
+                    autoSize={true}
+                    maxShadowOpacity={0.2}
+                    mobileScrollSupport={true}
                   >
                     {currentContent?.sliderImagePairs?.flatMap((pair) => [
                       <Page key={`${pair.id}-left`}>
