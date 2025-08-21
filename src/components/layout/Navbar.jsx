@@ -6,7 +6,7 @@ import instagramIcon from "../../img/icon-navbar-1.svg";
 import lineIcon from "../../img/icon-navbar-2.svg";
 import { gsap } from "gsap";
 
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/linktree_link";
+const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/linktree_link";
 
 const Logo = ({ className = "" }) => (
   <Link to="/" className={`flex-shrink-0 ${className}`}>

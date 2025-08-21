@@ -13,7 +13,7 @@ import TimeIcon from "../../img/Group 51.svg";
 import TelIcon from "../../img/Group 52.svg";
 import EmailIcon from "../../img/Group 53.svg";
 
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/linktree_link";
+const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/linktree_link";
 
 const staticInfo = {
   address: "3 Floor, Terminal 21 Asoke Bangkok, Thailand",
