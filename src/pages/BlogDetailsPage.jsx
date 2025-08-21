@@ -19,11 +19,11 @@ export default function BlogDetailsPage() {
       try {
         // 2. ดึงข้อมูล 2 ส่วนพร้อมกัน
         // ส่วนที่ 1: ดึงข้อมูลบทความปัจจุบัน
-        const postUrl = `https://cottonclix.com/wp-json/wp/v2/posts/${blogId}`;
+        const postUrl = `https://cms.cottonclix.com/wp-json/wp/v2/posts/${blogId}`;
         const postPromise = fetch(postUrl).then((res) => res.json());
 
         // ส่วนที่ 2: ดึงข้อมูลบทความล่าสุด 3 ชิ้น (โดยไม่รวมบทความปัจจุบัน)
-        const recentPostsUrl = `https://cottonclix.com/wp-json/wp/v2/posts?per_page=4&exclude=${blogId}`;
+        const recentPostsUrl = `https://cms.cottonclix.com/wp-json/wp/v2/posts?per_page=4&exclude=${blogId}`;
         const recentPromise = fetch(recentPostsUrl).then((res) => res.json());
 
         // รอให้ทั้งสองอย่างเสร็จสิ้น

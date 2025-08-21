@@ -10,7 +10,7 @@ import 'swiper/css/effect-coverflow'; // 2. Import CSS ของ Coverflow
 import { storyContent } from '../../data/mockData';
 import openBookImage from '../../img/13.svg';
 
-const API_URL = 'https://cottonclix.com/wp-json/wp/v2/collection';
+const API_URL = 'https://cms.cottonclix.com/wp-json/wp/v2/collection';
 
 export default function CollectionShowcase() {
   const [wpCollections, setWpCollections] = useState([]);

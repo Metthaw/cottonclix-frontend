@@ -54,16 +54,46 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
       const mainEl = mainRef.current;
       if (!mainEl) return;
       const handleFocus = () => {
-        gsap.fromTo( leavesRef.current, { x: 80, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
-        gsap.fromTo( bookRef.current, { x: 200, duration: 1, ease: "sine.inOut" }, { x: 0, duration: 1, ease: "sine.inOut" } );
-        gsap.fromTo( detailRef.current, { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }, { x: 0, y:0, opacity: 1, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo(
+          leavesRef.current,
+          { x: 80, duration: 1, ease: "sine.inOut" },
+          { x: 0, duration: 1, ease: "sine.inOut" }
+        );
+        gsap.fromTo(
+          bookRef.current,
+          { x: 200, duration: 1, ease: "sine.inOut" },
+          { x: 0, duration: 1, ease: "sine.inOut" }
+        );
+        gsap.fromTo(
+          detailRef.current,
+          { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" },
+          { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }
+        );
       };
       const handleBlur = () => {
-        gsap.fromTo( leavesRef.current, { x: 0, duration: 1, ease: "sine.inOut" }, { x: 80, duration: 1, ease: "sine.inOut" } );
-        gsap.fromTo( bookRef.current, { x: 0, duration: 1, ease: "sine.inOut" }, { x: 200, duration: 1, ease: "sine.inOut" } );
-        gsap.fromTo( detailRef.current, { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }, { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" } );
+        gsap.fromTo(
+          leavesRef.current,
+          { x: 0, duration: 1, ease: "sine.inOut" },
+          { x: 80, duration: 1, ease: "sine.inOut" }
+        );
+        gsap.fromTo(
+          bookRef.current,
+          { x: 0, duration: 1, ease: "sine.inOut" },
+          { x: 200, duration: 1, ease: "sine.inOut" }
+        );
+        gsap.fromTo(
+          detailRef.current,
+          { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" },
+          { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }
+        );
       };
-      const observer = new IntersectionObserver( ([entry]) => { if (entry.isIntersecting) handleFocus(); else handleBlur(); }, { threshold: 0.3 } );
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) handleFocus();
+          else handleBlur();
+        },
+        { threshold: 0.3 }
+      );
       observer.observe(mainEl);
       return () => observer.disconnect();
     },
@@ -72,7 +102,10 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
 
   if (!collectionData) {
     return (
-      <section ref={mainRef} className="w-full min-h-screen flex items-center justify-center bg-stone-100">
+      <section
+        ref={mainRef}
+        className="w-full min-h-screen flex items-center justify-center bg-stone-100"
+      >
         <p>Select a collection to read the story.</p>
       </section>
     );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // API Endpoint สำหรับดึงข้อมูล Page จาก slug และขอข้อมูลรูปภาพมาด้วย
-const API_URL = 'https://cottonclix.com/wp-json/wp/v2/pages?slug=about-us&_embed';
+const API_URL = 'https://cms.cottonclix.com/wp-json/wp/v2/pages?slug=about-us&_embed';
 
 export default function AboutPage() {
   const [pageData, setPageData] = useState(null);

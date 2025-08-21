@@ -14,7 +14,7 @@ import { useGSAP } from "@gsap/react";
 import { motion, AnimatePresence } from "motion/react";
 
 // 1. URL ของ API สำหรับดึงข้อมูล Linktree Links
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/linktree_link";
+const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/linktree_link";
 
 export default function LinktreePage() {
   // 2. สร้าง State สำหรับเก็บข้อมูลและสถานะการโหลด

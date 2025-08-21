@@ -16,9 +16,10 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/collection?_embed";
+const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/collection?_embed";
 
 export default function HomePage() {
   const [collections, setCollections] = useState([]);
@@ -48,14 +49,14 @@ export default function HomePage() {
   const flowerRef = useRef(null);
   const lastIndexRef = useRef(activeLocatorIndex);
   const isInitialRender = useRef(true);
-  
+
   useEffect(() => {
     const fetchCollections = async () => {
       setLoading(true);
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        
+
         const formattedData = data.map((item) => {
           const acf = item.acf;
           const imagePairs = [];
@@ -82,12 +83,11 @@ export default function HomePage() {
             coverImage: acf.cover_image,
             sliderImagePairs: imagePairs,
             // ✅ เปลี่ยนเป็นดึงข้อมูล 2 fields ใหม่นี้
-            storyHeading: acf.story_heading, 
+            storyHeading: acf.story_heading,
             storyParagraphs: acf.story_paragraphs,
           };
         });
-        
-        // console.log("Formatted Data Check:", formattedData);
+
         setCollections(formattedData);
 
         if (formattedData.length > 0) {
@@ -155,7 +155,7 @@ export default function HomePage() {
         });
         tl.to(flower, { x: tx, y: ty, rotation: 0, opacity: 1 });
         onScroll = () => {
-          if (tl && tl.isActive()) {
+          if (tl?.isActive()) {
             tl.progress(1, false);
             window.removeEventListener("scroll", onScroll);
           }
@@ -257,7 +257,8 @@ export default function HomePage() {
     }
   }, []);
 
-  const selectedCollectionData = collections.find(c => c.id === selectedCollectionId) || null;
+  const selectedCollectionData =
+    collections.find((c) => c.id === selectedCollectionId) || null;
 
   return (
     <motion.div
@@ -300,7 +301,7 @@ export default function HomePage() {
           flowerLocatorRef={storybookFlowerLocatorRef}
         />
       </div>
-      
+
       <div ref={ourStoryRef}>
         <OurStory
           upperFlowerLocatorRef={ourStoryUpperFlowerLocatorRef}

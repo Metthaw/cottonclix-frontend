@@ -11,7 +11,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 // 1. นำเข้าข้อมูลจาก mockData.js และ Link จาก react-router-dom
-const API_URL = 'https://cottonclix.com/wp-json/wp/v2/posts?per_page=6&_embed';
+const API_URL = 'https://cms.cottonclix.com/wp-json/wp/v2/posts?per_page=6&_embed';
 import { Link } from "react-router-dom";
 
 

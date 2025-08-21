@@ -14,7 +14,7 @@ import { ConfigProvider, Pagination } from "antd";
 import { motion, AnimatePresence } from "motion/react";
 
 // URL ของ API ที่เราจะไปดึงข้อมูล
-const API_URL = "https://cottonclix.com/wp-json/wp/v2/posts";
+const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/posts";
 
 export default function BlogPage() {
   // 2. สร้าง State เพื่อเก็บข้อมูลบทความและสถานะการโหลด
