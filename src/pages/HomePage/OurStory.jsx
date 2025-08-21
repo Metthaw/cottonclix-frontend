@@ -316,11 +316,13 @@ export default function OurStory({
         {/* ====================================================== */}
 
         <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[50vh] md:min-h-[90vh] isolate">
-          <div className="md:col-span-2 text-lg text-[#8D8D8D] leading-relaxed ">
-            <p className="px-28 pt-32">{storyData.part1.leftParagraph}</p>
+          <div className="grid max-w-[80%] justify-center align-middle md:col-span-2 text-base lg:text-xl text-[#8D8D8D] leading-relaxed order-2 md:order-1">
+            <p className="py-8 max-h-fit self-center">
+              {storyData.part1.leftParagraph}
+            </p>
           </div>
-          <div className="relative md:col-span-2 text-left h-full">
-            <div className=" grid grid-cols-1 md:grid-cols-1 items-center justify-end ">
+          <div className="relative grid md:col-span-2 text-left h-full justify-between order-1 md:order-2">
+            <div className="grid grid-cols-1 md:grid-cols-1 items-center justify-end">
               {/* This is the new, correctly placed locator */}
               <div
                 ref={upperFlowerLocatorRef}
@@ -332,18 +334,18 @@ export default function OurStory({
                     ref={headerRef}
                     src={logo}
                     alt="Cottonclix Logo"
-                    className="h-28 w-auto"
+                    className="h-16 lg:h-28 w-auto"
                   />
                 </div>
                 <h2
                   ref={subHeaderRef}
-                  className="text-5xl font-serif text-right pr-44 "
+                  className="text-3xl lg:text-5xl font-serif text-right pr-44 "
                 >
                   {storyData.part1.heading}
                 </h2>
               </div>
             </div>
-            <p className="text-xl text-[#8D8D8D] leading-relaxed mt-48">
+            <p className="text-base my-6 max-h-fit lg:text-xl text-[#8D8D8D] leading-relaxed self-center">
               {storyData.part1.rightParagraph}
             </p>
           </div>
@@ -351,7 +353,7 @@ export default function OurStory({
             ref={branchRef}
             src={element1}
             alt="Branch Decoration"
-            className="absolute bottom-0 left-0 w-[50%] h-auto opacity-100 -z-10 pointer-events-none drop-shadow-2xl"
+            className="absolute bottom-0 left-0 w-[35%] lg:w-[45%] h-auto opacity-100 -z-10 pointer-events-none drop-shadow-2xl"
           />
         </div>
 
@@ -361,8 +363,8 @@ export default function OurStory({
         {/* === ส่วนล่าง (ตามดีไซน์ล่าสุด) === */}
         {/* ====================================================== */}
 
-        <div className="relative grid grid-cols-2 md:grid-cols-1 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed min-h-[50vh] md:min-h-[90vh]">
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-x-16 gap-y-8 text-lg text-[#8D8D8D] leading-relaxed">
+        <div className="relative grid grid-cols-1 md:grid-cols-1 gap-x-16 gap-y-8 text-base lg:text-xl text-[#8D8D8D] leading-relaxed min-h-[50vh] md:min-h-[90vh]">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-x-16 gap-y-8 text-base lg:text-xl text-[#8D8D8D] leading-relaxed">
             {/* คอลัมน์ซ้าย */}
             <div className="space-y-6">
               {storyData.bottomSection.leftParagraphs.map((text, i) => (
@@ -376,9 +378,9 @@ export default function OurStory({
                 ref={singleBranchRef}
                 src={lineArt}
                 alt="Line Art"
-                className="absolute top-[-25%] scale-y-[-1] right-[-10%] w-48 h-auto opacity-100 hidden md:block rotate-90 drop-shadow-2xl"
+                className="absolute top-[-25%] scale-y-[-1] right-[-10%] w-[40%] h-auto opacity-100 hidden md:block rotate-90 drop-shadow-2xl"
               />
-              <div className="space-y-2 text-[#111000] text-xl">
+              <div className="space-y-2 text-[#111000] text-lg lg:text-xl">
                 {storyData.bottomSection.rightList.map((item, i) => (
                   <p key={i}>{item}</p>
                 ))}
@@ -397,10 +399,15 @@ export default function OurStory({
               className="absolute left-[15%] top-[10%]"
             />
             <div className="relative z-10 flex flex-col items-center justify-center">
-              <p className="font-serif font-semibold text-[#BC9F31] text-3xl pt-4">
+              <p className="font-serif font-semibold text-[#BC9F31] text-2xl lg:text-3xl pt-4">
                 {storyData.bottomSection.quote}
               </p>
-              <img ref={logoRef} src={Vector} alt="Logo" className="w-24 h-auto" />
+              <img
+                ref={logoRef}
+                src={Vector}
+                alt="Logo"
+                className="w-20 lg:w-24 h-auto"
+              />
             </div>
           </div>
         </div>

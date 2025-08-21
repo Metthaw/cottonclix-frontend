@@ -119,35 +119,38 @@ export default function ContactForm({ flowerLocatorRef }) {
     <section
       ref={mainRef}
       id="contact-form"
-      className="w-full min-h-[50vh] h-[50vh] my-[5%] md:min-h-screen md:h-screen bg-white overflow-hidden"
+      className="w-full min-h-screen bg-white overflow-hidden py-8 sm:py-12 md:py-16" // Adjusted height and padding
     >
-      <div className="container relative mx-auto px-4 flex justify-center">
+      <div className="container relative mx-auto px-4 sm:px-6 flex justify-center">
         <div
           ref={flowerLocatorRef}
-          className="absolute pointer-events-none top-[-10%] right-[40%] -z-50"
+          className="absolute pointer-events-none top-[-5%] sm:top-[-8%] md:top-[-10%] right-[40%] -z-50"
         />
         <div
           ref={formRef}
-          className="w-full max-w-3xl relative bg-stone-50 p-8 md:p-12 rounded-lg shadow-lg z-50"
+          className="w-full max-w-[90%] sm:max-w-[85%] md:max-w-3xl relative bg-stone-50 p-4 sm:p-6 md:p-12 rounded-lg shadow-lg z-50"
         >
           <div className="absolute bottom-0 left-0 w-full h-auto z-0 pointer-events-none">
             <img
               src={element1}
               alt="Branch Decoration"
-              className="w-full h-auto drop-shadow-2xl"
+              className="w-full h-auto drop-shadow-2xl opacity-50 sm:opacity-75 md:opacity-100"
             />
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif text-center text-[#BC9F31] mb-8 z-10 relative">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-center text-[#BC9F31] mb-4 sm:mb-6 md:mb-8 z-10 relative">
             Contact Us
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6 z-10 relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 sm:space-y-5 md:space-y-6 z-10 relative"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
               {/* First Name */}
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-[#8D8D8D] mb-2"
+                  className="block text-[#8D8D8D] text-sm sm:text-base mb-1 sm:mb-2"
                 >
                   First Name
                 </label>
@@ -157,13 +160,16 @@ export default function ContactForm({ flowerLocatorRef }) {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
                   required
                 />
               </div>
               {/* Last Name */}
               <div>
-                <label htmlFor="lastName" className="block text-[#8D8D8D] mb-2">
+                <label
+                  htmlFor="lastName"
+                  className="block text-[#8D8D8D] text-sm sm:text-base mb-1 sm:mb-2"
+                >
                   Last Name
                 </label>
                 <input
@@ -172,13 +178,16 @@ export default function ContactForm({ flowerLocatorRef }) {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-[#8D8D8D] mb-2">
+              <label
+                htmlFor="email"
+                className="block text-[#8D8D8D] text-sm sm:text-base mb-1 sm:mb-2"
+              >
                 Email
               </label>
               <input
@@ -187,30 +196,33 @@ export default function ContactForm({ flowerLocatorRef }) {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-[#8D8D8D] mb-2">
+              <label
+                htmlFor="message"
+                className="block text-[#8D8D8D] text-sm sm:text-base mb-1 sm:mb-2"
+              >
                 Message
               </label>
               <textarea
                 id="message"
                 name="message"
-                rows="5"
+                rows="4"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
                 required
               ></textarea>
             </div>
 
-            <div className="text-center pt-4">
+            <div className="text-center pt-2 sm:pt-3 md:pt-4">
               <button
                 type="submit"
-                className="bg-[#BC9F31] text-white font-bold py-3 px-12 rounded-full hover:bg-opacity-90 transition-all duration-300"
+                className="bg-[#BC9F31] text-white font-bold text-sm sm:text-base py-2 px-8 sm:py-3 sm:px-12 rounded-full hover:bg-opacity-90 transition-all duration-300"
               >
                 Send
               </button>
@@ -222,7 +234,7 @@ export default function ContactForm({ flowerLocatorRef }) {
           src={element5}
           ref={branchRef}
           alt="Branch2 Decoration"
-          className="absolute right-[3%] bottom-[-65%] -translate-y-1/2 w-2/5 h-[60vh] object-contain z-0 pointer-events-none"
+          className="absolute right-[3%] bottom-[-65%] -translate-y-1/2 w-2/5 h-[40vh] sm:h-[50vh] md:h-[60vh] object-contain z-0 pointer-events-none opacity-50 sm:opacity-75 md:opacity-100"
         />
       </div>
     </section>

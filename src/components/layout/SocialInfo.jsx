@@ -147,73 +147,73 @@ export default function SocialInfo({ flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
-      className={`w-full bg-white py-[5%] min-h-[50vh] h-[50vh] md:min-h-screen md:h-screen overflow-hidden`}
+      className="w-full bg-white py-8 sm:py-12 md:py-16 min-h-[100dvh]"
     >
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start lg:items-center">
           {/* Left Column: Contact Information */}
-          <div className="max-w-xl mx-auto lg:mx-0">
+          <div className="w-full max-w-xl mx-auto lg:mx-0">
             <h2
               ref={headerRef}
-              className="text-4xl font-semibold text-stone-800 mb-8 text-center lg:text-left"
+              className="text-2xl sm:text-3xl md:text-4xl font-semibold text-stone-800 mb-6 sm:mb-8 text-center lg:text-left"
             >
               Contact
             </h2>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
+            <div className="space-y-4 sm:space-y-6">
+              {/* Contact Info Items */}
+              <div className="flex items-start gap-3 sm:gap-4">
                 <img
                   src={LocationIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Address</h3>
-                  <p className="text-stone-600">{staticInfo.address}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Address</h3>
+                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.address}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <img
                   src={TimeIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Opening Hours</h3>
-                  <p className="text-stone-600">
-                    {staticInfo.openingHours}
-                  </p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Opening Hours</h3>
+                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.openingHours}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <img
                   src={TelIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Phone</h3>
-                  <p className="text-stone-600">{staticInfo.phone}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Phone</h3>
+                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.phone}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <img
                   src={EmailIcon}
                   alt=""
-                  className="w-5 h-5 flex-shrink-0 mt-1"
+                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="font-medium text-stone-700">Email</h3>
-                  <p className="text-stone-600">{staticInfo.email}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Email</h3>
+                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.email}</p>
                 </div>
               </div>
 
-              <div className="pt-4">
-                <h3 className="font-medium text-stone-700 mb-3">Follow Us</h3>
-                <div className="flex items-center gap-5">
+              {/* Social Media Links */}
+              <div className="pt-4 sm:pt-6">
+                <h3 className="text-sm sm:text-base font-medium text-stone-700 mb-3">Follow Us</h3>
+                <div className="flex items-center gap-4 sm:gap-5">
                   {socialLinks.map((social) => (
                     <a
                       key={social.url}
@@ -226,7 +226,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                       <img
                         src={social.icon}
                         alt={social.alt}
-                        className="h-7 w-7"
+                        className="h-6 w-6 sm:h-7 sm:w-7"
                       />
                     </a>
                   ))}
@@ -234,15 +234,17 @@ export default function SocialInfo({ flowerLocatorRef }) {
               </div>
             </div>
           </div>
+
+          {/* Flower Locator */}
           <div
             ref={flowerLocatorRef}
-            className="absolute pointer-events-none bottom-[15%] left-[10%]"
+            className="absolute pointer-events-none bottom-[10%] sm:bottom-[15%] left-[5%] sm:left-[10%]"
           />
 
           {/* Right Column: Map */}
           <div
             ref={mapRef}
-            className="h-96 w-full rounded-xl overflow-hidden shadow-lg"
+            className="h-72 sm:h-80 md:h-96 w-full rounded-xl overflow-hidden shadow-lg mt-6 lg:mt-0"
           >
             <iframe
               src={staticInfo.mapLocation}

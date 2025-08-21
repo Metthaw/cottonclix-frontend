@@ -23,7 +23,7 @@ PageCover.displayName = "PageCover";
 
 const Page = React.forwardRef((props, ref) => {
   return (
-    <div className="bg-stone-50 p-4 shadow-inner" ref={ref}>
+    <div className="p-4 shadow-inner" ref={ref}>
       {props.children}
     </div>
   );
@@ -104,7 +104,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
     return (
       <section
         ref={mainRef}
-        className="w-full min-h-screen flex items-center justify-center bg-stone-100"
+        className="w-full min-h-screen flex items-center justify-center"
       >
         <p>Select a collection to read the story.</p>
       </section>
@@ -114,7 +114,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
-      className="w-full min-h-[50vh] md:min-h-screen relative flex items-center bg-gradient-to-b from-stone-100 to-stone-200 py-20 overflow-hidden"
+      className="w-full min-h-[50vh] md:min-h-screen relative flex items-center py-20 overflow-hidden"
     >
       <img
         ref={leavesRef}
