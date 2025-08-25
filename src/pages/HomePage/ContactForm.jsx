@@ -134,7 +134,7 @@ export default function ContactForm({ flowerLocatorRef }) {
 
       const result = await response.json();
 
-      if (result.status === "mail_sent") {
+      if (result.success) {
         setStatus("✅ Message sent successfully!");
         setFormData({
           firstName: "",
