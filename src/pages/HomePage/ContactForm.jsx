@@ -15,6 +15,8 @@ export default function ContactForm({ flowerLocatorRef }) {
     message: "",
   });
 
+  const [status, setStatus] = useState("");
+
   const mainRef = useRef(null);
   const formRef = useRef(null);
   const branchRef = useRef(null);
@@ -107,10 +109,45 @@ export default function ContactForm({ flowerLocatorRef }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // ตอนนี้จะแค่แสดงข้อมูลใน Console
     // ในอนาคตเราจะใส่โค้ดของ EmailJS ที่นี่
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+      setStatus("❌ Please enter a valid email address");
+      return;
+    }
+
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch(
+        "https://cms.cottonclix.com/wp-json/contact-form-7/v1/contact-forms/dc7353f/feedback", // replace 123 with your CF7 form ID
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.status === "mail_sent") {
+        setStatus("✅ Message sent successfully!");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setStatus("❌ Failed: " + (result.message || "Unknown error"));
+      }
+    } catch (error) {
+      setStatus("❌ Error: " + error.message);
+    }
     console.log("Form Data Submitted:", formData);
     alert("Thank you for your message!");
   };
@@ -226,6 +263,7 @@ export default function ContactForm({ flowerLocatorRef }) {
               >
                 Send
               </button>
+              <p>{status}</p>
             </div>
           </form>
         </div>
