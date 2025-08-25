@@ -122,7 +122,7 @@ export default function ContactForm({ flowerLocatorRef }) {
 
     try {
       const response = await fetch(
-        "https://cms.cottonclix.com/wp-json/contact-form-7/v1/contact-forms/dc7353f/feedback", // replace 123 with your CF7 form ID
+        "https://cms.cottonclix.com/wp-json/fluentform/v1/submit/1",
         {
           method: "POST",
           headers: {
