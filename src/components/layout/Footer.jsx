@@ -1,6 +1,6 @@
 // src/components/layout/Footer.jsx
 
-import React from "react";
+import React, { useState } from "react";
 import lineArtImg from "../../img/element2.svg";
 import paperPlane from "../../img/paperPlane.svg";
 
@@ -11,6 +11,49 @@ const footerData = {
 };
 
 export default function Footer() {
+
+  const [email, setEmail] = useState("");
+const [status, setStatus] = useState("idle"); // idle, loading, success, error
+const [message, setMessage] = useState("");
+
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    // --- ⚠️ START: ข้อมูลสำคัญที่คุณได้มาจาก MailPoet ---
+    const API_ENDPOINT = "https://cms.cottonclix.com/wp-admin/admin-post.php?action=mailpoet_subscription_form";
+
+    const formData = new FormData();
+    formData.append("data[form_id]", "1");
+    formData.append("token", "3a3d677895");
+    formData.append("api_version", "v1");
+    formData.append("endpoint", "subscribers");
+    formData.append("mailpoet_method", "subscribe");
+    formData.append("data[form_field_M2NlODc2ZDMzY2NiX2VtYWls]", email);
+    // --- END: ข้อมูลสำคัญ ---
+
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: "POST",
+            body: formData,
+        });
+
+        if (response.ok) {
+            setStatus("success");
+            setMessage("Thank you for subscribing!");
+            setEmail("");
+        } else {
+            setStatus("error");
+            setMessage("Subscription failed. Please try again.");
+        }
+    } catch (error) {
+        setStatus("error");
+        setMessage("An error occurred. Please check your connection.");
+        console.error("An error occurred:", error);
+    }
+};
+
   return (
     <footer id="subscribe-form" className="w-full bg-white pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8">
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
@@ -78,16 +121,26 @@ export default function Footer() {
           />
 
           {/* Subscribe Input Container */}
-          <div className="w-full bg-white rounded-md sm:rounded-lg flex flex-col sm:flex-row items-stretch sm:items-center justify-between z-50 overflow-hidden">
-            <input
-              type="email"
-              placeholder={footerData.subscribePlaceholder}
-              className="bg-transparent w-full text-stone-700 placeholder-stone-500 focus:outline-none px-4 py-3 sm:py-0"
-            />
-            <button className="bg-[#8b5f31] text-white text-sm sm:text-base font-semibold py-3 px-6 sm:px-8 hover:bg-opacity-90 transition-opacity">
-              Subscribe
-            </button>
-          </div>
+          <form onSubmit={handleSubmit} className="w-full bg-white rounded-md sm:rounded-lg flex flex-col sm:flex-row items-stretch sm:items-center justify-between z-50 overflow-hidden">
+           <input
+  type="email"
+  placeholder={footerData.subscribePlaceholder}
+  className="bg-transparent w-full text-stone-700 placeholder-stone-500 focus:outline-none px-4 py-3 sm:py-0"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+  disabled={status === "loading"}
+/>
+            <button
+  type="submit"
+  className="bg-[#8b5f31] text-white text-sm sm:text-base font-semibold py-3 px-6 sm:px-8 hover:bg-opacity-90 transition-all disabled:opacity-50"
+  disabled={status === "loading"}
+>
+  {status === "loading" ? "Subscribing..." : "Subscribe"}
+</button>
+
+          </form>
+          
         </div>
 
         {/* Copyright Section */}
