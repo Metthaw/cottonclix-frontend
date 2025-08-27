@@ -157,7 +157,7 @@ const Navbar = () => {
           </nav>
 
           {/* Center Logo */}
-          <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8">
+          <div className="flex-shrink-0  sm:px-6 lg:px-8">
             <Logo className="block h-14 w-14 sm:h-16 sm:w-16 lg:h-18 lg:w-18 xl:h-20 xl:w-20" />
           </div>
 
@@ -170,19 +170,19 @@ const Navbar = () => {
               </nav>
 
               {/* Social Icons */}
-              <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6 ml-4 sm:ml-6 lg:ml-8">
+              <div className="flex items-center space-x-4 sm:space-x-4 lg:space-x-6 ml-4 sm:ml-6 lg:ml-8">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-stone-700 hover:text-amber-800 transition-colors"
+                    className="h-4 w-4 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-stone-700 hover:text-amber-800 transition-colors"
                   >
                     <img
                       src={social.icon}
                       alt={`${social.name} icon`}
-                      className="h-full w-full object-contain"
+                      className="h-auto w-auto object-contain"
                     />
                   </a>
                 ))}

@@ -130,10 +130,10 @@ export default function BlogPage() {
           >
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900">
-                Our Journal
+                Blogs
               </h1>
               <p className="mt-4 text-lg text-natural">
-                เรื่องราว แรงบันดาลใจ และเกร็ดความรู้จากโลกของ Cottonclix
+                
               </p>
             </div>
             <img

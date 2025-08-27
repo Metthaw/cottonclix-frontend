@@ -1,7 +1,37 @@
+/* /* =========================================================
+ * ส่วนที่ 1: ประกาศ @font-face (ต้องอยู่บนสุดเสมอ)
+ * ========================================================= */
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  src: url('../src/assets/fonts/IBMPlexSansThai-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  src: url('../src/assets/fonts/IBMPlexSansThai-Medium.ttf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  src: url('../src/assets/fonts/IBMPlexSansThai-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+/* =========================================================
+ * ส่วนที่ 2: ตามด้วย Tailwind Directives
+ * ========================================================= */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================
+ * ส่วนที่ 3: Custom CSS เดิมของคุณ
+ * ========================================================= */
 .storybook-container {
   perspective: 2000px;
 }

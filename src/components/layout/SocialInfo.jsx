@@ -166,7 +166,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <img
                   src={LocationIcon}
                   alt=""
-                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
+                  className="w-auto sm:w-5 h-auto sm:h-5 flex-shrink-0 "
                 />
                 <div>
                   <h3 className="text-sm sm:text-base font-medium text-stone-700">Address</h3>
