@@ -5,6 +5,7 @@ import element1 from "../../img/element1.png";
 import element5 from "../../img/element5.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Alert } from "antd"; // Import Alert component from Ant Design
 
 export default function ContactForm({ flowerLocatorRef }) {
   // ใช้ State เพื่อเก็บข้อมูลจากช่องกรอกต่างๆ
@@ -111,10 +112,9 @@ export default function ContactForm({ flowerLocatorRef }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // ตอนนี้จะแค่แสดงข้อมูลใน Console
-    // ในอนาคตเราจะใส่โค้ดของ EmailJS ที่นี่
+
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setStatus("❌ Please enter a valid email address");
+      setStatus("Please enter a valid email address");
       return;
     }
 
@@ -135,7 +135,7 @@ export default function ContactForm({ flowerLocatorRef }) {
       const result = await response.json();
 
       if (result.success) {
-        setStatus("✅ Message sent successfully!");
+        setStatus("Message sent successfully!");
         setFormData({
           firstName: "",
           lastName: "",
@@ -143,13 +143,11 @@ export default function ContactForm({ flowerLocatorRef }) {
           message: "",
         });
       } else {
-        setStatus("❌ Failed: " + (result.message || "Unknown error"));
+        setStatus("Failed: " + (result.message || "Unknown error"));
       }
     } catch (error) {
-      setStatus("❌ Error: " + error.message);
+      setStatus("Error: " + error.message);
     }
-    console.log("Form Data Submitted:", formData);
-    alert("Thank you for your message!");
   };
 
   return (
@@ -256,14 +254,28 @@ export default function ContactForm({ flowerLocatorRef }) {
               ></textarea>
             </div>
 
-            <div className="text-center pt-2 sm:pt-3 md:pt-4">
+            <div className="text-center pt-2 sm:pt-3 md:pt-4 space-y-4">
               <button
                 type="submit"
                 className="bg-[#BC9F31] text-white font-bold text-sm sm:text-base py-2 px-8 sm:py-3 sm:px-12 rounded-full hover:bg-opacity-90 transition-all duration-300"
               >
                 Send
               </button>
-              <p>{status}</p>
+              {status && (
+                <Alert
+                  closable
+                  message={status}
+                  type={
+                    status.includes("Message sent successfully!")
+                      ? "success"
+                      : status === "Sending..."
+                      ? "info"
+                      : "error"
+                  }
+                  showIcon
+                  className="mx-auto max-w-md"
+                />
+              )}
             </div>
           </form>
         </div>
