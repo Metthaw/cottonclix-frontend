@@ -35,15 +35,15 @@ const Navbar = () => {
           Instagram: instagramIcon,
           "Line Official": lineIcon,
         };
-        
+
         const formattedLinks = data
-          .filter(link => iconMap[link.title.rendered])
-          .map(link => ({
+          .filter((link) => iconMap[link.title.rendered])
+          .map((link) => ({
             name: link.title.rendered,
             href: link.acf.link_url,
-            icon: iconMap[link.title.rendered]
+            icon: iconMap[link.title.rendered],
           }));
-        
+
         setSocialLinks(formattedLinks);
       } catch (error) {
         console.error("Failed to fetch social links for Navbar:", error);
@@ -148,29 +148,29 @@ const Navbar = () => {
     <header className="w-full bg-white py-2 sm:py-3 px-3 sm:px-2 md:px-4 lg:px-6 relative z-50">
       <div className="container mx-auto">
         {/* Desktop/Tablet Layout */}
-        <div className="hidden md:flex items-center justify-between">
+        <div className="hidden md:flex items-center justify-between gap-12 lg:gap-16 xl:gap-20 max-w-[90%] mx-auto">
           {/* Left Menu */}
-          <nav className="flex-1 flex justify-center">
-            <div className="flex space-x-4 sm:space-x-6 lg:space-x-8 xl:space-x-10 text-sm sm:text-base lg:text-lg">
+          <nav className="flex-1 flex justify-end">
+            <div className="flex items-center gap-8 lg:gap-12 xl:gap-16 text-sm sm:text-base lg:text-lg">
               {leftMenuItems.map((item) => renderMenuItem(item))}
             </div>
           </nav>
 
           {/* Center Logo */}
-          <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8">
+          <div className="flex-shrink-0">
             <Logo className="block h-14 w-14 sm:h-16 sm:w-16 lg:h-18 lg:w-18 xl:h-20 xl:w-20" />
           </div>
 
           {/* Right Content */}
-          <div className="flex-1 flex justify-center">
-            <div className="flex items-center">
+          <div className="flex-1 flex justify-start">
+            <div className="flex items-center gap-8 lg:gap-12 xl:gap-16">
               {/* Right Menu */}
-              <nav className="flex space-x-4 sm:space-x-6 lg:space-x-10 xl:space-x-12 text-sm sm:text-base lg:text-lg">
+              <nav className="flex items-center gap-8 lg:gap-12 xl:gap-16 text-sm sm:text-base lg:text-lg">
                 {rightMenuItems.map((item) => renderMenuItem(item))}
               </nav>
 
               {/* Social Icons */}
-              <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-6 ml-4 sm:ml-6 lg:ml-8">
+              <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}

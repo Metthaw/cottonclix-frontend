@@ -159,7 +159,7 @@ export default function BlogPage() {
                       />
                     </div>
                     <div className="pt-4">
-                      <h3 className="mt-2 text-xl font-serif text-black group-hover:text-primary">
+                      <h3 className="mt-2 text-xl text-black group-hover:text-primary">
                         {post?.title?.rendered}
                       </h3>
                       <p

@@ -4,6 +4,8 @@ import openBookImage from "../../img/13.svg";
 import leaves2Img from "../../img/16.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Button } from "antd";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 // Helper components remain unchanged
 const PageCover = React.forwardRef((props, ref) => {
@@ -35,6 +37,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
   const bookRef = useRef(null);
   const leavesRef = useRef(null);
   const detailRef = useRef(null);
+  const flipBookRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
   // Check if screen is mobile
@@ -100,6 +103,14 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
     { scope: mainRef }
   );
 
+  const handlePrevPage = () => {
+    flipBookRef.current?.pageFlip()?.flipPrev();
+  };
+
+  const handleNextPage = () => {
+    flipBookRef.current?.pageFlip()?.flipNext();
+  };
+
   if (!collectionData) {
     return (
       <section
@@ -126,11 +137,11 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4">
           <h2 className="text-4xl font-serif text-primary mb-6">
-            {collectionData.storyHeading}
+            {collectionData?.storyHeading}
           </h2>
           <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-auto pr-4">
             <p style={{ whiteSpace: "pre-wrap" }}>
-              {collectionData.storyParagraphs}
+              {collectionData?.storyParagraphs}
             </p>
           </div>
         </div>
@@ -146,8 +157,25 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
                   className="w-full h-full object-contain"
                 />
                 <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%]">
+                  {/* Navigation Buttons */}
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<LeftOutlined />}
+                    onClick={handlePrevPage}
+                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                  />
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<RightOutlined />}
+                    onClick={handleNextPage}
+                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                  />
+
                   <HTMLFlipBook
-                    key={collectionData.id}
+                    ref={flipBookRef}
+                    key={collectionData?.id}
                     width={600}
                     height={850}
                     size="stretch"
@@ -155,7 +183,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
                     mobileScrollSupport={false}
                     className="w-full h-full"
                   >
-                    {collectionData.sliderImagePairs.flatMap((pair) => [
+                    {collectionData.sliderImagePairs?.flatMap((pair) => [
                       <Page key={`${pair.id}-left`}>
                         <img
                           src={pair.leftImg}
