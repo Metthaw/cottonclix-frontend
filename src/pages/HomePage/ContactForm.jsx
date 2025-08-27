@@ -5,6 +5,7 @@ import element1 from "../../img/element1.png";
 import element5 from "../../img/element5.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Alert } from "antd"; // Import Alert component from Ant Design
 
 export default function ContactForm({ flowerLocatorRef }) {
   // ใช้ State เพื่อเก็บข้อมูลจากช่องกรอกต่างๆ
@@ -14,6 +15,8 @@ export default function ContactForm({ flowerLocatorRef }) {
     email: "",
     message: "",
   });
+
+  const [status, setStatus] = useState("");
 
   const mainRef = useRef(null);
   const formRef = useRef(null);
@@ -107,12 +110,44 @@ export default function ContactForm({ flowerLocatorRef }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // ตอนนี้จะแค่แสดงข้อมูลใน Console
-    // ในอนาคตเราจะใส่โค้ดของ EmailJS ที่นี่
-    console.log("Form Data Submitted:", formData);
-    alert("Thank you for your message!");
+
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+      setStatus("Please enter a valid email address");
+      return;
+    }
+
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch(
+        "https://cms.cottonclix.com/wp-json/fluentform/v1/submit/1",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Message sent successfully!");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setStatus("Failed: " + (result.message || "Unknown error"));
+      }
+    } catch (error) {
+      setStatus("Error: " + error.message);
+    }
   };
 
   return (
@@ -219,13 +254,28 @@ export default function ContactForm({ flowerLocatorRef }) {
               ></textarea>
             </div>
 
-            <div className="text-center pt-2 sm:pt-3 md:pt-4">
+            <div className="text-center pt-2 sm:pt-3 md:pt-4 space-y-4">
               <button
                 type="submit"
                 className="bg-[#BC9F31] text-white font-bold text-sm sm:text-base py-2 px-8 sm:py-3 sm:px-12 rounded-full hover:bg-opacity-90 transition-all duration-300"
               >
                 Send
               </button>
+              {status && (
+                <Alert
+                  closable
+                  message={status}
+                  type={
+                    status.includes("Message sent successfully!")
+                      ? "success"
+                      : status === "Sending..."
+                      ? "info"
+                      : "error"
+                  }
+                  showIcon
+                  className="mx-auto max-w-md"
+                />
+              )}
             </div>
           </form>
         </div>

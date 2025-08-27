@@ -172,7 +172,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
                     className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 md:p-4">
-                    <h3 className="text-base md:text-lg font-serif text-white group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-base md:text-lg text-white group-hover:text-primary transition-colors duration-300 line-clamp-2">
                       {post.title.rendered}
                     </h3>
                   </div>

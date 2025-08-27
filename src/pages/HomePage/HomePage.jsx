@@ -10,6 +10,7 @@ import ContactForm from "./ContactForm";
 import Hero from "../HomePage/Hero.jsx";
 import AnimatedCottonFlower from "../../components/AnimatedCottonFlower";
 import SocialInfo from "../../components/layout/SocialInfo.jsx";
+import { FloatButton } from "antd";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -317,6 +318,11 @@ export default function HomePage() {
       <div ref={socialInfoRef}>
         <SocialInfo flowerLocatorRef={socialInfoFlowerLocatorRef} />
       </div>
+      <FloatButton.BackTop
+        className="fixed bottom-8 right-8 bg-[#BC9F31] hover:bg-[#BC9F31] text-white shadow-lg rounded-full"
+        visibilityHeight={400}
+        
+      />
     </motion.div>
   );
 }

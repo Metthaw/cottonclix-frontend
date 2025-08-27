@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react";
 
 // API Endpoint สำหรับดึงข้อมูล Page จาก slug และขอข้อมูลรูปภาพมาด้วย
-const API_URL = 'https://cms.cottonclix.com/wp-json/wp/v2/pages?slug=about-us&_embed';
+const API_URL =
+  "https://cms.cottonclix.com/wp-json/wp/v2/pages?slug=about-us&_embed";
 
 export default function AboutPage() {
   const [pageData, setPageData] = useState(null);
@@ -33,23 +37,29 @@ export default function AboutPage() {
   if (!pageData) {
     return <div className="text-center py-40">Page not found.</div>;
   }
-  
+
   // ดึง URL ของรูปภาพจากข้อมูลที่ _embed มาให้
-  const featuredImageUrl = pageData._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
+  const featuredImageUrl =
+    pageData._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
   const pageTitle = pageData.title.rendered;
   const pageContent = pageData.content.rendered;
 
   return (
-    <main className="bg-white">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 1 }}
+      className="bg-white"
+    >
       <div className="container mx-auto px-6 py-16">
         {/* ส่วนรูปภาพหลัก */}
-        <div 
+        <div
           className="w-full h-64 md:h-96 bg-cover bg-center rounded-lg shadow-md"
           style={{ backgroundImage: `url(${featuredImageUrl})` }}
           aria-label={pageTitle}
-        >
-        </div>
-        
+        ></div>
+
         {/* ส่วนเนื้อหา */}
         <article className="max-w-3xl mx-auto mt-12">
           <h1 className="text-4xl font-bold font-serif text-gray-800 mb-6 text-center">
@@ -57,12 +67,12 @@ export default function AboutPage() {
           </h1>
 
           {/* แสดงผลเนื้อหา HTML จาก WordPress Editor */}
-          <div 
+          <div
             className="prose lg:prose-lg max-w-none mx-auto text-natural space-y-4"
-            dangerouslySetInnerHTML={{ __html: pageContent }} 
+            dangerouslySetInnerHTML={{ __html: pageContent }}
           />
         </article>
       </div>
-    </main>
+    </motion.div>
   );
-};
+}
