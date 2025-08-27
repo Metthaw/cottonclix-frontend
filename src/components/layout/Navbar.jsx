@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logoSrc from "../../img/Group 8.svg";
+import logoMobileSrc from "../../img/Logo.png";
 import facebookIcon from "../../img/icon-navbar.svg";
 import instagramIcon from "../../img/icon-navbar-1.svg";
 import lineIcon from "../../img/icon-navbar-2.svg";
@@ -12,6 +13,16 @@ const Logo = ({ className = "" }) => (
   <Link to="/" className={`flex-shrink-0 ${className}`}>
     <img
       src={logoSrc}
+      alt="Cottonclix Logo"
+      className="h-full w-full object-contain"
+    />
+  </Link>
+);
+
+const MobileLogo = ({ className = "" }) => (
+  <Link to="/" className={`flex-shrink-0 ${className}`}>
+    <img
+      src={logoMobileSrc}
       alt="Cottonclix Logo"
       className="h-full w-full object-contain"
     />
@@ -193,7 +204,7 @@ const Navbar = () => {
 
         {/* Mobile Layout */}
         <div className="md:hidden flex items-center justify-between relative z-10 bg-white">
-          <Logo className="h-12 w-12" />
+          <MobileLogo className="h-12 w-fit" />
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
