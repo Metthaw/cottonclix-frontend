@@ -22,15 +22,15 @@ const handleSubmit = async (event) => {
     setMessage("");
 
     // --- ⚠️ START: ข้อมูลสำคัญที่คุณได้มาจาก MailPoet ---
-    const API_ENDPOINT = "https://cms.cottonclix.com/wp-json/myapi/v1/subscribe";
+    const API_ENDPOINT = "https://cms.cottonclix.com/wp-admin/admin-post.php?action=mailpoet_subscription_form";
 
     const formData = new FormData();
     formData.append("data[form_id]", "1");
-    formData.append("token", "3a3d677895");
+    formData.append("token", "e3f5cb55c9");
     formData.append("api_version", "v1");
     formData.append("endpoint", "subscribers");
     formData.append("mailpoet_method", "subscribe");
-    formData.append("email", email);
+    formData.append("data[form_field_M2NlODc2ZDMzY2NiX2VtYWls]", email);
     // --- END: ข้อมูลสำคัญ ---
 
     try {
