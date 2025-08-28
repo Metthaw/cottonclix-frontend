@@ -30,7 +30,7 @@ const handleSubmit = async (event) => {
     formData.append("api_version", "v1");
     formData.append("endpoint", "subscribers");
     formData.append("mailpoet_method", "subscribe");
-    formData.append("data[form_field_M2NlODc2ZDMzY2NiX2VtYWls]", email);
+    formData.append("email", email);
     // --- END: ข้อมูลสำคัญ ---
 
     try {
@@ -124,6 +124,8 @@ const handleSubmit = async (event) => {
           <form onSubmit={handleSubmit} className="w-full bg-white rounded-md sm:rounded-lg flex flex-col sm:flex-row items-stretch sm:items-center justify-between z-50 overflow-hidden">
            <input
   type="email"
+  id="email_gs5140gow3"
+  name="email"
   placeholder={footerData.subscribePlaceholder}
   className="bg-transparent w-full text-stone-700 placeholder-stone-500 focus:outline-none px-4 py-3 sm:py-0"
   value={email}
