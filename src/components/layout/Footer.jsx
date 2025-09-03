@@ -1,7 +1,6 @@
 // src/components/layout/Footer.jsx
 
 import React, { useState } from "react";
-import React, { useState } from "react";
 import lineArtImg from "../../img/element2.svg";
 import paperPlane from "../../img/paperPlane.svg";
 
