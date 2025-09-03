@@ -219,19 +219,17 @@ const CatalogSlider = ({
   return (
     <section
       ref={mainRef}
-      className="w-full max-w-full min-h-[50vh] md:min-h-screen bg-white flex md:items-center z-0 overflow-hidden"
+      className="w-full max-w-full min-h-fit bg-white flex md:items-center z-0 overflow-hidden"
     >
       <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
         <div className="flex relative md:items-center w-full md:aspect-[3/1]">
-
           <div className="w-full px-4 md:px-14 py-8 md:py-12">
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div
                 ref={carouselRef}
                 className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
               >
-                <div className="absolute left-[-20%] inset-0 flex justify-start items-center pointer-events-none">
+                <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
                   <img
                     ref={leavesRef}
                     src={leavesImg}
@@ -292,7 +290,6 @@ const CatalogSlider = ({
                 />
               </div>
             </div>
-
           </div>
         </div>
       </div>

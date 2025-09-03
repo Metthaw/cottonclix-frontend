@@ -82,10 +82,10 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
   ); // ✅ no dependencies
 
   return (
-    <section className="w-full min-h-[50vh] sm:min-h-[50vh] md:min-h-screen bg-white">
+    <section className="w-full min-h-fit bg-white py-20">
       <div
         ref={mainRef}
-        className="w-full min-h-[50vh] sm:min-h-[50vh] md:min-h-screen flex justify-center items-center p-4 sm:p-6 md:p-8"
+        className="w-full min-h-fit flex justify-center items-center p-8 sm:p-12 md:p-20"
       >
         <div
           ref={containerRef}

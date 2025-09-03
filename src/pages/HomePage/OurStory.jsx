@@ -309,104 +309,125 @@ export default function OurStory({
   ); // ✅
 
   return (
-    <section ref={mainRef} className="w-full bg-white py-20 overflow-hidden">
-      <div className="container mx-auto px-8">
-        {/* ====================================================== */}
-        {/* === ส่วนบน (ตามโค้ดที่คุณทำมา) === */}
-        {/* ====================================================== */}
-
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 min-h-[50vh] md:min-h-[90vh] isolate">
-          <div className="grid max-w-[80%] justify-center align-middle md:col-span-2 text-base lg:text-xl text-[#8D8D8D] leading-relaxed order-2 md:order-1">
-            <p className="py-8 max-h-fit self-center">
-              {storyData.part1.leftParagraph}
-            </p>
-          </div>
-          <div className="relative grid md:col-span-2 text-left h-full justify-between order-1 md:order-2">
-            <div className="grid grid-cols-1 md:grid-cols-1 items-center justify-end">
-              {/* This is the new, correctly placed locator */}
-              <div
-                ref={upperFlowerLocatorRef}
-                className="absolute left-[-20%] top-[15%]"
-              />
-              <div className="grid grid-cols-1 md:grid-cols-1 items-center justify-end">
-                <div className="flex items-center justify-end gap-4 ">
-                  <img
-                    ref={headerRef}
-                    src={logo}
-                    alt="Cottonclix Logo"
-                    className="h-16 lg:h-28 w-auto"
-                  />
-                </div>
-                <h2
-                  ref={subHeaderRef}
-                  className="text-3xl lg:text-5xl font-serif text-right pr-44 "
-                >
-                  {storyData.part1.heading}
-                </h2>
+    <section
+      ref={mainRef}
+      className="w-full bg-white py-8 sm:py-12 md:py-16 lg:py-20 overflow-hidden"
+    >
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        {/* Upper Section */}
+        <div className="relative min-h-[50vh] flex flex-col md:grid md:grid-cols-4 gap-32 md:gap-8">
+          {/* Logo & Heading - Mobile: Top, Desktop: Right */}
+          <div className="flex flex-col items-center md:my-[20%] md:justify-between md:items-end md:col-span-2 order-1 md:order-2">
+            <div className="flex flex-col items-center md:items-end gap-4 md:gap-2">
+              <div className="flex items-center justify-center md:justify-end">
+                <img
+                  ref={headerRef}
+                  src={logo}
+                  alt="Cottonclix Logo"
+                  className="h-16 sm:h-20 md:h-14 lg:h-28 w-auto"
+                />
               </div>
+              <h2
+                ref={subHeaderRef}
+                className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-serif text-center md:text-right"
+              >
+                {storyData.part1.heading}
+              </h2>
             </div>
-            <p className="text-base my-6 max-h-fit lg:text-xl text-[#8D8D8D] leading-relaxed self-center">
+            <p className="text-base sm:text-lg md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-right mt-6 md:mt-6 leading-relaxed max-w-2xl md:max-w-none">
               {storyData.part1.rightParagraph}
             </p>
+            <div
+              ref={upperFlowerLocatorRef}
+              className="md:absolute left-[30%] top-[35%] md:left-[55%] md:top-[30%] pointer-events-none"
+            />
           </div>
-          <img
-            ref={branchRef}
-            src={element1}
-            alt="Branch Decoration"
-            className="absolute bottom-0 left-0 w-[35%] lg:w-[45%] h-auto opacity-100 -z-10 pointer-events-none drop-shadow-2xl"
-          />
+
+          {/* Left Paragraph */}
+          <div className="grid row-span-1 md:col-span-2 order-2 md:order-1 items-start md:my-[50%]">
+            <p className="text-base sm:text-lg md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed max-w-2xl md:max-w-none">
+              {storyData.part1.leftParagraph}
+            </p>
+            {/* Decorative Branch */}
+            <img
+              ref={branchRef}
+              src={element1}
+              alt="Branch Decoration"
+              className="md:absolute bottom-0 left-[5%] md:left-[-5%] 
+            w-[100%] md:w-[35%] lg:w-[45%] 
+            h-auto
+            z-10 pointer-events-none drop-shadow-2xl
+            "
+            />
+          </div>
         </div>
 
-        <hr ref={lineRef} className=" mb-10 border-stone-200" />
+        <hr ref={lineRef} className=" border-stone-200" />
 
-        {/* ====================================================== */}
-        {/* === ส่วนล่าง (ตามดีไซน์ล่าสุด) === */}
-        {/* ====================================================== */}
-
-        <div className="relative grid grid-cols-1 md:grid-cols-1 gap-x-16 gap-y-8 text-base lg:text-xl text-[#8D8D8D] leading-relaxed min-h-[50vh] md:min-h-[90vh]">
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-x-16 gap-y-8 text-base lg:text-xl text-[#8D8D8D] leading-relaxed">
-            {/* คอลัมน์ซ้าย */}
-            <div className="space-y-6">
+        {/* Lower Section */}
+        <div className="min-h-[50vh] flex flex-col my-[10%]">
+          {/* Two Column Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16">
+            {/* Left Column */}
+            <div className="space-y-4 md:space-y-6">
               {storyData.bottomSection.leftParagraphs.map((text, i) => (
-                <p key={i}>{text}</p>
+                <p
+                  key={i}
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed"
+                >
+                  {text}
+                </p>
               ))}
             </div>
 
-            {/* คอลัมน์ขวา */}
+            {/* Right Column */}
             <div className="relative">
               <img
                 ref={singleBranchRef}
                 src={lineArt}
                 alt="Line Art"
-                className="absolute top-[-25%] scale-y-[-1] right-[-10%] w-[40%] h-auto opacity-100 hidden md:block rotate-90 drop-shadow-2xl"
+                className="absolute hidden md:block top-[-25%] right-0 md:right-[-10%] 
+                w-[40%] h-auto 
+                scale-y-[-1] rotate-90 drop-shadow-2xl"
               />
-              <div className="space-y-2 text-[#111000] text-lg lg:text-xl">
-                {storyData.bottomSection.rightList.map((item, i) => (
-                  <p key={i}>{item}</p>
+              <div className="space-y-4 md:space-y-6">
+                <div className="space-y-2 text-[#111000]">
+                  {storyData.bottomSection.rightList.map((item, i) => (
+                    <p
+                      key={i}
+                      className="text-sm sm:text-base md:text-lg lg:text-xl text-center md:text-left"
+                    >
+                      {item}
+                    </p>
+                  ))}
+                </div>
+                {storyData.bottomSection.rightParagraphs.map((text, i) => (
+                  <p
+                    key={i}
+                    className="text-sm sm:text-base md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed"
+                  >
+                    {text}
+                  </p>
                 ))}
               </div>
-
-              {storyData.bottomSection.rightParagraphs.map((text, i) => (
-                <p key={i}>{text}</p>
-              ))}
             </div>
           </div>
 
-          <div className="flex justify-center items-center gap-4 relative py-16">
-            {/* Lower flower locator - positioned relative to the quote section */}
+          {/* Quote Section */}
+          <div className="relative mt-12 sm:mt-16 md:mt-20">
             <div
               ref={lowerFlowerLocatorRef}
               className="absolute left-[15%] top-[10%]"
             />
-            <div className="relative z-10 flex flex-col items-center justify-center">
-              <p className="font-serif font-semibold text-[#BC9F31] text-2xl lg:text-3xl pt-4">
+            <div className="flex flex-col items-center space-y-4">
+              <p className="font-serif text-xl sm:text-2xl md:text-3xl text-[#BC9F31] text-center">
                 {storyData.bottomSection.quote}
               </p>
               <img
                 ref={logoRef}
                 src={Vector}
                 alt="Logo"
-                className="w-20 lg:w-24 h-auto"
+                className="w-16 sm:w-18 md:w-20 lg:w-24 h-auto"
               />
             </div>
           </div>

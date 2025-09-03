@@ -218,7 +218,9 @@ export default function HomePage() {
       { ref: contactFormRef, name: "contact" },
       { ref: socialInfoRef, name: "social" },
     ];
-    const observer = new IntersectionObserver(
+
+    // Observer for regular sections
+    const mainObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -226,17 +228,76 @@ export default function HomePage() {
           }
         });
       },
-      { root: null, threshold: 0.4 }
+      {
+        root: null,
+        threshold: 0.9,
+        rootMargin: "0px",
+      }
     );
+
+    // Special observer for OurStory section
+    const ourStoryObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isSmallScreen = window.innerWidth < 768;
+          const isLandscape = window.innerHeight < window.innerWidth;
+
+          // Adjust threshold based on screen orientation and size
+          if (isSmallScreen && isLandscape) {
+            // For landscape mobile, use a lower threshold
+            if (entry.intersectionRatio > 0.2) {
+              setActiveSection(entry.target.dataset.sectionName);
+            }
+          } else {
+            // For portrait and larger screens, use normal threshold
+            if (entry.intersectionRatio > 0.3) {
+              setActiveSection(entry.target.dataset.sectionName);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        // More granular thresholds for smoother detection
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        // Adjust root margin based on screen orientation
+        rootMargin:
+          window.innerHeight < window.innerWidth ? "-5% 0px" : "-10% 0px",
+      }
+    );
+
+    // Add resize handler to update observers when orientation changes
+    const handleResize = () => {
+      if (ourStoryRef.current) {
+        ourStoryObserver.unobserve(ourStoryRef.current);
+        ourStoryObserver.observe(ourStoryRef.current);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Observe sections with appropriate observer
     sections.forEach((section) => {
       if (section.ref.current) {
         section.ref.current.dataset.sectionName = section.name;
-        observer.observe(section.ref.current);
+
+        if (section.name === "ourstory") {
+          ourStoryObserver.observe(section.ref.current);
+        } else {
+          mainObserver.observe(section.ref.current);
+        }
       }
     });
-    return () => observer.disconnect();
+
+    // Cleanup
+    return () => {
+      mainObserver.disconnect();
+      ourStoryObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
+  // Update the scroll handler for better responsiveness
   useEffect(() => {
     const handleScroll = () => {
       if (activeSection === "ourstory" && ourStoryRef.current) {
@@ -245,9 +306,13 @@ export default function HomePage() {
         const scrollPosition = -ourStoryRect.top;
         const scrollRatio =
           scrollPosition / (ourStoryRect.height - viewportHeight);
-        setActiveLocatorIndex(scrollRatio > 0.5 ? 1 : 0);
+
+        // Add debouncing and smoother threshold
+        const threshold = window.innerWidth < 768 ? 0.4 : 0.5;
+        setActiveLocatorIndex(scrollRatio > threshold ? 1 : 0);
       }
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeSection]);
@@ -274,8 +339,15 @@ export default function HomePage() {
         createPortal(
           <div
             ref={flowerRef}
-            className="w-[25%] h-auto absolute opacity-0 pointer-events-none z-40"
-            style={{ willChange: "transform, opacity" }}
+            className="w-[25%] h-auto absolute opacity-0 pointer-events-none"
+            style={{
+              willChange: "transform, opacity",
+              // Dynamically adjust z-index based on active section
+              zIndex:
+                activeSection === "contact" || activeSection === "blog"
+                  ? 30
+                  : 40,
+            }}
           >
             <AnimatedCottonFlower />
           </div>,
@@ -321,7 +393,6 @@ export default function HomePage() {
       <FloatButton.BackTop
         className="fixed bottom-8 right-8 bg-[#BC9F31] hover:bg-[#BC9F31] text-white shadow-lg rounded-full"
         visibilityHeight={400}
-        
       />
     </motion.div>
   );
