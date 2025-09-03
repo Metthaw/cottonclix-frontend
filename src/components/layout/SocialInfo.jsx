@@ -20,7 +20,8 @@ const staticInfo = {
   openingHours: "10:00 am - 10:00 pm",
   phone: "+66 123 4568",
   email: "cottonclix.official@gmail.com",
-  mapLocation: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
+  mapLocation:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
 };
 
 export default function SocialInfo({ flowerLocatorRef }) {
@@ -42,13 +43,13 @@ export default function SocialInfo({ flowerLocatorRef }) {
         };
 
         const formattedLinks = data
-          .filter(link => iconMap[link.title.rendered])
-          .map(link => ({
+          .filter((link) => iconMap[link.title.rendered])
+          .map((link) => ({
             icon: iconMap[link.title.rendered],
             url: link.acf.link_url,
             alt: link.title.rendered,
           }));
-        
+
         setSocialLinks(formattedLinks);
       } catch (error) {
         console.error("Failed to fetch social links for SocialInfo:", error);
@@ -147,7 +148,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
-      className="w-full bg-white py-8 sm:py-12 md:py-16 min-h-[100dvh]"
+      className="w-full bg-white py-8 sm:py-12 md:py-16 min-h-fit"
     >
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start lg:items-center">
@@ -169,8 +170,12 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Address</h3>
-                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.address}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                    Address
+                  </h3>
+                  <p className="text-sm sm:text-base text-stone-600">
+                    {staticInfo.address}
+                  </p>
                 </div>
               </div>
 
@@ -181,8 +186,12 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Opening Hours</h3>
-                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.openingHours}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                    Opening Hours
+                  </h3>
+                  <p className="text-sm sm:text-base text-stone-600">
+                    {staticInfo.openingHours}
+                  </p>
                 </div>
               </div>
 
@@ -193,8 +202,12 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Phone</h3>
-                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.phone}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                    Phone
+                  </h3>
+                  <p className="text-sm sm:text-base text-stone-600">
+                    {staticInfo.phone}
+                  </p>
                 </div>
               </div>
 
@@ -205,14 +218,20 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">Email</h3>
-                  <p className="text-sm sm:text-base text-stone-600">{staticInfo.email}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                    Email
+                  </h3>
+                  <p className="text-sm sm:text-base text-stone-600">
+                    {staticInfo.email}
+                  </p>
                 </div>
               </div>
 
               {/* Social Media Links */}
               <div className="pt-4 sm:pt-6">
-                <h3 className="text-sm sm:text-base font-medium text-stone-700 mb-3">Follow Us</h3>
+                <h3 className="text-sm sm:text-base font-medium text-stone-700 mb-3">
+                  Follow Us
+                </h3>
                 <div className="flex items-center gap-4 sm:gap-5">
                   {socialLinks.map((social) => (
                     <a
