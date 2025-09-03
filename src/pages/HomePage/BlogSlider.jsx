@@ -132,7 +132,8 @@ export default function BlogSlider({ flowerLocatorRef }) {
         className="absolute pointer-events-none 
         top-[5%] sm:top-[8%] md:top-[10%] 
         right-[30%] md:right-[40%] 
-        z-0"
+        z-10
+        "
       />
 
       {/* Background Leaf */}

@@ -345,7 +345,7 @@ export default function HomePage() {
               // Dynamically adjust z-index based on active section
               zIndex:
                 activeSection === "contact" || activeSection === "blog"
-                  ? 30
+                  ? 10
                   : 40,
             }}
           >
