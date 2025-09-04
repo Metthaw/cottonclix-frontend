@@ -1,6 +1,6 @@
 // src/pages/HomePage/ContactForm.jsx
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import element1 from "../../img/element1.png";
 import element5 from "../../img/element5.svg";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +17,7 @@ export default function ContactForm({ flowerLocatorRef }) {
   });
 
   const [status, setStatus] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const mainRef = useRef(null);
   const formRef = useRef(null);
@@ -150,6 +151,19 @@ export default function ContactForm({ flowerLocatorRef }) {
     }
   };
 
+  // Auto-close alert after 5 seconds when status changes
+  useEffect(() => {
+    let timer;
+    if (status) {
+      setShowAlert(true);
+      timer = setTimeout(() => {
+        setShowAlert(false);
+        setStatus("");
+      }, 5000); // 5000ms = 5 seconds
+    }
+    return () => clearTimeout(timer); // Clean up the timer on unmount or when status changes
+  }, [status]);
+
   return (
     <section
       ref={mainRef}
@@ -261,9 +275,13 @@ export default function ContactForm({ flowerLocatorRef }) {
               >
                 Send
               </button>
-              {status && (
+              {showAlert && status && (
                 <Alert
                   closable
+                  onClose={() => {
+                    setShowAlert(false);
+                    setStatus("");
+                  }}
                   message={status}
                   type={
                     status.includes("Message sent successfully!")

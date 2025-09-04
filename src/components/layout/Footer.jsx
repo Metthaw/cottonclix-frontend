@@ -1,8 +1,9 @@
 // src/components/layout/Footer.jsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import lineArtImg from "../../img/element2.svg";
 import paperPlane from "../../img/paperPlane.svg";
+import { Alert } from "antd"; // Import Alert component from Ant Design
 
 const footerData = {
   subscribePlaceholder: "Your E-mail",
@@ -13,13 +14,26 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle, loading, success, error
   const [message, setMessage] = useState("");
+  const [alertVisible, setAlertVisible] = useState(false);
+
+  // Auto-close alert after 5 seconds when it becomes visible
+  useEffect(() => {
+    let timer;
+    if (alertVisible) {
+      timer = setTimeout(() => {
+        setAlertVisible(false);
+      }, 5000); // 5000ms = 5 seconds
+    }
+    return () => clearTimeout(timer); // Clean up the timer on unmount or when alert is hidden
+  }, [alertVisible]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setStatus("loading");
     setMessage("");
+    setAlertVisible(false);
 
-    // --- ⚠️ START: ข้อมูลสำคัญที่คุณได้มาจาก MailPoet ---
+    // --- START: ข้อมูลสำคัญที่คุณได้มาจาก MailPoet ---
     const API_ENDPOINT =
       "https://cms.cottonclix.com/wp-json/myapi/v1/subscribe";
 
@@ -41,14 +55,17 @@ export default function Footer() {
       if (response.ok) {
         setStatus("success");
         setMessage("Thank you for subscribing!");
+        setAlertVisible(true);
         setEmail("");
       } else {
         setStatus("error");
         setMessage("Subscription failed. Please try again.");
+        setAlertVisible(true);
       }
     } catch (error) {
       setStatus("error");
       setMessage("An error occurred. Please check your connection.");
+      setAlertVisible(true);
       console.error("An error occurred:", error);
     }
   };
@@ -59,6 +76,21 @@ export default function Footer() {
       className="w-full bg-white pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8"
     >
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
+        {/* Alert Message */}
+        {alertVisible && (
+          <div className="max-w-5xl mx-auto mb-4">
+            <Alert
+              message={status === "success" ? "Success" : "Error"}
+              description={message}
+              type={status === "success" ? "success" : "error"}
+              showIcon
+              closable
+              afterClose={() => setAlertVisible(false)}
+              className="rounded-lg"
+            />
+          </div>
+        )}
+
         {/* Subscribe Section */}
         <div className="w-full relative max-w-5xl mx-auto bg-[#dad0c6] py-6 sm:py-8 md:py-12 px-4 sm:px-24 md:px-48 rounded-lg sm:rounded-xl flex items-center justify-between mb-8 sm:mb-12 md:mb-16">
           {/* Decorative Elements - Mobile First Approach */}
