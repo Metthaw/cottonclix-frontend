@@ -126,15 +126,13 @@ export default function BlogPage() {
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             onAnimationComplete={() => setIsAnimatedIn(true)}
-            className="container relative mx-auto px-6 py-16 z-50"
+            className="container relative mx-auto px-6 py-16 z-10"
           >
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900">
                 Blogs
               </h1>
-              <p className="mt-4 text-lg text-natural">
-                
-              </p>
+              <p className="mt-4 text-lg text-natural"></p>
             </div>
             <img
               src={element2}
@@ -144,7 +142,7 @@ export default function BlogPage() {
             />
 
             {!loading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 z-50">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 z-10">
                 {posts?.map((post) => (
                   <Link
                     to={`/blog/${post?.id}`}
@@ -178,20 +176,7 @@ export default function BlogPage() {
             )}
 
             {/* Pagination */}
-            <div className="flex justify-center items-center space-x-2 mt-16 z-10 py-28">
-              {/* <span className="px-4 py-2 text-gray-500 cursor-not-allowed">
-            {"<"}
-          </span>
-          <span className="px-4 py-2 bg-primary text-white rounded-md">1</span>
-          <span className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer">
-            2
-          </span>
-          <span className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer">
-            3
-          </span>
-          <span className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-md cursor-pointer">
-            {">"}
-          </span> */}
+            <div className="relative flex justify-center items-center space-x-2 z-10 py-28">
               <ConfigProvider
                 theme={{
                   components: {
@@ -212,7 +197,7 @@ export default function BlogPage() {
               <img
                 src={element5}
                 alt="Branch2 Decoration"
-                className="absolute left-[-15%] bottom-[-15%] -translate-y-1/2 w-2/5 h-[50vh] rotate-[45deg] object-contain -z-10 pointer-events-none"
+                className="absolute left-[-15%] top-[50%] -translate-y-1/2 w-[30%] h-auto rotate-[45deg] object-contain -z-10 pointer-events-none"
               />
             </div>
           </motion.div>

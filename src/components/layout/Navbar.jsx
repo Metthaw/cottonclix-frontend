@@ -203,7 +203,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Layout */}
-        <div className="md:hidden flex items-center justify-between relative z-10 bg-white">
+        <div className="md:hidden flex items-center justify-between relative z-50 bg-white">
           <MobileLogo className="h-12 w-fit" />
 
           <button
