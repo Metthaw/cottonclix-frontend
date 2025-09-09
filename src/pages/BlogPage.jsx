@@ -129,7 +129,7 @@ export default function BlogPage() {
             className="container relative mx-auto px-6 py-16 z-10"
           >
             <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900">
+              <h1 className="text-4xl md:text-5xl font-bold  text-gray-900">
                 Blogs
               </h1>
               <p className="mt-4 text-lg text-natural"></p>

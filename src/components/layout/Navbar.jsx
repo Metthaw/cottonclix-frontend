@@ -192,7 +192,7 @@ const Navbar = () => {
 
   return (
     <header className="w-full bg-white py-2 sm:py-3 px-3 sm:px-2 md:px-4 lg:px-6 relative z-50">
-      <div className="container mx-auto">
+      <div className="container mx-auto font-medium">
         {/* Desktop/Tablet Layout */}
         <div className="hidden md:flex items-center justify-between gap-12 lg:gap-16 xl:gap-20 max-w-[90%] mx-auto">
           {/* Left Menu */}

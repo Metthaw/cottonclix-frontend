@@ -35,7 +35,7 @@ const storyData = {
       "Because we believe the best gifts aren't just objects they're the feelings that make someone smile.",
       "Cottonclix wants to be a small part of those moments — when you want someone to know",
     ],
-    quote: "“I care.”",
+    quote: "“ I care. ”",
     finalLogoUrl: "/src/img/Logo.png",
   },
 };
@@ -329,12 +329,12 @@ export default function OurStory({
               </div>
               <h2
                 ref={subHeaderRef}
-                className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-serif text-center md:text-right"
+                className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-bold  text-center md:text-right "
               >
                 {storyData.part1.heading}
               </h2>
             </div>
-            <p className="text-base sm:text-lg md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-right mt-6 md:mt-6 leading-relaxed max-w-2xl md:max-w-none">
+            <p className="text-base sm:text-lg md:text-lg lg:text-xl  text-center md:text-right mt-6 md:mt-6 leading-relaxed max-w-2xl md:max-w-none">
               {storyData.part1.rightParagraph}
             </p>
             <div
@@ -345,7 +345,7 @@ export default function OurStory({
 
           {/* Left Paragraph */}
           <div className="grid row-span-1 md:col-span-2 order-2 md:order-1 items-start md:my-[50%]">
-            <p className="text-base sm:text-lg md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed max-w-2xl md:max-w-none">
+            <p className="text-base sm:text-lg md:text-lg lg:text-xl  text-center md:text-left leading-relaxed max-w-2xl md:max-w-none">
               {storyData.part1.leftParagraph}
             </p>
             {/* Decorative Branch */}
@@ -373,7 +373,7 @@ export default function OurStory({
               {storyData.bottomSection.leftParagraphs.map((text, i) => (
                 <p
                   key={i}
-                  className="text-sm sm:text-base md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                 >
                   {text}
                 </p>
@@ -404,7 +404,7 @@ export default function OurStory({
                 {storyData.bottomSection.rightParagraphs.map((text, i) => (
                   <p
                     key={i}
-                    className="text-sm sm:text-base md:text-lg lg:text-xl text-[#8D8D8D] text-center md:text-left leading-relaxed"
+                    className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                   >
                     {text}
                   </p>
@@ -420,7 +420,7 @@ export default function OurStory({
               className="absolute left-[15%] top-[10%]"
             />
             <div className="flex flex-col items-center space-y-4">
-              <p className="font-serif text-xl sm:text-2xl md:text-3xl text-[#BC9F31] text-center">
+              <p className="font-bold text-xl sm:text-2xl md:text-3xl text-[#BC9F31] text-center">
                 {storyData.bottomSection.quote}
               </p>
               <img

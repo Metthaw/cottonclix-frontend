@@ -1,4 +1,8 @@
 // tailwind.config.js
+
+import { m } from 'motion/react';
+import { b } from 'motion/react-client';
+
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
@@ -7,12 +11,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // ตั้งค่าให้ฟอนต์ sans-serif (ฟอนต์หลัก) ใช้ 'IBM Plex Sans Thai' เป็นอันดับแรก
-        // และตามด้วยฟอนต์สำรองมาตรฐานของ Tailwind เพื่อความปลอดภัย
-        sans: ['IBM Plex Sans Thai', ...defaultTheme.fontFamily.sans],
-        
-        // ฟอนต์ serif (ถ้าคุณต้องการใช้ในบางจุด)
-        serif: ['Playfair Display', 'serif'],
+         
+        // เราจะตั้งให้ฟอนต์ sans-serif หลักของเว็บคือ IBM Plex Sans Thai
+        // พร้อมมีฟอนต์สำรองเป็น sans-serif ทั่วไป
+         sans: ['IBM Plex Sans Thai', 'sans-serif'],
+        medium: ['IBM Plex Sans Thai Medium', 'sans-serif'], // เพิ่มฟอนต์
+         bold: ['IBM Plex Sans Thai Bold', 'sans-serif'], // เพิ่มฟอนต์ 
+
+        // // ฟอนต์ serif ที่เราเคยคุยกันไว้ก็ยังอยู่
+        serif: ['IBM Plex Sans Thai', 'serif'],
+        // sans: ['"IBM Plex Sans Thai"', "sans-serif"],
+
+        // ฟอนต์ serif ที่เราเคยคุยกันไว้ก็ยังอยู่
+         
       },
     },
   },
