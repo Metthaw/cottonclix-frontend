@@ -114,31 +114,66 @@ const Navbar = () => {
     switch (item) {
       case "Our Story":
         return (
-          <Link key={item} to="/about" className={className}>
+          <Link
+            key={item}
+            to="/about"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
             {item}
           </Link>
         );
       case "Blog":
         return (
-          <Link key={item} to="/blog" className={className}>
+          <Link
+            key={item}
+            to="/blog"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
             {item}
           </Link>
         );
       case "Contact":
         return (
-          <a key={item} href="/#contact-form" className={className}>
+          <a
+            key={item}
+            href="/#contact-form"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
             {item}
           </a>
         );
       case "Subscribe":
         return (
-          <a key={item} href="/#subscribe-form" className={className}>
+          <a
+            key={item}
+            href="/#subscribe-form"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
             {item}
           </a>
         );
       case "Index":
         return (
-          <Link key={item} to="/index" className={className}>
+          <Link
+            key={item}
+            to="/index"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
             {item}
           </Link>
         );
