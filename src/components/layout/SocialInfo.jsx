@@ -156,7 +156,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
           <div className="w-full max-w-xl mx-auto lg:mx-0">
             <h2
               ref={headerRef}
-              className="text-2xl sm:text-3xl md:text-4xl font-semibold text-stone-800 mb-6 sm:mb-8 text-center lg:text-left"
+              className="text-2xl sm:text-3xl md:text-4xl font-semibold  mb-6 sm:mb-8 text-center lg:text-left"
             >
               Contact
             </h2>
@@ -170,10 +170,10 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-auto sm:w-5 h-auto sm:h-5 flex-shrink-0 "
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                  <h3 className="text-sm sm:text-base font-bold ">
                     Address
                   </h3>
-                  <p className="text-sm sm:text-base text-stone-600">
+                  <p className="text-sm sm:text-base ">
                     {staticInfo.address}
                   </p>
                 </div>
@@ -186,10 +186,10 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                  <h3 className="text-sm sm:text-base font-bold ">
                     Opening Hours
                   </h3>
-                  <p className="text-sm sm:text-base text-stone-600">
+                  <p className="text-sm sm:text-base ">
                     {staticInfo.openingHours}
                   </p>
                 </div>
@@ -202,10 +202,10 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                  <h3 className="text-sm sm:text-base font-bold ">
                     Phone
                   </h3>
-                  <p className="text-sm sm:text-base text-stone-600">
+                  <p className="text-sm sm:text-base ">
                     {staticInfo.phone}
                   </p>
                 </div>
@@ -218,10 +218,10 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-stone-700">
+                  <h3 className="text-sm sm:text-base font-bold ">
                     Email
                   </h3>
-                  <p className="text-sm sm:text-base text-stone-600">
+                  <p className="text-sm sm:text-base ">
                     {staticInfo.email}
                   </p>
                 </div>
@@ -229,7 +229,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
 
               {/* Social Media Links */}
               <div className="pt-4 sm:pt-6">
-                <h3 className="text-sm sm:text-base font-medium text-stone-700 mb-3">
+                <h3 className="text-sm sm:text-base font-bold  mb-3">
                   Follow Us
                 </h3>
                 <div className="flex items-center gap-4 sm:gap-5">

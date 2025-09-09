@@ -156,7 +156,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
         {/* Heading */}
         <h2
           className="text-xl sm:text-2xl md:text-4xl lg:text-5xl 
-          font-serif text-amber-800 text-center 
+          font-bold text-amber-800 text-center 
           mb-3 sm:mb-4 md:mb-8 lg:mb-12"
         >
           From Our Journal

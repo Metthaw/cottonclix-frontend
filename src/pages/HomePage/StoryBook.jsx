@@ -135,11 +135,11 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
       />
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
-        <div ref={detailRef} className="text-left p-4">
-          <h2 className="text-4xl font-serif text-primary mb-6">
+        <div ref={detailRef} className="text-left p-4 ml">
+          <h2 className="text-4xl font-sans text-primary mb-6">
             {collectionData?.storyHeading}
           </h2>
-          <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-auto pr-4">
+          <div className="space-y-4  text-base text-natural max-h-[60vh]  pr-80">
             <p style={{ whiteSpace: "pre-wrap" }}>
               {collectionData?.storyParagraphs}
             </p>
