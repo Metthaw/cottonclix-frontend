@@ -125,7 +125,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
   return (
     <section
       ref={mainRef}
-      className="w-full min-h-fit relative flex items-center py-20 overflow-hidden"
+      className="w-full min-h-fit relative flex items-center py-20 overflow-hidden mt-12"
     >
       <img
         ref={leavesRef}
@@ -133,6 +133,14 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
         alt="Decorative Leaves"
         className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
       />
+      <a
+          href="https://lin.ee/iv9KnOe"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-5 right-5 z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+        >
+          Shop Now
+      </a>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4 ml">
@@ -197,14 +205,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
                           alt="Story page - right"
                           className="w-full h-full object-cover"
                         />
-                        <a
-                          href="https://lin.ee/iv9KnOe"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute bottom-5 right-5 z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
-                        >
-                          Shop Now
-                        </a>
+                       
                       </Page>,
                     ])}
                   </HTMLFlipBook>

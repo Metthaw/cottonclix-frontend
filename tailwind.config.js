@@ -5,6 +5,7 @@ import { b } from 'motion/react-client';
 
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -24,7 +25,6 @@ export default {
         // ฟอนต์ serif ที่เราเคยคุยกันไว้ก็ยังอยู่
          
       },
-      
     },
   },
   plugins: [],
