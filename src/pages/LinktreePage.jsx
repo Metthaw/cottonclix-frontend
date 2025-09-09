@@ -185,7 +185,7 @@ export default function LinktreePage() {
             handleBlur();
           }
         },
-        { threshold: 0.4 }
+        { threshold: 0.2 }
       );
 
       observer.observe(mainRef.current);
@@ -258,7 +258,7 @@ export default function LinktreePage() {
                     href={link.url} // ใช้ URL ที่มาจาก WordPress
                     target="_blank" // เปิดในแท็บใหม่
                     rel="noopener noreferrer"
-                    className="bg-stone-100 p-4 rounded-full flex items-center justify-center text-lg font-semibold hover:bg-stone-200 transition-colors"
+                    className="bg-stone-100 p-4 rounded-full flex items-center justify-center z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
                   >
                     <span>{link.name}</span>
                   </a>
@@ -270,19 +270,19 @@ export default function LinktreePage() {
               ref={leavesRef}
               src={leaves2Img}
               alt="Decorative Leaves"
-              className="absolute right-[-10%] top-[30%] scale-y-[-1] opacity-0 -translate-y-1/2 w-2/5 h-[60vh] object-contain pointer-events-none"
+              className="absolute right-[0%] top-[30%] scale-y-[-1] opacity-0 -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
             />
             <img
               ref={flowerRef}
               src={cottonFlowerImg}
               alt="Cotton Flower"
-              className="absolute right-[15%] bottom-[-40%] opacity-0 -translate-y-1/2 w-2/5 h-[10vh] object-contain  pointer-events-none"
+              className="absolute right-[15%] top-[100%] opacity-0 -translate-y-1/2 w-[10%] h-auto object-contain  pointer-events-none"
             />
             <img
               ref={branchRef}
               src={element5}
               alt="Branch2 Decoration"
-              className="absolute left-[-10%] bottom-[-100%] rotate-[45deg] opacity-0 -translate-y-1/2 w-2/5 h-[40vh] object-contain pointer-events-none"
+              className="absolute left-[0%] top-[80%] rotate-[45deg] opacity-0 -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
             />
           </motion.div>
         )}
