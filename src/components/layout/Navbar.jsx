@@ -140,29 +140,25 @@ const Navbar = () => {
         );
       case "Contact":
         return (
-          <a
+          <Link
             key={item}
-            href="/#contact-form"
+            to="/#contact-form"
             className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
+            onClick={() => setIsMenuOpen(false)}
           >
             {item}
-          </a>
+          </Link>
         );
       case "Subscribe":
         return (
-          <a
+          <Link
             key={item}
-            href="/#subscribe-form"
+            to="/#subscribe-form"
             className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
+            onClick={() => setIsMenuOpen(false)}
           >
             {item}
-          </a>
+          </Link>
         );
       case "Index":
         return (
