@@ -137,7 +137,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
           href="https://lin.ee/iv9KnOe"
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute bottom-5 right-5 z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+          className="absolute bottom-[5%] right-[5%]  md:bottom-[10%] md:right-[10%] z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
         >
           Shop Now
       </a>
@@ -147,7 +147,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
           <h2 className="text-4xl font-sans text-primary mb-6">
             {collectionData?.storyHeading}
           </h2>
-          <div className="space-y-4  text-base text-natural max-h-[60vh]  pr-80">
+          <div className="space-y-4  text-base text-natural max-h-[60vh]">
             <p style={{ whiteSpace: "pre-wrap" }}>
               {collectionData?.storyParagraphs}
             </p>
