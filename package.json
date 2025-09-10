@@ -20,6 +20,7 @@
     "motion": "^12.23.11",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-ga4": "^2.1.0",
     "react-pageflip": "^2.0.3",
     "react-router-dom": "^7.6.3",
     "swiper": "^11.2.10"
