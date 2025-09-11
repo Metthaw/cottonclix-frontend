@@ -4,7 +4,7 @@ import openBookImage from "../../img/13.svg";
 import leaves2Img from "../../img/16.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Button } from "antd";
+import { Button, Skeleton } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 // Helper components remain unchanged
@@ -32,7 +32,7 @@ const Page = React.forwardRef((props, ref) => {
 });
 Page.displayName = "Page";
 
-export default function StoryBook({ collectionData, flowerLocatorRef }) {
+export default function StoryBook({ collectionData, flowerLocatorRef, loading = false }) {
   const mainRef = useRef(null);
   const bookRef = useRef(null);
   const leavesRef = useRef(null);
@@ -111,15 +111,72 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
     flipBookRef.current?.pageFlip()?.flipNext();
   };
 
+  // Skeleton content
+  const StoryBookSkeleton = () => (
+    <section 
+      ref={mainRef}
+      className="w-full min-h-fit relative flex items-center py-20 overflow-hidden mt-12"
+    >
+      <Skeleton.Image 
+        active 
+        className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
+      />
+      <Skeleton.Button 
+        active 
+        className="absolute bottom-[5%] right-[5%] md:bottom-[10%] md:right-[10%] z-10 w-32 h-10 rounded-full"
+      />
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Text side skeleton */}
+        <div ref={detailRef} className="text-left p-4 ml">
+          <Skeleton.Input 
+            active 
+            size="large" 
+            className="w-3/4 h-12 mb-6"
+          />
+          <div className="space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <Skeleton 
+                key={i} 
+                active 
+                paragraph={{ rows: 2, width: ['100%', '90%'] }} 
+                className="w-full"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Flip book side skeleton */}
+        <div className="relative w-full aspect-[4/3]">
+          <div className="relative w-full h-full" ref={bookRef}>
+            <Skeleton.Image 
+              active 
+              className="w-full h-full object-contain"
+            />
+            <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%] bg-gray-100 rounded-lg">
+              <Skeleton.Image 
+                active 
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  // if (!collectionData) {
+  //   return (
+  //     <section
+  //       ref={mainRef}
+  //       className="w-full min-h-screen flex items-center justify-center"
+  //     >
+  //       <p>Select a collection to read the story.</p>
+  //     </section>
+  //   );
+  // }
+
   if (!collectionData) {
-    return (
-      <section
-        ref={mainRef}
-        className="w-full min-h-screen flex items-center justify-center"
-      >
-        <p>Select a collection to read the story.</p>
-      </section>
-    );
+    return <StoryBookSkeleton />;
   }
 
   return (
@@ -134,12 +191,12 @@ export default function StoryBook({ collectionData, flowerLocatorRef }) {
         className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
       />
       <a
-          href="https://lin.ee/iv9KnOe"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute bottom-[5%] right-[5%]  md:bottom-[10%] md:right-[10%] z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
-        >
-          Shop Now
+        href="https://lin.ee/iv9KnOe"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-[5%] right-[5%] md:bottom-[10%] md:right-[10%] z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+      >
+        Shop Now
       </a>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}

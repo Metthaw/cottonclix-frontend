@@ -6,14 +6,35 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import leaves2Img from "../../img/16.svg";
-
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Skeleton } from "antd";
+import { Link } from "react-router-dom";
 
-// 1. นำเข้าข้อมูลจาก mockData.js และ Link จาก react-router-dom
 const API_URL =
   "https://cms.cottonclix.com/wp-json/wp/v2/posts?per_page=6&_embed";
-import { Link } from "react-router-dom";
+
+// Skeleton component for blog posts
+const BlogPostSkeleton = () => (
+  <div className="w-full aspect-[4/5] sm:aspect-[3/4] relative rounded-lg overflow-hidden bg-gray-100">
+    <Skeleton.Image 
+      active 
+      className="!w-full !h-full [&>span]:!w-full [&>span]:!h-full"
+    />
+    <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3 md:p-4">
+      <Skeleton.Input 
+        active 
+        size="small" 
+        className="!w-3/4 !h-3 sm:!h-3.5 md:!h-4 mb-1.5 md:mb-2"
+      />
+      <Skeleton.Input 
+        active 
+        size="small" 
+        className="!w-1/2 !h-3 sm:!h-3.5 md:!h-4"
+      />
+    </div>
+  </div>
+);
 
 export default function BlogSlider({ flowerLocatorRef }) {
   const mainRef = useRef(null);
@@ -46,61 +67,33 @@ export default function BlogSlider({ flowerLocatorRef }) {
       const handleFocus = () => {
         gsap.fromTo(
           leavesRef.current,
-          {
-            x: -80,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
+          { x: -80, duration: 1, ease: "sine.inOut" },
+          { x: 0, duration: 1, ease: "sine.inOut" }
         );
 
-        gsap.fromTo(
-          sliderRef.current,
-          {
-            x: -80,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        if (sliderRef.current) {
+          gsap.fromTo(
+            sliderRef.current,
+            { x: -80, duration: 1, ease: "sine.inOut" },
+            { x: 0, duration: 1, ease: "sine.inOut" }
+          );
+        }
       };
 
       const handleBlur = () => {
         gsap.fromTo(
           leavesRef.current,
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: -80,
-            duration: 1,
-            ease: "sine.inOut",
-          }
+          { x: 0, duration: 1, ease: "sine.inOut" },
+          { x: -80, duration: 1, ease: "sine.inOut" }
         );
 
-        gsap.fromTo(
-          sliderRef.current,
-          {
-            x: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: -80,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        if (sliderRef.current) {
+          gsap.fromTo(
+            sliderRef.current,
+            { x: 0, duration: 1, ease: "sine.inOut" },
+            { x: -80, duration: 1, ease: "sine.inOut" }
+          );
+        }
       };
 
       const observer = new IntersectionObserver(
@@ -111,29 +104,77 @@ export default function BlogSlider({ flowerLocatorRef }) {
             handleBlur();
           }
         },
-        { threshold: 0.4 } // fire when 20% of element is visible
+        { threshold: 0.4 }
       );
 
       observer.observe(mainEl);
-
       return () => observer.disconnect();
     },
     { scope: mainRef }
-  ); // ✅ no dependencies
+  );
+
+  // Skeleton loading state
   if (loading) {
-    return <section className="w-full py-20 text-center">Loading...</section>;
+    return (
+      <section ref={mainRef} className="relative w-full min-h-[600px] bg-white py-12 md:py-16 lg:py-20">
+        {/* Background Leaf */}
+        <div
+          ref={leavesRef}
+          className="absolute left-[-5%] md:left-[-10%] top-1/2 -translate-y-1/2 
+          w-[60%] md:w-2/5 h-auto pointer-events-none z-0"
+        >
+          <Skeleton.Image 
+            active 
+            className="!w-full !h-auto aspect-square rotate-[18deg] scale-x-[-1]"
+          />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          {/* Heading Skeleton */}
+          <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+            <Skeleton.Input 
+              active 
+              className="!w-64 !h-10 sm:!h-12 md:!h-14 lg:!h-16 mx-auto"
+            />
+          </div>
+
+          {/* Swiper Skeleton */}
+          <div className="w-full max-w-7xl mx-auto">
+            <div 
+              ref={sliderRef}
+              className="swiper-container !overflow-visible"
+            >
+              <div className="swiper-wrapper">
+                {[...Array(4)].map((_, index) => (
+                  <div 
+                    key={index} 
+                    className="swiper-slide !h-auto !flex items-stretch"
+                    style={{
+                      width: 'calc(100% / 1.2)',
+                      padding: '0 6px'
+                    }}
+                  >
+                    <BlogPostSkeleton />
+                  </div>
+                ))}
+              </div>
+              <div className="swiper-pagination !relative !mt-6"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
-    <section ref={mainRef} className="relative w-full min-h-fit bg-white">
-      {/* Flower Locator - Move it first in DOM order */}
+    <section ref={mainRef} className="relative w-full min-h-fit bg-white py-12">
+      {/* Flower Locator */}
       <div
         ref={flowerLocatorRef}
         className="absolute pointer-events-none 
         top-[5%] sm:top-[8%] md:top-[10%] 
         right-[30%] md:right-[40%] 
-        z-10
-        "
+        z-10"
       />
 
       {/* Background Leaf */}
@@ -151,7 +192,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
         z-0"
       />
 
-      {/* Content Container - Higher z-index */}
+      {/* Content Container */}
       <div className="relative z-10 container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Heading */}
         <h2
@@ -163,7 +204,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
         </h2>
 
         {/* Swiper Container */}
-        <div className="w-full max-w-7xl mx-auto z-50">
+        <div className="w-full max-w-7xl mx-auto">
           <Swiper
             ref={sliderRef}
             modules={[Pagination]}
@@ -188,7 +229,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
                 centeredSlides: false,
               },
             }}
-            className="!pt-2 !pb-8 md:!pb-12 !z-50"
+            className="!pt-2 !pb-8 md:!pb-12"
           >
             {posts.map((post) => (
               <SwiperSlide key={post.id}>

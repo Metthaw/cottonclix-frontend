@@ -8,7 +8,7 @@ import "swiper/css/effect-fade";
 import leavesImg from "../../img/element4.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Carousel } from "antd";
+import { Carousel, Skeleton } from "antd";
 
 const carouselStyles = `
  .custom-carousel .slick-dots {
@@ -65,7 +65,7 @@ const carouselStyles = `
 // รับ props: collections, loading, และ onOpenBook
 const CatalogSlider = ({
   collections,
-  loading,
+  loading = false,
   onOpenBook,
   flowerLocatorRef,
 }) => {
@@ -198,13 +198,52 @@ const CatalogSlider = ({
     }
   }, [collections]);
 
-  // if (loading) {
-  //   return (
-  //     <section className="w-full bg-white py-20 lg:py-24 text-center">
-  //       Loading...
-  //     </section>
-  //   );
-  // }
+  // Skeleton content
+  const SkeletonContent = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+      {/* Left side - Image Skeleton */}
+      <div className="w-full h-auto order-2 md:order-1 max-w-full mx-auto">
+        <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
+          <Skeleton.Image 
+            active 
+            className="w-[60%] max-w-full h-auto object-contain rotate-[18deg]"
+            style={{ transform: 'scaleX(-1)' }}
+          />
+        </div>
+        <div className="z-30 w-full">
+          <Skeleton.Image 
+            active 
+            className="w-full h-[60vh] max-h-[60vh] object-contain"
+          />
+        </div>
+      </div>
+      
+      {/* Right side - Text Skeleton */}
+      <div className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2">
+        <div className="flex flex-col w-full">
+          <Skeleton.Input 
+            active 
+            size="large" 
+            className="w-3/4 h-12 mb-4"
+          />
+          <Skeleton.Input 
+            active 
+            size="default" 
+            className="w-5/6 h-8 mb-6"
+          />
+          <Skeleton.Button 
+            active 
+            size="large" 
+            className="w-32 h-12 mt-6"
+          />
+        </div>
+        <div 
+          ref={flowerLocatorRef}
+          className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
+        />
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     const styleElement = document.createElement("style");
@@ -224,72 +263,76 @@ const CatalogSlider = ({
       <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
         <div className="flex relative md:items-center w-full md:aspect-[3/1]">
           <div className="w-full px-4 md:px-14 py-8 md:py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <div
-                ref={carouselRef}
-                className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
-              >
-                <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
-                  <img
-                    ref={leavesRef}
-                    src={leavesImg}
-                    alt="Decorative Leaves"
-                    className="w-[60%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+            {loading ? (
+              <SkeletonContent />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div
+                  ref={carouselRef}
+                  className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
+                >
+                  <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
+                    <img
+                      ref={leavesRef}
+                      src={leavesImg}
+                      alt="Decorative Leaves"
+                      className="w-[60%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+                    />
+                  </div>
+                  <Carousel
+                    autoplay={false}
+                    draggable
+                    slidesToShow={1}
+                    slidesToScroll={1}
+                    infinite={false}
+                    afterChange={(current) => {
+                      if (collections?.length > 0) {
+                        setActiveCollection(collections[current]);
+                      }
+                    }}
+                    className="z-30 custom-carousel w-full"
+                  >
+                    {collections?.map((collection) => (
+                      <div
+                        key={collection?.id}
+                        className="!flex items-center justify-center"
+                      >
+                        <img
+                          src={collection?.coverImage}
+                          alt={collection?.name}
+                          className="w-full h-auto max-h-[60vh] object-contain"
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                </div>
+                <div
+                  ref={detailRef}
+                  className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2"
+                >
+                  {activeCollection?.id && (
+                    <div className="flex flex-col">
+                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-amber-800 break-words">
+                        {activeCollection?.name}
+                      </h2>
+                      <p className="text-xl lg:text-2xl text-amber-600 mt-4 break-words">
+                        {activeCollection?.subtitle}
+                      </p>
+                      <button
+                        onClick={() => onOpenBook(activeCollection?.id)}
+                        className="mt-6 inline-block text-amber-800 hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
+                      >
+                        {"<<< Open"}
+                      </button>
+                    </div>
+                  )}
+                  <div
+                    ref={flowerLocatorRef}
+                    className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
                   />
                 </div>
-                <Carousel
-                  autoplay={false}
-                  draggable
-                  slidesToShow={1}
-                  slidesToScroll={1}
-                  infinite={false}
-                  afterChange={(current) => {
-                    if (collections?.length > 0) {
-                      setActiveCollection(collections[current]);
-                    }
-                  }}
-                  className="z-30 custom-carousel w-full"
-                >
-                  {collections?.map((collection) => (
-                    <div
-                      key={collection?.id}
-                      className="!flex items-center justify-center"
-                    >
-                      <img
-                        src={collection?.coverImage}
-                        alt={collection?.name}
-                        className="w-full h-auto max-h-[60vh] object-contain"
-                      />
-                    </div>
-                  ))}
-                </Carousel>
               </div>
-              <div
-                ref={detailRef}
-                className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2"
-              >
-                {activeCollection?.id && (
-                  <div className="flex flex-col">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-amber-800 break-words">
-                      {activeCollection?.name}
-                    </h2>
-                    <p className="text-xl lg:text-2xl text-amber-600 mt-4 break-words">
-                      {activeCollection?.subtitle}
-                    </p>
-                    <button
-                      onClick={() => onOpenBook(activeCollection?.id)}
-                      className="mt-6 inline-block text-amber-800 hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
-                    >
-                      {"<<< Open"}
-                    </button>
-                  </div>
-                )}
-                <div
-                  ref={flowerLocatorRef}
-                  className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
