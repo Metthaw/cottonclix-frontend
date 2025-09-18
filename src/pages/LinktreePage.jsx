@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/Logo.png";
 import SocialInfo from "../components/layout/SocialInfo";
-
+import { Skeleton } from "antd";
 import element5 from "../img/element5.svg";
 import cottonFlowerImg from "../img/4.png";
 import leaves2Img from "../img/16.svg";
@@ -21,12 +21,14 @@ export default function LinktreePage() {
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAnimatedIn, setIsAnimatedIn] = useState(false);
+  const [linksRendered, setLinksRendered] = useState(false);
 
   const mainRef = useRef(null);
   const logoRef = useRef(null);
   const flowerRef = useRef(null);
   const leavesRef = useRef(null);
   const branchRef = useRef(null);
+  const linksContainerRef = useRef(null);
 
   useGSAP(
     () => {
@@ -185,7 +187,7 @@ export default function LinktreePage() {
             handleBlur();
           }
         },
-        { threshold: 0.2 }
+        { threshold: 0.3 }
       );
 
       observer.observe(mainRef.current);
@@ -199,15 +201,21 @@ export default function LinktreePage() {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
+        setLoading(true);
         const response = await fetch(API_URL);
         const data = await response.json();
-        // จัดระเบียบข้อมูลให้ใช้งานง่าย
+
+        // Map ข้อมูลจาก API ให้เป็นรูปแบบที่ต้องการ
         const formattedLinks = data.map((item) => ({
           id: item.id,
           name: item.title.rendered,
-          url: item.acf.link_url,
+          url: item.acf?.link_url || "#",
         }));
+
         setLinks(formattedLinks);
+
+        // Wait for the next tick to ensure the DOM is updated
+        await new Promise((resolve) => setTimeout(resolve, 0));
       } catch (error) {
         console.error("Error fetching links:", error);
       } finally {
@@ -218,29 +226,54 @@ export default function LinktreePage() {
     fetchLinks();
   }, []);
 
+  // Effect to track when links are rendered
+  useEffect(() => {
+    if (!loading && links.length > 0 && linksContainerRef.current) {
+      // Use requestAnimationFrame to ensure the DOM has been updated
+      requestAnimationFrame(() => {
+        setLinksRendered(true);
+      });
+    }
+  }, [loading, links]);
+
+  // Skeleton for the link items
+  const SkeletonLinkItem = () => (
+    <div className="bg-stone-100 p-4 rounded-full flex items-center justify-center h-14">
+      <Skeleton.Input active className="w-full h-6" />
+    </div>
+  );
+
+  // Skeleton for the header
+  const SkeletonHeader = () => (
+    <div className="text-center mb-12">
+      <Skeleton.Avatar
+        active
+        size={96}
+        shape="square"
+        className="mx-auto mb-4"
+      />
+    </div>
+  );
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -30 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="bg-white py-16 overflow-hidden"
-    >
+    <div className="bg-white py-16 overflow-hidden">
       <AnimatePresence mode="wait">
-        {!loading && (
-          <motion.div
-            ref={mainRef}
-            key="blog-grid"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            onAnimationComplete={() => setIsAnimatedIn(true)}
-            className="relative my-16"
-          >
-            <div className="container mx-auto px-6 max-w-4xl">
-              {/* --- Header: โลโก้และชื่อแบรนด์ --- */}
-              <div ref={logoRef} className="text-center mb-12 opacity-0">
+        <motion.div
+          ref={mainRef}
+          key="linktree-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          onAnimationComplete={() => setIsAnimatedIn(true)}
+          className="relative my-16"
+        >
+          <div className="container mx-auto px-6 max-w-4xl">
+            {/* Header */}
+            {loading ? (
+              <SkeletonHeader />
+            ) : (
+              <div ref={logoRef} className="text-center mb-12">
                 <Link to="/">
                   <img
                     src={logo}
@@ -249,47 +282,59 @@ export default function LinktreePage() {
                   />
                 </Link>
               </div>
+            )}
 
-              {/* --- Links Grid: แสดงผลข้อมูลจาก State --- */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-16">
-                {links.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.url} // ใช้ URL ที่มาจาก WordPress
-                    target="_blank" // เปิดในแท็บใหม่
-                    rel="noopener noreferrer"
-                    className="bg-stone-100 p-4 rounded-full flex items-center justify-center z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
-                  >
-                    <span>{link.name}</span>
-                  </a>
-                ))}
-              </div>
-              <div />
+            {/* Links Grid */}
+            <div
+              ref={linksContainerRef}
+              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-16"
+            >
+              {loading
+                ? Array(4)
+                    .fill()
+                    .map((_, index) => <SkeletonLinkItem key={index} />)
+                : links.map((link) => (
+                    <a
+                      key={link.id}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-stone-100 p-4 rounded-full flex items-center justify-center z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
+                    >
+                      <span>{link.name}</span>
+                    </a>
+                  ))}
             </div>
-            <img
-              ref={leavesRef}
-              src={leaves2Img}
-              alt="Decorative Leaves"
-              className="absolute right-[0%] top-[30%] scale-y-[-1] opacity-0 -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
-            />
-            <img
-              ref={flowerRef}
-              src={cottonFlowerImg}
-              alt="Cotton Flower"
-              className="absolute right-[15%] top-[100%] opacity-0 -translate-y-1/2 w-[10%] h-auto object-contain  pointer-events-none"
-            />
-            <img
-              ref={branchRef}
-              src={element5}
-              alt="Branch2 Decoration"
-              className="absolute left-[0%] top-[80%] rotate-[45deg] opacity-0 -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
-            />
-          </motion.div>
-        )}
+
+            {/* Decorative Elements - Only show when links are rendered */}
+            {linksRendered && (
+              <>
+                <img
+                  ref={leavesRef}
+                  src={leaves2Img}
+                  alt="Decorative Leaves"
+                  className="absolute right-[0%] top-[30%] scale-y-[-1] -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
+                />
+                <img
+                  ref={flowerRef}
+                  src={cottonFlowerImg}
+                  alt="Cotton Flower"
+                  className="absolute right-[15%] top-[100%] -translate-y-1/2 w-[10%] h-auto object-contain pointer-events-none"
+                />
+                <img
+                  ref={branchRef}
+                  src={element5}
+                  alt="Branch2 Decoration"
+                  className="absolute left-[0%] top-[80%] rotate-[45deg] -translate-y-1/2 w-[20%] h-auto object-contain pointer-events-none"
+                />
+              </>
+            )}
+          </div>
+        </motion.div>
       </AnimatePresence>
       <div>
         <SocialInfo />
       </div>
-    </motion.div>
+    </div>
   );
 }

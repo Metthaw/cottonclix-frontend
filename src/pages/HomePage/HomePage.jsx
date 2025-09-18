@@ -230,7 +230,7 @@ export default function HomePage() {
       },
       {
         root: null,
-        threshold: 0.9,
+        threshold: 0.7,
         rootMargin: "0px",
       }
     );

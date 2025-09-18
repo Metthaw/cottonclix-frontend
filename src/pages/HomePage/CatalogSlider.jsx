@@ -276,7 +276,7 @@ const CatalogSlider = ({
                       ref={leavesRef}
                       src={leavesImg}
                       alt="Decorative Leaves"
-                      className="w-[60%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+                      className="w-[50%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
                     />
                   </div>
                   <Carousel
