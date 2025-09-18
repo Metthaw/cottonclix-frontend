@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logoSrc from "../../img/Group 8.svg";
-import logoMobileSrc from "../../img/Logo.png";
+import logoMobileSrc from "../../img/LogoMobile.svg";
 import facebookIcon from "../../img/icon-navbar.svg";
 import instagramIcon from "../../img/icon-navbar-1.svg";
 import lineIcon from "../../img/icon-navbar-2.svg";
@@ -249,12 +249,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <div
           ref={menuRef}
-          className="md:hidden absolute left-0 right-0 w-full bg-white"
-          style={{
-            boxShadow:
-              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-            display: "none",
-          }}
+          className="md:hidden absolute w-full bg-white shadow-lg hidden"
         >
           <div className="container mx-auto px-4 pt-2 pb-6 border-t border-gray-200">
             <nav className="flex flex-col space-y-4 text-lg">

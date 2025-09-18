@@ -32,76 +32,98 @@ const Page = React.forwardRef((props, ref) => {
 });
 Page.displayName = "Page";
 
-export default function StoryBook({ collectionData, flowerLocatorRef, loading = false }) {
+export default function StoryBook({
+  collectionData,
+  flowerLocatorRef,
+  loading = false,
+}) {
   const mainRef = useRef(null);
   const bookRef = useRef(null);
   const leavesRef = useRef(null);
   const detailRef = useRef(null);
   const flipBookRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if screen is mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // md breakpoint
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   useGSAP(
     () => {
       const mainEl = mainRef.current;
       if (!mainEl) return;
+
       const handleFocus = () => {
-        gsap.fromTo(
-          leavesRef.current,
-          { x: 80, duration: 1, ease: "sine.inOut" },
-          { x: 0, duration: 1, ease: "sine.inOut" }
-        );
-        gsap.fromTo(
-          bookRef.current,
-          { x: 200, duration: 1, ease: "sine.inOut" },
-          { x: 0, duration: 1, ease: "sine.inOut" }
-        );
-        gsap.fromTo(
-          detailRef.current,
-          { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" },
-          { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }
-        );
+        if (leavesRef.current) {
+          gsap.fromTo(
+            leavesRef.current,
+            { x: 80, duration: 1, ease: "sine.inOut" },
+            { x: 0, duration: 1, ease: "sine.inOut" }
+          );
+        }
+
+        if (bookRef.current) {
+          gsap.fromTo(
+            bookRef.current,
+            { x: 200, duration: 1, ease: "sine.inOut" },
+            { x: 0, duration: 1, ease: "sine.inOut" }
+          );
+        }
+
+        if (detailRef.current) {
+          gsap.fromTo(
+            detailRef.current,
+            { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" },
+            { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }
+          );
+        }
       };
+
       const handleBlur = () => {
-        gsap.fromTo(
-          leavesRef.current,
-          { x: 0, duration: 1, ease: "sine.inOut" },
-          { x: 80, duration: 1, ease: "sine.inOut" }
-        );
-        gsap.fromTo(
-          bookRef.current,
-          { x: 0, duration: 1, ease: "sine.inOut" },
-          { x: 200, duration: 1, ease: "sine.inOut" }
-        );
-        gsap.fromTo(
-          detailRef.current,
-          { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" },
-          { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }
-        );
+        if (leavesRef.current) {
+          gsap.fromTo(
+            leavesRef.current,
+            { x: 0, duration: 1, ease: "sine.inOut" },
+            { x: 80, duration: 1, ease: "sine.inOut" }
+          );
+        }
+
+        if (bookRef.current) {
+          gsap.fromTo(
+            bookRef.current,
+            { x: 0, duration: 1, ease: "sine.inOut" },
+            { x: 200, duration: 1, ease: "sine.inOut" }
+          );
+        }
+
+        if (detailRef.current) {
+          gsap.fromTo(
+            detailRef.current,
+            { x: 0, y: 0, opacity: 1, duration: 1, ease: "sine.inOut" },
+            { y: 200, opacity: 0, duration: 1, ease: "sine.inOut" }
+          );
+        }
       };
+
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) handleFocus();
-          else handleBlur();
+          if (entry.isIntersecting) {
+            handleFocus();
+          } else {
+            handleBlur();
+          }
         },
-        { threshold: 0.3 }
+        { threshold: 0.2 }
       );
+
       observer.observe(mainEl);
       return () => observer.disconnect();
     },
     { scope: mainRef }
   );
+
+  useEffect(() => {
+    // Hide skeleton after initial render to allow animations to work
+    if (loading === false) {
+      setShowSkeleton(false);
+    }
+  }, [loading]);
 
   const handlePrevPage = () => {
     flipBookRef.current?.pageFlip()?.flipPrev();
@@ -111,72 +133,48 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
     flipBookRef.current?.pageFlip()?.flipNext();
   };
 
-  // Skeleton content
-  const StoryBookSkeleton = () => (
-    <section 
-      ref={mainRef}
-      className="w-full min-h-fit relative flex items-center py-20 overflow-hidden mt-12"
-    >
-      <Skeleton.Image 
-        active 
-        className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
-      />
-      <Skeleton.Button 
-        active 
-        className="absolute bottom-[5%] right-[5%] md:bottom-[10%] md:right-[10%] z-10 w-32 h-10 rounded-full"
-      />
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-        {/* Text side skeleton */}
-        <div ref={detailRef} className="text-left p-4 ml">
-          <Skeleton.Input 
-            active 
-            size="large" 
-            className="w-3/4 h-12 mb-6"
+  if (!collectionData) {
+    return (
+      <section
+        ref={mainRef}
+        className="w-full min-h-fit relative flex items-center py-20 overflow-hidden mt-12"
+      >
+        <div className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto z-0 rotate-[18deg] pointer-events-none">
+          <Skeleton.Image
+            active
+            className="w-full h-full"
+            style={{ height: "100%" }}
           />
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <Skeleton 
-                key={i} 
-                active 
-                paragraph={{ rows: 2, width: ['100%', '90%'] }} 
-                className="w-full"
-              />
-            ))}
-          </div>
         </div>
 
-        {/* Flip book side skeleton */}
-        <div className="relative w-full aspect-[4/3]">
-          <div className="relative w-full h-full" ref={bookRef}>
-            <Skeleton.Image 
-              active 
-              className="w-full h-full object-contain"
-            />
-            <div className="absolute top-[49%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[92%] h-[86%] bg-gray-100 rounded-lg">
-              <Skeleton.Image 
-                active 
-                className="w-full h-full"
-              />
+        <Skeleton.Button
+          active
+          className="absolute bottom-[5%] right-[5%] md:bottom-[10%] md:right-[10%] z-10 w-32 h-10 rounded-full"
+        />
+
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Text side skeleton */}
+          <div className="text-left p-4 ml">
+            <Skeleton.Input active size="large" className="w-3/4 h-12 mb-6" />
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <Skeleton
+                  key={i}
+                  active
+                  paragraph={{ rows: 2, width: ["100%", "90%"] }}
+                  className="w-full"
+                />
+              ))}
             </div>
           </div>
+
+          {/* Flip book side skeleton */}
+          <div className="relative w-full aspect-[4/3]">
+            <Skeleton.Image active className="w-full h-full" />
+          </div>
         </div>
-      </div>
-    </section>
-  );
-
-  // if (!collectionData) {
-  //   return (
-  //     <section
-  //       ref={mainRef}
-  //       className="w-full min-h-screen flex items-center justify-center"
-  //     >
-  //       <p>Select a collection to read the story.</p>
-  //     </section>
-  //   );
-  // }
-
-  if (!collectionData) {
-    return <StoryBookSkeleton />;
+      </section>
+    );
   }
 
   return (
@@ -184,14 +182,24 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
       ref={mainRef}
       className="w-full min-h-fit relative flex items-center py-20 overflow-hidden mt-12"
     >
-      <img
-        ref={leavesRef}
-        src={leaves2Img}
-        alt="Decorative Leaves"
-        className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
-      />
-      
-        <a
+      {showSkeleton ? (
+        <div className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto z-0 rotate-[18deg] pointer-events-none">
+          <Skeleton.Image
+            active
+            className="w-full h-full"
+            style={{ height: "100%" }}
+          />
+        </div>
+      ) : (
+        <img
+          ref={leavesRef}
+          src={leaves2Img}
+          alt="Decorative Leaves"
+          className="absolute right-[-10%] top-[35%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
+        />
+      )}
+
+      <a
         href="https://lin.ee/iv9KnOe"
         target="_blank"
         rel="noopener noreferrer"
@@ -199,25 +207,45 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
       >
         Shop Now
       </a>
-      
+
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4 ml">
-          <h2 className="text-4xl font-sans text-primary mb-6">
-            {collectionData?.storyHeading}
-          </h2>
-          <div className="space-y-4  text-base text-natural max-h-[60vh]">
-            <p style={{ whiteSpace: "pre-wrap" }}>
-              {collectionData?.storyParagraphs}
-            </p>
-          </div>
+          {showSkeleton ? (
+            <>
+              <Skeleton.Input active size="large" className="w-3/4 h-12 mb-6" />
+              <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    active
+                    paragraph={{ rows: 2, width: ["100%", "90%"] }}
+                    className="w-full"
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-4xl font-sans text-primary mb-6">
+                {collectionData?.storyHeading}
+              </h2>
+              <div className="space-y-4 text-base text-natural max-h-[60vh] overflow-y-auto">
+                <p style={{ whiteSpace: "pre-wrap" }}>
+                  {collectionData?.storyParagraphs}
+                </p>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Flip book side */}
         <div className="relative w-full aspect-[4/3]">
-          {collectionData?.sliderImagePairs?.length > 0 && (
-            <div className="relative w-full h-full" ref={bookRef}>
-              <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div ref={bookRef} className="relative w-full h-full">
+            {showSkeleton ? (
+              <Skeleton.Image active className="w-full h-full" />
+            ) : (
+              <>
                 <img
                   src={openBookImage}
                   alt="Open Story Book"
@@ -268,13 +296,56 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
                       </Page>,
                     ])}
                   </HTMLFlipBook>
+                  {collectionData?.sliderImagePairs?.length > 0 && (
+                    <HTMLFlipBook
+                      ref={flipBookRef}
+                      key={collectionData?.id}
+                      width={600}
+                      height={850}
+                      size="stretch"
+                      drawShadow={true}
+                      mobileScrollSupport={false}
+                      className="w-full h-full"
+                    >
+                      {collectionData.sliderImagePairs?.flatMap((pair) => [
+                        <Page key={`${pair.id}-left`}>
+                          <img
+                            src={pair.leftImg}
+                            alt="Story page - left"
+                            className="w-full h-full object-cover"
+                          />
+                        </Page>,
+                        <Page key={`${pair.id}-right`}>
+                          <img
+                            src={pair.rightImg}
+                            alt="Story page - right"
+                            className="w-full h-full object-cover"
+                          />
+                        </Page>,
+                      ])}
+                    </HTMLFlipBook>
+                  )}
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<LeftOutlined />}
+                    onClick={handlePrevPage}
+                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                  />
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<RightOutlined />}
+                    onClick={handleNextPage}
+                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                  />
                 </div>
-              </div>
-            </div>
-          )}
+              </>
+            )}
+          </div>
           <div
             ref={flowerLocatorRef}
-            className="absolute bottom-[140%] left-[65%] md:bottom-[20%] md:left-[-25%] pointer-events-none"
+            className="absolute bottom-[140%] left-[60%] md:bottom-[20%] md:left-[-25%] pointer-events-none"
           />
         </div>
       </div>
