@@ -229,10 +229,8 @@ export default function SocialInfo({ flowerLocatorRef }) {
 
               {/* Social Media Links */}
               <div className="pt-4 sm:pt-6">
-                <h3 className="text-sm sm:text-base font-bold  mb-3">
-                  Follow Us
-                </h3>
-                <div className="flex items-center gap-4 sm:gap-5">
+                
+                <div className="flex items-center gap-2 ml-10">
                   {socialLinks.map((social) => (
                     <a
                       key={social.url}

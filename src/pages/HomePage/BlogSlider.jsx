@@ -195,13 +195,7 @@ export default function BlogSlider({ flowerLocatorRef }) {
       {/* Content Container */}
       <div className="relative z-10 container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Heading */}
-        <h2
-          className="text-xl sm:text-2xl md:text-4xl lg:text-5xl 
-          font-bold text-amber-800 text-center 
-          mb-3 sm:mb-4 md:mb-8 lg:mb-12"
-        >
-          From Our Journal
-        </h2>
+        
 
         {/* Swiper Container */}
         <div className="w-full max-w-7xl mx-auto">

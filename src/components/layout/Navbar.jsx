@@ -212,14 +212,14 @@ const Navbar = () => {
               </nav>
 
               {/* Social Icons */}
-              <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
+              <div className="flex items-center  ">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-4 w-4 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-stone-700 hover:text-amber-800 transition-colors"
+                    className="h-4 w-4 sm:h-8 sm:w-8 lg:h-10 lg:w-10 hover:text-amber-800 "
                   >
                     <img
                       src={social.icon}

@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage.jsx";
 import BlogPage from "./pages/BlogPage.jsx";
 import BlogDetailsPage from "./pages/BlogDetailsPage.jsx";
 import LinktreePage from "./pages/LinktreePage.jsx";
+import PolicyPage from "./pages/PolicyPage.jsx";
 
 // Initialize GA4
 initGA();
@@ -45,6 +46,10 @@ const router = createBrowserRouter(
         {
           path: "index",
           element: <LinktreePage />,
+        },
+        {
+          path: "policy",
+          element: <PolicyPage />,
         },
       ],
     },
