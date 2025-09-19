@@ -194,7 +194,7 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
         href="https://lin.ee/iv9KnOe"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-[5%] right-[5%] md:bottom-[10%] md:right-[10%] z-10 bg-stone-600 text-white font-semibold px-6 py-2 rounded-full hover:bg-stone-700 transition-colors"
+        className="absolute bottom-[5%] right-[50%] md:bottom-[10%] md:right-[10%] z-10 bg-[#8C5F31] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#A7723C] transition-colors"
       >
         Shop Now
       </a>
@@ -228,14 +228,14 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
                     shape="circle"
                     icon={<LeftOutlined />}
                     onClick={handlePrevPage}
-                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:bg-[#A7723C]"
                   />
                   <Button
                     type="primary"
                     shape="circle"
                     icon={<RightOutlined />}
                     onClick={handleNextPage}
-                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
+                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:bg-[#A7723C]"
                   />
 
                   <HTMLFlipBook

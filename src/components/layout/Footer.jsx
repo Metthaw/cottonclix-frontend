@@ -7,7 +7,7 @@ import { Alert } from "antd"; // Import Alert component from Ant Design
 
 const footerData = {
   subscribePlaceholder: "Your E-mail",
-  copyrightText: " 2025  Cottonclix All Rights Reserved.",
+  copyrightText: " Copyright 2025 © Cottonclix All Rights Reserved.",
 };
 
 export default function Footer() {
@@ -178,10 +178,23 @@ export default function Footer() {
           </form>
         </div>
 
-        {/* Copyright Section */}
-        <div className="text-center text-stone-500 text-xs sm:text-sm">
+<div className=" mx-10 flex flex-wrap justify gap-x-6 sm:gap-x-8 gap-y-2 text-center">
+  <div className="ml-10 mr-20 flex flex-wrap justify gap-x-6 sm:gap-x-8 gap-y-2 text-left">
+        <a href="/about" className=" hover:underline">Our Story</a>
+    <a href="/blog" className=" hover:underline">Blog</a>
+    <a href="/#contact-form" className=" hover:underline">Contact</a>
+    <a href="/#subscribe-form" className=" hover:underline">Subscribe</a>
+    <a href="/index" className=" hover:underline">Index</a>
+    <a href="/policy" className=" hover:underline">Privacy Policy</a>
+  </div>
+    
+  {/* Copyright Section */}
+  <div className="text-right text-[#8C5F31] sm:text-sm ml-auto">
           <p>{footerData.copyrightText}</p>
-        </div>
+  </div>
+</div>
+
+        
       </div>
     </footer>
   );

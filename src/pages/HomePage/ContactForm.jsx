@@ -186,7 +186,7 @@ export default function ContactForm({ flowerLocatorRef }) {
               className="w-full h-auto drop-shadow-xl opacity-50 sm:opacity-70 md:opacity-90"
             />
           </div>
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-serif text-center text-[#BC9F31] mb-2 sm:mb-3 md:mb-4 z-10 relative">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-medium text-left text-[#8C5F31] mb-2 sm:mb-3 md:mb-4 z-10 relative">
             Contact Us
           </h2>
 
@@ -209,7 +209,7 @@ export default function ContactForm({ flowerLocatorRef }) {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full px-2 py-1 text-xs sm:text-sm border lg:text-base border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                  className="w-full px-2 py-1 text-xs sm:text-sm border lg:text-base border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8C5F31]"
                   required
                 />
               </div>
@@ -227,7 +227,7 @@ export default function ContactForm({ flowerLocatorRef }) {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                  className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8C5F31]"
                 />
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function ContactForm({ flowerLocatorRef }) {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8C5F31]"
                 required
               />
             </div>
@@ -263,7 +263,7 @@ export default function ContactForm({ flowerLocatorRef }) {
                 rows="3"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#BC9F31]"
+                className="w-full px-2 py-1 text-xs sm:text-sm lg:text-base border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8C5F31]"
                 required
               ></textarea>
             </div>
@@ -271,7 +271,7 @@ export default function ContactForm({ flowerLocatorRef }) {
             <div className="text-center pt-1 sm:pt-2 md:pt-3 space-y-2">
               <button
                 type="submit"
-                className="bg-[#BC9F31] text-white font-semibold text-xs sm:text-sm lg:text-base py-1 px-4 sm:py-1.5 sm:px-6 rounded-full hover:bg-opacity-90 transition-all duration-300"
+                className="bg-[#8C5F31] text-white font-semibold text-xs sm:text-sm lg:text-base py-1 px-4 sm:py-1.5 sm:px-6 rounded-full hover:bg-opacity-90 transition-all duration-300"
               >
                 Send
               </button>

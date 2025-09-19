@@ -312,15 +312,15 @@ const CatalogSlider = ({
                 >
                   {activeCollection?.id && (
                     <div className="flex flex-col">
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-amber-800 break-words">
+                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8C5F31] break-words">
                         {activeCollection?.name}
                       </h2>
-                      <p className="text-xl lg:text-2xl text-amber-600 mt-4 break-words">
+                      <p className="text-xl lg:text-2xl text-[#C59F78] mt-4 break-words">
                         {activeCollection?.subtitle}
                       </p>
                       <button
                         onClick={() => onOpenBook(activeCollection?.id)}
-                        className="mt-6 inline-block text-amber-800 hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
+                        className="mt-6 inline-block text-[#8C5F31] hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
                       >
                         {"<<< Open"}
                       </button>

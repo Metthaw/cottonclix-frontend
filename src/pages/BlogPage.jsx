@@ -128,8 +128,8 @@ export default function BlogPage() {
             onAnimationComplete={() => setIsAnimatedIn(true)}
             className="container relative mx-auto px-6 py-16 z-10"
           >
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold  text-gray-900">
+            <div className="text-left mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold  text-black">
                 Blogs
               </h1>
               <p className="mt-4 text-lg text-natural"></p>
@@ -157,16 +157,16 @@ export default function BlogPage() {
                       />
                     </div>
                     <div className="pt-4">
-                      <h3 className="mt-2 text-xl text-black group-hover:text-primary">
+                      <h3 className="mt-2 font-medium text-[#8C5F31] group-hover:text-primary">
                         {post?.title?.rendered}
                       </h3>
                       <p
-                        className="mt-2 text-natural text-sm h-12 overflow-hidden"
+                        className="mt-2 text-natural text-sm h-12 overflow-hidden text-[#8C5F31]"
                         dangerouslySetInnerHTML={{
                           __html: post?.acf?.excerpt,
                         }}
                       />
-                      <p className="mt-3 text-sm text-gray-400">
+                      <p className="mt-3 text-sm text-[#8C5F31]">
                         {new Date(post?.date).toLocaleDateString()}
                       </p>
                     </div>
@@ -181,7 +181,7 @@ export default function BlogPage() {
                 theme={{
                   components: {
                     Pagination: {
-                      colorPrimary: "#856647",
+                      colorPrimary: "#8C5F31",
                       colorPrimaryHover: "#BC9F31",
                       colorPrimaryActive: "#BC9F31",
                     },

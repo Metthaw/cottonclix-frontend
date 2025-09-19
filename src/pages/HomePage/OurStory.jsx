@@ -308,6 +308,34 @@ export default function OurStory({
     { scope: logoRef }
   ); // ✅
 
+ const renderStyledText = (text, wordsToStyle, className) => {
+    // ตรวจสอบให้แน่ใจว่า wordsToStyle เป็น Array
+    const wordsArray = Array.isArray(wordsToStyle) ? wordsToStyle : [wordsToStyle];
+
+    if (!wordsArray.length || !text) {
+      return text;
+    }
+    
+    // สร้าง Regular Expression จาก Array ของคำที่ต้องการ
+    const regex = new RegExp(`(${wordsArray.join('|')})`, 'gi');
+    const parts = text.split(regex);
+
+    return (
+      <span>
+        {parts.map((part, index) =>
+          // ตรวจสอบว่า part ที่เจอ ตรงกับคำใดคำหนึ่งใน Array หรือไม่
+          wordsArray.find(word => word.toLowerCase() === part.toLowerCase()) ? (
+            <span key={index} className={className}>
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  };
+
   return (
     <section
       ref={mainRef}
@@ -335,7 +363,11 @@ export default function OurStory({
               </h2>
             </div>
             <p className="text-base sm:text-lg md:text-lg lg:text-xl  text-center md:text-right mt-6 md:mt-6 leading-relaxed max-w-2xl md:max-w-none">
-              {storyData.part1.rightParagraph}
+              {renderStyledText(
+                storyData.part1.rightParagraph,
+                "Cottonclix",
+                "text-[#8C5F31] font-bold"
+              )}
             </p>
             <div
               ref={upperFlowerLocatorRef}
@@ -346,7 +378,11 @@ export default function OurStory({
           {/* Left Paragraph */}
           <div className="grid row-span-1 md:col-span-2 order-2 md:order-1 items-start md:my-[50%]">
             <p className="text-base sm:text-lg md:text-lg lg:text-xl  text-center md:text-left leading-relaxed max-w-2xl md:max-w-none">
-              {storyData.part1.leftParagraph}
+              {renderStyledText(
+                storyData.part1.leftParagraph,
+                "Cottonclix",
+                "text-[#8C5F31] font-bold"
+              )}
             </p>
             {/* Decorative Branch */}
             <img
@@ -375,7 +411,11 @@ export default function OurStory({
                   key={i}
                   className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                 >
-                  {text}
+                  {renderStyledText(
+              text,
+              ["“thing”", "“feeling”"],
+              "font-bold" // ใส่แค่คลาส font-bold
+            )}
                 </p>
               ))}
             </div>
@@ -406,7 +446,11 @@ export default function OurStory({
                     key={i}
                     className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                   >
-                    {text}
+                     {renderStyledText(
+                      text,
+                      "Cottonclix",
+                      "text-[#8C5F31] font-bold"
+                    )}
                   </p>
                 ))}
               </div>
@@ -420,7 +464,7 @@ export default function OurStory({
               className="absolute left-[15%] top-[10%]"
             />
             <div className="flex flex-col items-center space-y-4">
-              <p className="font-bold text-xl sm:text-2xl md:text-3xl text-[#BC9F31] text-center">
+              <p className="font-bold text-xl sm:text-2xl md:text-3xl text-[#8C5F31] text-center">
                 {storyData.bottomSection.quote}
               </p>
               <img

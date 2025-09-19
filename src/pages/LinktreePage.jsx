@@ -206,6 +206,7 @@ export default function LinktreePage() {
           id: item.id,
           name: item.title.rendered,
           url: item.acf.link_url,
+          iconUrl: item.acf.icon,
         }));
         setLinks(formattedLinks);
       } catch (error) {
@@ -253,13 +254,24 @@ export default function LinktreePage() {
               {/* --- Links Grid: แสดงผลข้อมูลจาก State --- */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-16">
                 {links.map((link) => (
+
                   <a
                     key={link.id}
                     href={link.url} // ใช้ URL ที่มาจาก WordPress
                     target="_blank" // เปิดในแท็บใหม่
                     rel="noopener noreferrer"
-                    className="bg-stone-100 p-4 rounded-full flex items-center justify-center z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
+                    className="bg-[#DAD0C5]  p-4 rounded-full flex  gap-2 items-center justify-start z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
                   >
+                    <div className="">
+                      {link.iconUrl && (
+                      <img
+                        src={link.iconUrl}
+                        alt={`${link.name} icon`}
+                        className="w-auto h-10" // ปรับขนาดไอคอนตามต้องการ
+                      />
+                    )}
+                    </div>
+                    
                     <span>{link.name}</span>
                   </a>
                 ))}

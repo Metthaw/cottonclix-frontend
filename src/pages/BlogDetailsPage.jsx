@@ -97,8 +97,8 @@ export default function BlogDetailsPage() {
       {recentPosts.length > 0 && (
         <section className="">
           <div className="container mx-auto px-6 py-16">
-            <h2 className="text-3xl font-serif text-center mb-8 text-gray-800">
-              Recent Posts
+            <h2 className="text-3xl font-serif text-center mb-8 text-black">
+              Recent 
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {recentPosts.map((recent) => (
