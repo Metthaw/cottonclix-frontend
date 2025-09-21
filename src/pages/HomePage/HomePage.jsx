@@ -11,6 +11,7 @@ import Hero from "../HomePage/Hero.jsx";
 import AnimatedCottonFlower from "../../components/AnimatedCottonFlower";
 import SocialInfo from "../../components/layout/SocialInfo.jsx";
 import { FloatButton } from "antd";
+import { ArrowUpOutlined } from '@ant-design/icons';
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -391,7 +392,14 @@ export default function HomePage() {
         <SocialInfo flowerLocatorRef={socialInfoFlowerLocatorRef} />
       </div>
       <FloatButton.BackTop
-        className="fixed bottom-8 right-8 bg-[#BC9F31] hover:bg-[#BC9F31] text-white shadow-lg rounded-full"
+      icon={
+    <div className="w-full h-full flex items-center justify-center bg-[#8C5F31] hover:bg-[#A7723C] rounded-full transition-colors">
+      <ArrowUpOutlined style={{ color: 'white', fontSize: '18px' }} />
+    </div>
+  }
+        className="fixed bottom-8 right-8  shadow-xl rounded-full !bg-[#8C5F31] !hover:bg-[#A7723C]
+        "
+       
         visibilityHeight={400}
       />
     </motion.div>
