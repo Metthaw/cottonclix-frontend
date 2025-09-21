@@ -453,7 +453,14 @@ export default function OurStory({
                     )}
                   </p>
                 ))}
-                <p> Read More ...</p>
+                 <a
+        href={"/about"}
+        
+        rel="noopener noreferrer"
+        className=" text-[#8C5F31] font-bold underline hover:text-[#A7723C] transition-colors"
+      >
+        Read more ...
+      </a>
               </div>
             </div>
           </div>
