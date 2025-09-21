@@ -190,14 +190,16 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
         alt="Decorative Leaves"
         className="absolute right-[-10%] top-[30%] -translate-y-1/2 w-2/5 h-auto object-contain z-0 rotate-[18deg] pointer-events-none"
       />
-      <a
+      
+        <a
         href="https://lin.ee/iv9KnOe"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-[5%] right-[50%] md:bottom-[10%] md:right-[10%] z-10 bg-[#8C5F31] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#A7723C] transition-colors"
+        className="absolute bottom-[5%]  md:bottom-[10%] md:right-[10%] z-10 bg-[#8C5F31] text-white font-bold px-6 py-2 rounded-lg hover:bg-[#A7723C] transition-colors"
       >
         Shop Now
       </a>
+      
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text side */}
         <div ref={detailRef} className="text-left p-4 ml">
@@ -228,14 +230,14 @@ export default function StoryBook({ collectionData, flowerLocatorRef, loading = 
                     shape="circle"
                     icon={<LeftOutlined />}
                     onClick={handlePrevPage}
-                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:bg-[#A7723C]"
+                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:!bg-[#A7723C]"
                   />
                   <Button
                     type="primary"
                     shape="circle"
                     icon={<RightOutlined />}
                     onClick={handleNextPage}
-                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:bg-[#A7723C]"
+                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#8C5F31] hover:!bg-[#A7723C]"
                   />
 
                   <HTMLFlipBook

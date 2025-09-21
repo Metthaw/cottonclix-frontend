@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { initGA, logPageView } from "./analytics";
+import { ConfigProvider } from "antd";
 
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
@@ -71,6 +72,7 @@ router.subscribe((state) => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    
     <RouterProvider router={router} />
   </React.StrictMode>
 );
