@@ -5,6 +5,7 @@ import leaves2Img from "../../img/16.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Button, ConfigProvider, Skeleton } from "antd";
+import { Button, ConfigProvider, Skeleton } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 // Helper components remain unchanged

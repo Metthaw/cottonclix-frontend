@@ -3,9 +3,16 @@ import { Link } from "react-router-dom";
 import logo from "../img/Logo.png";
 import SocialInfo from "../components/layout/SocialInfo";
 import { Skeleton } from "antd";
+import { Skeleton } from "antd";
 import element5 from "../img/element5.svg";
 import cottonFlowerImg from "../img/4.png";
 import leaves2Img from "../img/16.svg";
+import linktreeFB from "../img/linktreeFB.svg";
+import linktreeLine from "../img/linktreeLine.svg";
+import linktreeIG from "../img/linktreeIG.svg";
+import linktreeTT from "../img/linktreeTT.svg";
+import linktreeSP from "../img/linktreeSP.svg";
+import linktreeWeb from "../img/linktreeWeb.svg";
 import linktreeFB from "../img/linktreeFB.svg";
 import linktreeLine from "../img/linktreeLine.svg";
 import linktreeIG from "../img/linktreeIG.svg";
@@ -218,6 +225,8 @@ export default function LinktreePage() {
         setLoading(true);
         const response = await fetch(API_URL);
         const data = await response.json();
+
+        // Map ข้อมูลจาก API ให้เป็นรูปแบบที่ต้องการ
 
         // Map ข้อมูลจาก API ให้เป็นรูปแบบที่ต้องการ
         const formattedLinks = data.map((item) => ({
