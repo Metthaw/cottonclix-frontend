@@ -212,7 +212,7 @@ const Navbar = () => {
               </nav>
 
               {/* Social Icons */}
-              <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
+              <div className="flex items-center gap-1 lg:gap-1 xl:gap-2">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
