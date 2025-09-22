@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Link as RouterLink} from "react-router-dom";
 
 // --- รูปภาพที่ใช้ใน Component นี้ ---
 import logo from "../../img/Logo.png";
@@ -453,14 +454,14 @@ export default function OurStory({
                     )}
                   </p>
                 ))}
-                 <a
-        href={"/about"}
+                 <RouterLink 
+        to={"/about"}
         
         rel="noopener noreferrer"
         className=" text-[#8C5F31] font-bold underline hover:text-[#A7723C] transition-colors"
       >
         Read more ...
-      </a>
+      </RouterLink>
               </div>
             </div>
           </div>
