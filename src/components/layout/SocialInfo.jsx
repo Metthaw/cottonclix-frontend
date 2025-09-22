@@ -167,7 +167,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <img
                   src={LocationIcon}
                   alt=""
-                  className="w-auto sm:w-5 h-auto sm:h-5 flex-shrink-0 "
+                  className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
                   <h3 className="text-sm sm:text-base font-bold ">
@@ -183,7 +183,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <img
                   src={TimeIcon}
                   alt=""
-                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
+                  className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
                   <h3 className="text-sm sm:text-base font-bold ">
@@ -199,7 +199,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <img
                   src={TelIcon}
                   alt=""
-                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
+                  className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
                   <h3 className="text-sm sm:text-base font-bold ">
@@ -215,7 +215,7 @@ export default function SocialInfo({ flowerLocatorRef }) {
                 <img
                   src={EmailIcon}
                   alt=""
-                  className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0 mt-1"
+                  className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
                   <h3 className="text-sm sm:text-base font-bold ">

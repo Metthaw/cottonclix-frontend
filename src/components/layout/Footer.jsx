@@ -178,23 +178,33 @@ export default function Footer() {
           </form>
         </div>
 
-<div className=" mx-10 flex flex-wrap justify gap-x-6 sm:gap-x-8 gap-y-2 text-center">
-  <div className="ml-10 mr-20 flex flex-wrap justify gap-x-6 sm:gap-x-8 gap-y-2 text-left">
-        <a href="/about" className=" hover:underline">Our Story</a>
-    <a href="/blog" className=" hover:underline">Blog</a>
-    <a href="/#contact-form" className=" hover:underline">Contact</a>
-    <a href="/#subscribe-form" className=" hover:underline">Subscribe</a>
-    <a href="/index" className=" hover:underline">Index</a>
-    <a href="/policy" className=" hover:underline">Privacy Policy</a>
-  </div>
-    
-  {/* Copyright Section */}
-  <div className="text-right text-[#8C5F31] sm:text-sm ml-auto">
-          <p>{footerData.copyrightText}</p>
-  </div>
-</div>
+        <div className="mx-10 flex flex-col md:flex-row items-center justify-center flex-wrap gap-x-6 sm:gap-x-8 gap-y-4 text-center">
+          <div className="flex flex-col md:flex-row flex-wrap w-full justify-center gap-x-8 md:gap-x-6 gap-y-8">
+            <a href="/about" className=" hover:underline">
+              Our Story
+            </a>
+            <a href="/blog" className=" hover:underline">
+              Blog
+            </a>
+            <a href="/#contact-form" className=" hover:underline">
+              Contact
+            </a>
+            <a href="/#subscribe-form" className=" hover:underline">
+              Subscribe
+            </a>
+            <a href="/index" className=" hover:underline">
+              Index
+            </a>
+            <a href="/policy" className=" hover:underline">
+              Privacy Policy
+            </a>
+          </div>
 
-        
+          {/* Copyright Section */}
+          <div className="text-[#8C5F31] sm:text-sm mx-4 w-fit">
+            <p>{footerData.copyrightText}</p>
+          </div>
+        </div>
       </div>
     </footer>
   );

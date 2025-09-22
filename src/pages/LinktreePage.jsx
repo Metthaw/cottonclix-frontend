@@ -3,22 +3,9 @@ import { Link } from "react-router-dom";
 import logo from "../img/Logo.png";
 import SocialInfo from "../components/layout/SocialInfo";
 import { Skeleton } from "antd";
-import { Skeleton } from "antd";
 import element5 from "../img/element5.svg";
 import cottonFlowerImg from "../img/4.png";
 import leaves2Img from "../img/16.svg";
-import linktreeFB from "../img/linktreeFB.svg";
-import linktreeLine from "../img/linktreeLine.svg";
-import linktreeIG from "../img/linktreeIG.svg";
-import linktreeTT from "../img/linktreeTT.svg";
-import linktreeSP from "../img/linktreeSP.svg";
-import linktreeWeb from "../img/linktreeWeb.svg";
-import linktreeFB from "../img/linktreeFB.svg";
-import linktreeLine from "../img/linktreeLine.svg";
-import linktreeIG from "../img/linktreeIG.svg";
-import linktreeTT from "../img/linktreeTT.svg";
-import linktreeSP from "../img/linktreeSP.svg";
-import linktreeWeb from "../img/linktreeWeb.svg";
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -41,15 +28,6 @@ export default function LinktreePage() {
   const leavesRef = useRef(null);
   const branchRef = useRef(null);
   const linksContainerRef = useRef(null);
-
-  const iconNameMap = [
-    { name: "Website", icon: linktreeWeb },
-    { name: "Facebook", icon: linktreeFB },
-    { name: "Instagram", icon: linktreeIG },
-    { name: "Line Official", icon: linktreeLine },
-    { name: "Shopee", icon: linktreeSP },
-    { name: "Tiktok", icon: linktreeTT },
-  ];
 
   useGSAP(
     () => {
@@ -313,25 +291,24 @@ export default function LinktreePage() {
                       />
                     ))
                 : links.map((link) => (
-  
-                  <a
+                    <a
                       key={link.id}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full z-10 max-w-md mx-auto mb-3 flex items-center justify-center h-14 bg-[#d9cfc5] hover:bg-[#d0c4b9] rounded-full transition-colors"
+                      className="w-[80%] z-10 font-semibold text-lg max-w-md mx-auto mb-3 flex items-center justify-center h-14 bg-[#d9cfc5] hover:bg-[#d0c4b9] rounded-full transition-colors"
                     >
-                      <div className="">
-                      {link.iconUrl && (
-                      <img
-                        src={link.iconUrl}
-                        alt={`${link.name} icon`}
-                        className="w-auto h-10" // ปรับขนาดไอคอนตามต้องการ
-                      />
-                    )}
-                    </div>
-                    
-                    <span>{link.name}</span>
+                      <div className="flex items-center w-full gap-4 px-6">
+                        {link.iconUrl && (
+                          <img
+                            src={link.iconUrl}
+                            alt={`${link.name} icon`}
+                            className="w-auto h-10" // ปรับขนาดไอคอนตามต้องการ
+                          />
+                        )}
+
+                        <span>{link.name}</span>
+                      </div>
                     </a>
                   ))}
             </div>

@@ -173,6 +173,19 @@ const Navbar = () => {
             {item}
           </Link>
         );
+      case "Privacy Policy":
+        return (
+          <Link
+            key={item}
+            to="/policy"
+            className={className}
+            onClick={() => {
+              setIsMenuOpen(false);
+            }}
+          >
+            {item}
+          </Link>
+        );
       default:
         return (
           <a
@@ -235,7 +248,7 @@ const Navbar = () => {
 
         {/* Mobile Layout */}
         <div className="md:hidden flex items-center justify-between relative z-50 bg-white">
-          <MobileLogo className="h-12 w-fit" />
+          <MobileLogo className="h-12 w-auto block" />
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
