@@ -6,6 +6,12 @@ import { Skeleton } from "antd";
 import element5 from "../img/element5.svg";
 import cottonFlowerImg from "../img/4.png";
 import leaves2Img from "../img/16.svg";
+import linktreeFB from "../img/linktreeFB.svg";
+import linktreeLine from "../img/linktreeLine.svg";
+import linktreeIG from "../img/linktreeIG.svg";
+import linktreeTT from "../img/linktreeTT.svg";
+import linktreeSP from "../img/linktreeSP.svg";
+import linktreeWeb from "../img/linktreeWeb.svg";
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -21,7 +27,6 @@ export default function LinktreePage() {
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAnimatedIn, setIsAnimatedIn] = useState(false);
-  const [linksRendered, setLinksRendered] = useState(false);
 
   const mainRef = useRef(null);
   const logoRef = useRef(null);
@@ -29,6 +34,15 @@ export default function LinktreePage() {
   const leavesRef = useRef(null);
   const branchRef = useRef(null);
   const linksContainerRef = useRef(null);
+
+  const iconNameMap = [
+    { name: "Website", icon: linktreeWeb },
+    { name: "Facebook", icon: linktreeFB },
+    { name: "Instagram", icon: linktreeIG },
+    { name: "Line Official", icon: linktreeLine },
+    { name: "Shopee", icon: linktreeSP },
+    { name: "Tiktok", icon: linktreeTT },
+  ];
 
   useGSAP(
     () => {
@@ -227,16 +241,6 @@ export default function LinktreePage() {
     fetchLinks();
   }, []);
 
-  // Effect to track when links are rendered
-  useEffect(() => {
-    if (!loading && links.length > 0 && linksContainerRef.current) {
-      // Use requestAnimationFrame to ensure the DOM has been updated
-      requestAnimationFrame(() => {
-        setLinksRendered(true);
-      });
-    }
-  }, [loading, links]);
-
   // Skeleton for the link items
   const SkeletonLinkItem = () => (
     <div className="bg-stone-100 p-4 rounded-full flex items-center justify-center h-14">
@@ -293,7 +297,12 @@ export default function LinktreePage() {
               {loading
                 ? Array(4)
                     .fill()
-                    .map((_, index) => <SkeletonLinkItem key={index} />)
+                    .map((_, index) => (
+                      <div
+                        key={index}
+                        className="h-12 mb-3 bg-gray-200 rounded-full w-full max-w-md mx-auto"
+                      />
+                    ))
                 : links.map((link) => (
   
                   <a
@@ -301,7 +310,7 @@ export default function LinktreePage() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#DAD0C5]  p-4 rounded-full flex  gap-2 items-center justify-start z-20 text-lg font-semibold hover:bg-stone-200 transition-colors"
+                      className="w-full z-10 max-w-md mx-auto mb-3 flex items-center justify-center h-14 bg-[#d9cfc5] hover:bg-[#d0c4b9] rounded-full transition-colors"
                     >
                       <div className="">
                       {link.iconUrl && (
@@ -319,7 +328,7 @@ export default function LinktreePage() {
             </div>
 
             {/* Decorative Elements - Only show when links are rendered */}
-            {linksRendered && (
+            {!loading && (
               <>
                 <img
                   ref={leavesRef}
@@ -331,7 +340,7 @@ export default function LinktreePage() {
                   ref={flowerRef}
                   src={cottonFlowerImg}
                   alt="Cotton Flower"
-                  className="absolute right-[15%] top-[100%] -translate-y-1/2 w-[10%] h-auto object-contain pointer-events-none"
+                  className="absolute right-[15%] top-[100%] z-20 -translate-y-1/2 w-[10%] h-auto object-contain pointer-events-none"
                 />
                 <img
                   ref={branchRef}

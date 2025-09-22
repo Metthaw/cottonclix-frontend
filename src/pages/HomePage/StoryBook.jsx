@@ -4,7 +4,7 @@ import openBookImage from "../../img/13.svg";
 import leaves2Img from "../../img/16.svg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Button, Skeleton } from "antd";
+import { Button, ConfigProvider, Skeleton } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 // Helper components remain unchanged
@@ -325,20 +325,44 @@ export default function StoryBook({
                       ])}
                     </HTMLFlipBook>
                   )}
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<LeftOutlined />}
-                    onClick={handlePrevPage}
-                    className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
-                  />
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<RightOutlined />}
-                    onClick={handleNextPage}
-                    className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50 bg-[#BC9F31] hover:bg-[#8b7422]"
-                  />
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Button: {
+                          // Default
+                          colorPrimary: "#ffffff", // brown background
+                          colorTextLightSolid: "#8b7422", // text/icon in default
+                          colorBorder: "#ffffff", // white outline
+                          lineWidth: 2,
+
+                          // Hover
+                          colorPrimaryHover: "#8b7422", // bg turns white
+                          colorText: "#8b7422", // text turns brown
+                          colorBorderHover: "#8b7422", // outline brown
+
+                          // Active (click)
+                          colorPrimaryActive: "#ffffff", // bg stays white
+                          colorTextActive: "#8b7422", // text stays brown
+                          colorBorderActive: "#8b7422", // outline brown
+                        },
+                      },
+                    }}
+                  >
+                    <Button
+                      type="default"
+                      shape="circle"
+                      icon={<LeftOutlined />}
+                      onClick={handlePrevPage}
+                      className="absolute left-[-3%] top-1/2 -translate-y-1/2 z-50"
+                    />
+                    <Button
+                      type="default"
+                      shape="circle"
+                      icon={<RightOutlined />}
+                      onClick={handleNextPage}
+                      className="absolute right-[-3%] top-1/2 -translate-y-1/2 z-50"
+                    />
+                  </ConfigProvider>
                 </div>
               </>
             )}
