@@ -67,6 +67,7 @@ const CatalogSlider = ({
   collections,
   loading = false,
   onOpenBook,
+  onClickBook,
   flowerLocatorRef,
 }) => {
   const [activeCollection, setActiveCollection] = useState(null);
@@ -296,6 +297,7 @@ const CatalogSlider = ({
                       <div
                         key={collection?.id}
                         className="!flex items-center justify-center"
+                        onClick={() => onClickBook(collection?.id)}
                       >
                         <img
                           src={collection?.coverImage}

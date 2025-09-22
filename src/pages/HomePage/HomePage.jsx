@@ -132,6 +132,16 @@ export default function HomePage() {
     }, 100);
   };
 
+  const handleSelectBook = (collectionId) => {
+    setSelectedCollectionId(collectionId);
+    setTimeout(() => {
+      storyBookRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }, 100);
+  };
+
   useGSAP(
     () => {
       let tl;
@@ -365,6 +375,7 @@ export default function HomePage() {
           collections={collections}
           loading={loading}
           onOpenBook={handleOpenBook}
+          onClickBook={handleSelectBook}
           flowerLocatorRef={catalogFlowerLocatorRef}
         />
       </div>
