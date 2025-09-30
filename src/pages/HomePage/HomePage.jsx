@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import CatalogSlider from "./CatalogSlider";
 import StoryBook from "./StoryBook";
 import OurStory from "./OurStory";
+import UpperStorySection from "./UpperStorySection";
+import LowerStorySection from "./LowerStorySection";
 import BlogSlider from "./BlogSlider";
 import ContactForm from "./ContactForm";
 import Hero from "../HomePage/Hero.jsx";
@@ -43,6 +45,8 @@ export default function HomePage() {
   const catalogSliderRef = useRef(null);
   const storyBookRef = useRef(null);
   const ourStoryRef = useRef(null);
+  const upperStorySectionRef = useRef(null);
+  const lowerStorySectionRef = useRef(null);
   const blogSliderRef = useRef(null);
   const contactFormRef = useRef(null);
   const socialInfoRef = useRef(null);
@@ -110,6 +114,8 @@ export default function HomePage() {
     catalog: [catalogFlowerLocatorRef],
     storybook: [storybookFlowerLocatorRef],
     ourstory: [ourStoryUpperFlowerLocatorRef, ourStoryLowerFlowerLocatorRef],
+    upperstory: [ourStoryUpperFlowerLocatorRef],
+    lowerstory: [ourStoryLowerFlowerLocatorRef],
     blog: [blogSliderFlowerLocatorRef],
     contact: [contactFormFlowerLocatorRef],
     social: [socialInfoFlowerLocatorRef],
@@ -196,6 +202,8 @@ export default function HomePage() {
         catalog: 90,
         storybook: 180,
         ourstory: activeSection === "ourstory" ? 270 : 0,
+        upperstory: 270,
+        lowerstory: 270,
         blog: 90,
         contact: 180,
         social: 270,
@@ -225,6 +233,8 @@ export default function HomePage() {
       { ref: catalogSliderRef, name: "catalog" },
       { ref: storyBookRef, name: "storybook" },
       { ref: ourStoryRef, name: "ourstory" },
+      { ref: upperStorySectionRef, name: "upperstory" },
+      { ref: lowerStorySectionRef, name: "lowerstory" },
       { ref: blogSliderRef, name: "blog" },
       { ref: contactFormRef, name: "contact" },
       { ref: socialInfoRef, name: "social" },
@@ -387,12 +397,20 @@ export default function HomePage() {
         />
       </div>
 
-      <div ref={ourStoryRef}>
+      {/* <div ref={ourStoryRef}>
         <OurStory
           upperFlowerLocatorRef={ourStoryUpperFlowerLocatorRef}
           lowerFlowerLocatorRef={ourStoryLowerFlowerLocatorRef}
         />
+      </div> */}
+      
+      <div ref={upperStorySectionRef}>
+        <UpperStorySection flowerLocatorRef={ourStoryUpperFlowerLocatorRef} />
       </div>
+      <div ref={lowerStorySectionRef}>
+        <LowerStorySection flowerLocatorRef={ourStoryLowerFlowerLocatorRef} />
+      </div>
+
       <div ref={blogSliderRef}>
         <BlogSlider flowerLocatorRef={blogSliderFlowerLocatorRef} />
       </div>

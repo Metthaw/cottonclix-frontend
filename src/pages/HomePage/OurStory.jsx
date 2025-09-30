@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Link as RouterLink} from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 // --- รูปภาพที่ใช้ใน Component นี้ ---
 import logo from "../../img/Logo.png";
@@ -309,23 +309,27 @@ export default function OurStory({
     { scope: logoRef }
   ); // ✅
 
- const renderStyledText = (text, wordsToStyle, className) => {
+  const renderStyledText = (text, wordsToStyle, className) => {
     // ตรวจสอบให้แน่ใจว่า wordsToStyle เป็น Array
-    const wordsArray = Array.isArray(wordsToStyle) ? wordsToStyle : [wordsToStyle];
+    const wordsArray = Array.isArray(wordsToStyle)
+      ? wordsToStyle
+      : [wordsToStyle];
 
     if (!wordsArray.length || !text) {
       return text;
     }
-    
+
     // สร้าง Regular Expression จาก Array ของคำที่ต้องการ
-    const regex = new RegExp(`(${wordsArray.join('|')})`, 'gi');
+    const regex = new RegExp(`(${wordsArray.join("|")})`, "gi");
     const parts = text.split(regex);
 
     return (
       <span>
         {parts.map((part, index) =>
           // ตรวจสอบว่า part ที่เจอ ตรงกับคำใดคำหนึ่งใน Array หรือไม่
-          wordsArray.find(word => word.toLowerCase() === part.toLowerCase()) ? (
+          wordsArray.find(
+            (word) => word.toLowerCase() === part.toLowerCase()
+          ) ? (
             <span key={index} className={className}>
               {part}
             </span>
@@ -413,10 +417,10 @@ export default function OurStory({
                   className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                 >
                   {renderStyledText(
-              text,
-              ["“thing”", "“feeling”"],
-              "font-bold" // ใส่แค่คลาส font-bold
-            )}
+                    text,
+                    ["“thing”", "“feeling”"],
+                    "font-bold" // ใส่แค่คลาส font-bold
+                  )}
                 </p>
               ))}
             </div>
@@ -447,21 +451,20 @@ export default function OurStory({
                     key={i}
                     className="text-sm sm:text-base md:text-lg lg:text-xl  text-center md:text-left leading-relaxed"
                   >
-                     {renderStyledText(
+                    {renderStyledText(
                       text,
                       "Cottonclix",
                       "text-[#8C5F31] font-bold"
                     )}
                   </p>
                 ))}
-                 <RouterLink 
-        to={"/about"}
-        
-        rel="noopener noreferrer"
-        className=" text-[#8C5F31] font-bold underline hover:text-[#A7723C] transition-colors"
-      >
-        Read more ...
-      </RouterLink>
+                <RouterLink
+                  to={"/about"}
+                  rel="noopener noreferrer"
+                  className=" text-[#8C5F31] font-bold underline hover:text-[#A7723C] transition-colors"
+                >
+                  Read more ...
+                </RouterLink>
               </div>
             </div>
           </div>
@@ -483,7 +486,6 @@ export default function OurStory({
                 className="w-16 sm:w-18 md:w-20 lg:w-24 h-auto"
               />
             </div>
-            
           </div>
         </div>
       </div>
