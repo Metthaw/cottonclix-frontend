@@ -6,13 +6,12 @@ import gsap from "gsap";
 import logo from "../../img/Logo.png";
 import element1 from "../../img/element1.png";
 
-const UpperStorySection = () => {
+const UpperStorySection = ({ flowerLocatorRef }) => {
   const headerRef = useRef(null);
   const subHeaderRef = useRef(null);
   const branchRef = useRef(null);
   const containerRef = useRef(null);
   const lineRef = useRef(null);
-  const upperFlowerLocatorRef = useRef(null);
 
   // Data for the component
   const data = {
@@ -172,7 +171,7 @@ const UpperStorySection = () => {
               )}
             </p>
             <div
-              ref={upperFlowerLocatorRef}
+              ref={flowerLocatorRef}
               className="md:absolute left-[30%] top-[35%] md:left-[55%] md:top-[30%] pointer-events-none"
             />
           </div>

@@ -4,7 +4,6 @@ import { createPortal } from "react-dom";
 // Import Components
 import CatalogSlider from "./CatalogSlider";
 import StoryBook from "./StoryBook";
-import OurStory from "./OurStory";
 import UpperStorySection from "./UpperStorySection";
 import LowerStorySection from "./LowerStorySection";
 import BlogSlider from "./BlogSlider";
@@ -44,7 +43,6 @@ export default function HomePage() {
   const socialInfoFlowerLocatorRef = useRef(null);
   const catalogSliderRef = useRef(null);
   const storyBookRef = useRef(null);
-  const ourStoryRef = useRef(null);
   const upperStorySectionRef = useRef(null);
   const lowerStorySectionRef = useRef(null);
   const blogSliderRef = useRef(null);
@@ -113,7 +111,6 @@ export default function HomePage() {
     hero: [flowerLocatorRef],
     catalog: [catalogFlowerLocatorRef],
     storybook: [storybookFlowerLocatorRef],
-    ourstory: [ourStoryUpperFlowerLocatorRef, ourStoryLowerFlowerLocatorRef],
     upperstory: [ourStoryUpperFlowerLocatorRef],
     lowerstory: [ourStoryLowerFlowerLocatorRef],
     blog: [blogSliderFlowerLocatorRef],
@@ -201,16 +198,12 @@ export default function HomePage() {
         hero: 0,
         catalog: 90,
         storybook: 180,
-        ourstory: activeSection === "ourstory" ? 270 : 0,
         upperstory: 270,
         lowerstory: 270,
         blog: 90,
         contact: 180,
         social: 270,
       };
-      if (activeSection === "ourstory") {
-        sectionRotations.ourstory = activeLocatorIndex === 0 ? 270 : 0;
-      }
       const targetRotation = sectionRotations[activeSection] || 0;
       lastIndexRef.current = activeLocatorIndex;
       if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
@@ -232,7 +225,6 @@ export default function HomePage() {
       { ref: heroContainerRef, name: "hero" },
       { ref: catalogSliderRef, name: "catalog" },
       { ref: storyBookRef, name: "storybook" },
-      { ref: ourStoryRef, name: "ourstory" },
       { ref: upperStorySectionRef, name: "upperstory" },
       { ref: lowerStorySectionRef, name: "lowerstory" },
       { ref: blogSliderRef, name: "blog" },
@@ -251,7 +243,7 @@ export default function HomePage() {
       },
       {
         root: null,
-        threshold: 0.7,
+        threshold: 0.6,
         rootMargin: "0px",
       }
     );
@@ -287,26 +279,11 @@ export default function HomePage() {
       }
     );
 
-    // Add resize handler to update observers when orientation changes
-    const handleResize = () => {
-      if (ourStoryRef.current) {
-        ourStoryObserver.unobserve(ourStoryRef.current);
-        ourStoryObserver.observe(ourStoryRef.current);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
     // Observe sections with appropriate observer
     sections.forEach((section) => {
       if (section.ref.current) {
         section.ref.current.dataset.sectionName = section.name;
-
-        if (section.name === "ourstory") {
-          ourStoryObserver.observe(section.ref.current);
-        } else {
-          mainObserver.observe(section.ref.current);
-        }
+        mainObserver.observe(section.ref.current);
       }
     });
 
@@ -314,29 +291,8 @@ export default function HomePage() {
     return () => {
       mainObserver.disconnect();
       ourStoryObserver.disconnect();
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  // Update the scroll handler for better responsiveness
-  useEffect(() => {
-    const handleScroll = () => {
-      if (activeSection === "ourstory" && ourStoryRef.current) {
-        const ourStoryRect = ourStoryRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        const scrollPosition = -ourStoryRect.top;
-        const scrollRatio =
-          scrollPosition / (ourStoryRect.height - viewportHeight);
-
-        // Add debouncing and smoother threshold
-        const threshold = window.innerWidth < 768 ? 0.4 : 0.5;
-        setActiveLocatorIndex(scrollRatio > threshold ? 1 : 0);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [activeSection]);
 
   useEffect(() => {
     if (heroContainerRef.current) {
@@ -396,21 +352,12 @@ export default function HomePage() {
           flowerLocatorRef={storybookFlowerLocatorRef}
         />
       </div>
-
-      {/* <div ref={ourStoryRef}>
-        <OurStory
-          upperFlowerLocatorRef={ourStoryUpperFlowerLocatorRef}
-          lowerFlowerLocatorRef={ourStoryLowerFlowerLocatorRef}
-        />
-      </div> */}
-      
       <div ref={upperStorySectionRef}>
         <UpperStorySection flowerLocatorRef={ourStoryUpperFlowerLocatorRef} />
       </div>
       <div ref={lowerStorySectionRef}>
         <LowerStorySection flowerLocatorRef={ourStoryLowerFlowerLocatorRef} />
       </div>
-
       <div ref={blogSliderRef}>
         <BlogSlider flowerLocatorRef={blogSliderFlowerLocatorRef} />
       </div>

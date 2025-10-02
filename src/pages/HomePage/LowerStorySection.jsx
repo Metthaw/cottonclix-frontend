@@ -7,12 +7,11 @@ import { Link as RouterLink } from "react-router-dom";
 import lineArt from "../../img/element2.svg";
 import Vector from "../../img/Group 8.svg";
 
-const LowerStorySection = () => {
+const LowerStorySection = ({ flowerLocatorRef }) => {
   const singleBranchRef = useRef(null);
   const logoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
-  const lowerFlowerLocatorRef = useRef(null);
 
   // Data for the component
   const data = {
@@ -197,7 +196,7 @@ const LowerStorySection = () => {
           {/* Quote Section */}
           <div className="relative mt-12 sm:mt-16 md:mt-20">
             <div
-              ref={lowerFlowerLocatorRef}
+              ref={flowerLocatorRef}
               className="absolute left-[15%] top-[10%]"
             />
             <div className="flex flex-col items-center space-y-4">
