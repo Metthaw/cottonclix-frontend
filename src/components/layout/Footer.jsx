@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import lineArtImg from "../../img/element2.svg";
 import paperPlane from "../../img/paperPlane.svg";
 import { Alert } from "antd"; // Import Alert component from Ant Design
+import { Link } from "react-router-dom";
 
 const footerData = {
   subscribePlaceholder: "Your E-mail",
@@ -180,24 +181,24 @@ export default function Footer() {
 
         <div className="mx-10 flex flex-col md:flex-row items-center justify-center flex-wrap gap-x-6 sm:gap-x-8 gap-y-4 text-center">
           <div className="flex flex-col md:flex-row flex-wrap w-full justify-center gap-x-8 md:gap-x-6 gap-y-8">
-            <a href="/about" className=" hover:underline">
+            <Link to="/about" className="hover:underline">
               Our Story
-            </a>
-            <a href="/blog" className=" hover:underline">
+            </Link>
+            <Link to="/blog" className="hover:underline">
               Blog
-            </a>
-            <a href="/#contact-form" className=" hover:underline">
+            </Link>
+            <Link to="#contact-form" className="hover:underline">
               Contact
-            </a>
-            <a href="/#subscribe-form" className=" hover:underline">
+            </Link>
+            <Link to="#subscribe-form" className="hover:underline">
               Subscribe
-            </a>
-            <a href="/index" className=" hover:underline">
+            </Link>
+            <Link to="/index" className="hover:underline">
               Index
-            </a>
-            <a href="/policy" className=" hover:underline">
+            </Link>
+            <Link to="/policy" className="hover:underline">
               Privacy Policy
-            </a>
+            </Link>
           </div>
 
           {/* Copyright Section */}
