@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import leavesImg from "../../img/element4.png";
 import smallBookImg from "../../img/10.png";
-import lineArtImg from "../../img/element2.svg";
+import lineArtImg from "../../img/element2.png";
 
 const Hero = ({ containerRef, flowerLocatorRef }) => {
   const leavesRef = useRef(null);
@@ -82,10 +82,10 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
   ); // ✅ no dependencies
 
   return (
-    <section className="w-full min-h-fit bg-white py-20">
+    <section className="w-full min-h-fit bg-white py-20 landscape:h-screen landscape:py-0 landscape:flex landscape:items-center">
       <div
         ref={mainRef}
-        className="w-full min-h-fit flex justify-center items-center p-8 sm:p-12 md:p-20"
+        className="w-full min-h-fit flex justify-center items-center p-8 sm:p-12 md:p-20 landscape:p-4"
       >
         <div
           ref={containerRef}
@@ -96,10 +96,10 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
             ref={leavesRef}
             src={leavesImg}
             alt="Decorative Leaves"
-            className="absolute left-[0%] top-[-60%] 
-              w-[35%] 
+            className="absolute left-[8%] top-[23%] 
+              w-[40%] 
               h-auto object-contain z-10 
-              rotate-[25deg]"
+              rotate-[-15deg]"
           />
 
           {/* Main Book Image */}
@@ -117,8 +117,8 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
           <div
             ref={flowerLocatorRef}
             className="absolute 
-              left-[35%] sm:left-[38%] md:left-[40%]
-              top-[-15%] sm:top-[-12%] md:top-[-10%]
+              left-[35%]
+              top-[-8%]
               w-0 h-0
               transform
               translate-x-[-50%] translate-y-[-50%]
@@ -132,11 +132,11 @@ const Hero = ({ containerRef, flowerLocatorRef }) => {
             src={lineArtImg}
             alt="Cotton Flower"
             className="absolute 
-              top-[15%] sm:top-[18%] md:top-[20%] 
-              right-[2%] sm:right-[3%] md:right-[5%] 
-              w-[25%] sm:w-[22%] md:w-[20%] 
+              top-[20%] 
+              right-[1%] 
+              w-[40%] 
               h-auto z-10 
-              rotate-[35deg] sm:rotate-[40deg] md:rotate-[45deg]"
+              rotate-[85deg]"
           />
         </div>
       </div>

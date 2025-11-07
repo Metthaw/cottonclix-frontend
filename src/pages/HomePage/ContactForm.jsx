@@ -3,9 +3,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import element1 from "../../img/element1.png";
 import element5 from "../../img/element5.svg";
+import bushFlower2 from "../../img/Dicut-Cotton_FlowerBush_2.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Alert } from "antd"; // Import Alert component from Ant Design
+import { Alert } from "antd";
 
 export default function ContactForm({ flowerLocatorRef }) {
   // ใช้ State เพื่อเก็บข้อมูลจากช่องกรอกต่างๆ
@@ -22,6 +23,7 @@ export default function ContactForm({ flowerLocatorRef }) {
   const mainRef = useRef(null);
   const formRef = useRef(null);
   const branchRef = useRef(null);
+  const bushRef = useRef(null);
 
   useGSAP(
     () => {
@@ -38,6 +40,20 @@ export default function ContactForm({ flowerLocatorRef }) {
           },
           {
             rotate: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          bushRef.current,
+          {
+            x: -80,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: 0,
             duration: 1,
             ease: "sine.inOut",
           }
@@ -68,6 +84,20 @@ export default function ContactForm({ flowerLocatorRef }) {
           },
           {
             rotate: 30,
+            duration: 1,
+            ease: "sine.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          bushRef.current,
+          {
+            x: 0,
+            duration: 1,
+            ease: "sine.inOut",
+          },
+          {
+            x: -80,
             duration: 1,
             ease: "sine.inOut",
           }
@@ -175,6 +205,14 @@ export default function ContactForm({ flowerLocatorRef }) {
           ref={flowerLocatorRef}
           className="absolute pointer-events-none top-[-3%] sm:top-[-5%] md:top-[-6%] right-[30%] sm:right-[32%] md:right-[35%] -z-50"
         />
+        <div className="absolute left-[-10%] inset-0 flex justify-start items-center pointer-events-none">
+          <img
+            ref={bushRef}
+            src={bushFlower2}
+            alt="Decorative Leaves"
+            className="w-[25%] max-w-full scale-x-[-1] h-auto object-contain rotate-[30deg]"
+          />
+        </div>
         <div
           ref={formRef}
           className="w-full max-w-[92%] sm:max-w-[85%] md:max-w-xl lg:max-w-2xl relative bg-stone-50 p-2 sm:p-3 md:p-4 lg:p-8 rounded-lg shadow-md z-50"

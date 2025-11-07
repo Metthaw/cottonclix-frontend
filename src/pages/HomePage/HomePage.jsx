@@ -29,7 +29,6 @@ export default function HomePage() {
   const [selectedCollectionId, setSelectedCollectionId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("hero");
-  const [activeLocatorIndex, setActiveLocatorIndex] = useState(0);
   const [isHeroReady, setIsHeroReady] = useState(false);
 
   const heroContainerRef = useRef(null);
@@ -51,7 +50,6 @@ export default function HomePage() {
 
   const rootRef = useRef(null);
   const flowerRef = useRef(null);
-  const lastIndexRef = useRef(activeLocatorIndex);
   const isInitialRender = useRef(true);
 
   useEffect(() => {
@@ -193,7 +191,7 @@ export default function HomePage() {
         return;
       }
       const locRefs = locatorRefMap[activeSection] || [];
-      const curRef = locRefs[activeLocatorIndex] || locRefs[0];
+      const curRef = locRefs[0];
       const sectionRotations = {
         hero: 0,
         catalog: 90,
@@ -205,7 +203,7 @@ export default function HomePage() {
         social: 270,
       };
       const targetRotation = sectionRotations[activeSection] || 0;
-      lastIndexRef.current = activeLocatorIndex;
+
       if (!curRef?.current || !flowerRef.current || !heroContainerRef.current)
         return;
       const { x, y } = getRelativePosition(curRef, heroContainerRef);
@@ -217,7 +215,7 @@ export default function HomePage() {
         ease: "slow(0.7, 0.7)",
       });
     },
-    { scope: rootRef, dependencies: [activeSection, activeLocatorIndex] }
+    { scope: rootRef, dependencies: [activeSection] }
   );
 
   useEffect(() => {
@@ -316,7 +314,7 @@ export default function HomePage() {
         createPortal(
           <div
             ref={flowerRef}
-            className="w-[25%] h-auto absolute opacity-0 pointer-events-none"
+            className="w-[30%] h-auto absolute opacity-0 pointer-events-none"
             style={{
               willChange: "transform, opacity",
               // Dynamically adjust z-index based on active section

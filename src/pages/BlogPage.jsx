@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react"; // 1. Import useState และ useEffect
 import { Link } from "react-router-dom";
 import SocialInfo from "../components/layout/SocialInfo";
-import element2 from "../img/element2.svg";
+import element2 from "../img/element2.png";
 import element5 from "../img/element5.svg";
 
 import { gsap } from "gsap";

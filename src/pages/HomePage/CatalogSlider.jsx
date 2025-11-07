@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import leavesImg from "../../img/element4.png";
+// import leavesImg from "../../img/element4.png";
+import circleleavesImg from "../../img/Dicut-Cotton_Flower-15.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Carousel, Skeleton } from "antd";
@@ -205,40 +204,28 @@ const CatalogSlider = ({
       {/* Left side - Image Skeleton */}
       <div className="w-full h-auto order-2 md:order-1 max-w-full mx-auto">
         <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
-          <Skeleton.Image 
-            active 
+          <Skeleton.Image
+            active
             className="w-[60%] max-w-full h-auto object-contain rotate-[18deg]"
-            style={{ transform: 'scaleX(-1)' }}
+            style={{ transform: "scaleX(-1)" }}
           />
         </div>
         <div className="z-30 w-full">
-          <Skeleton.Image 
-            active 
+          <Skeleton.Image
+            active
             className="w-full h-[60vh] max-h-[60vh] object-contain"
           />
         </div>
       </div>
-      
+
       {/* Right side - Text Skeleton */}
       <div className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2">
         <div className="flex flex-col w-full">
-          <Skeleton.Input 
-            active 
-            size="large" 
-            className="w-3/4 h-12 mb-4"
-          />
-          <Skeleton.Input 
-            active 
-            size="default" 
-            className="w-5/6 h-8 mb-6"
-          />
-          <Skeleton.Button 
-            active 
-            size="large" 
-            className="w-32 h-12 mt-6"
-          />
+          <Skeleton.Input active size="large" className="w-3/4 h-12 mb-4" />
+          <Skeleton.Input active size="default" className="w-5/6 h-8 mb-6" />
+          <Skeleton.Button active size="large" className="w-32 h-12 mt-6" />
         </div>
-        <div 
+        <div
           ref={flowerLocatorRef}
           className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
         />
@@ -252,7 +239,7 @@ const CatalogSlider = ({
     document.head.appendChild(styleElement);
 
     return () => {
-      document.head.removeChild(styleElement);
+      styleElement.remove();
     };
   }, []);
 
@@ -272,12 +259,12 @@ const CatalogSlider = ({
                   ref={carouselRef}
                   className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
                 >
-                  <div className="absolute left-[-30%] inset-0 flex justify-start items-center pointer-events-none">
+                  <div className="absolute left-[-20%] top-[25%] inset-0 flex justify-start items-center pointer-events-none">
                     <img
                       ref={leavesRef}
-                      src={leavesImg}
+                      src={circleleavesImg}
                       alt="Decorative Leaves"
-                      className="w-[50%] max-w-full scale-x-[-1] h-auto object-contain rotate-[18deg]"
+                      className="w-[70%] h-auto object-contain"
                     />
                   </div>
                   <Carousel

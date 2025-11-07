@@ -1,7 +1,7 @@
 // src/components/layout/Footer.jsx
 
 import React, { useState, useEffect } from "react";
-import lineArtImg from "../../img/element2.svg";
+import lineArtImg from "../../img/element2.png";
 import paperPlane from "../../img/paperPlane.svg";
 import { Alert } from "antd"; // Import Alert component from Ant Design
 import { Link } from "react-router-dom";
@@ -95,7 +95,7 @@ export default function Footer() {
         {/* Subscribe Section */}
         <div className="w-full relative max-w-5xl mx-auto bg-[#dad0c6] py-6 sm:py-8 md:py-12 px-4 sm:px-24 md:px-48 rounded-lg sm:rounded-xl flex items-center justify-between mb-8 sm:mb-12 md:mb-16">
           {/* Decorative Elements - Mobile First Approach */}
-          <img
+          {/* <img
             src={lineArtImg}
             alt="Cotton Flower"
             className="absolute scale-y-[-1] scale-x-[-1] 
@@ -104,9 +104,9 @@ export default function Footer() {
               -translate-x-1/2 -translate-y-1/2 
               w-[15%] sm:w-[18%] md:w-1/5 
               h-full z-0"
-          />
+          /> */}
 
-          <img
+          {/* <img
             src={lineArtImg}
             alt="Cotton Flower"
             className="absolute 
@@ -116,9 +116,9 @@ export default function Footer() {
               w-[15%] sm:w-[18%] md:w-1/5 
               h-[15vh] sm:h-[18vh] md:h-[20vh] 
               z-0 invert brightness-0"
-          />
+          /> */}
 
-          <img
+          {/* <img
             src={lineArtImg}
             alt="Cotton Flower"
             className="absolute scale-y-[-1] 
@@ -129,9 +129,9 @@ export default function Footer() {
               w-[15%] sm:w-[18%] md:w-1/5 
               h-[15vh] sm:h-[18vh] md:h-[20vh] 
               z-0"
-          />
+          /> */}
 
-          <img
+          {/* <img
             src={lineArtImg}
             alt="Cotton Flower"
             className="absolute 
@@ -142,9 +142,9 @@ export default function Footer() {
               z-10 
               right-[-8%] sm:right-[-10%] md:right-[-12%] 
               invert brightness-0"
-          />
+          /> */}
 
-          <img
+          {/* <img
             src={paperPlane}
             alt="paper Plane"
             className="absolute 
@@ -153,7 +153,7 @@ export default function Footer() {
               h-[15vh] sm:h-[18vh] md:h-[20vh] 
               z-10 
               right-[-10%] sm:right-[-15%] md:right-[-20%]"
-          />
+          /> */}
 
           {/* Subscribe Input Container */}
           <form

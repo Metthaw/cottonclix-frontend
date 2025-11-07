@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 // Import images
 import logo from "../../img/Logo.png";
-import element1 from "../../img/element1.png";
+import bushFlower1 from "../../img/Dicut-Cotton_FlowerBush_1.png";
 
 const UpperStorySection = ({ flowerLocatorRef }) => {
   const headerRef = useRef(null);
@@ -20,8 +20,6 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
       "In a world that moves faster every day, small gifts made with care have become more meaningful than we often realize. And that... is the inspiration behind Cottonclix.",
     rightParagraph:
       "Cottonclix was born from a love for fabric, a passion for nature-inspired patterns, and the belief that 'a good gift doesn't have to be big, it just has to be meaningful.'",
-    logo,
-    element1,
   };
 
   // Text styling function
@@ -37,7 +35,7 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
     return (
       <span>
         {parts.map((part, index) =>
-          wordsArray.find(
+          wordsArray.some(
             (word) => word.toLowerCase() === part.toLowerCase()
           ) ? (
             <span key={index} className={className}>
@@ -151,7 +149,7 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
               <div className="flex items-center justify-center md:justify-end">
                 <img
                   ref={headerRef}
-                  src={data.logo}
+                  src={logo}
                   alt="Cottonclix Logo"
                   className="h-16 sm:h-20 md:h-14 lg:h-28 w-auto"
                 />
@@ -188,9 +186,9 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
             {/* Decorative Branch */}
             <img
               ref={branchRef}
-              src={data.element1}
+              src={bushFlower1}
               alt="Branch Decoration"
-              className="md:absolute bottom-0 left-[5%] md:left-[-5%] w-[100%] md:w-[35%] lg:w-[45%] h-auto z-10 pointer-events-none drop-shadow-2xl"
+              className="md:absolute bottom-[-5%] left-[5%] md:left-[5%] w-[100%] md:w-[35%] lg:w-[25%] rotate-[-45deg] h-auto z-10 pointer-events-none drop-shadow-2xl"
             />
           </div>
         </div>

@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { Link as RouterLink } from "react-router-dom";
 
 // Import images
-import lineArt from "../../img/element2.svg";
+import branch1 from "../../img/oelement2.svg";
 import Vector from "../../img/Group 8.svg";
 
 const LowerStorySection = ({ flowerLocatorRef }) => {
@@ -29,7 +29,6 @@ const LowerStorySection = ({ flowerLocatorRef }) => {
       "Cottonclix wants to be a small part of those moments — when you want someone to know",
     ],
     quote: "“I care.”",
-    lineArt,
     vector: Vector,
   };
 
@@ -155,7 +154,7 @@ const LowerStorySection = ({ flowerLocatorRef }) => {
             <div className="relative">
               <img
                 ref={singleBranchRef}
-                src={data.lineArt}
+                src={branch1}
                 alt="Line Art"
                 className="absolute hidden md:block top-[-25%] right-0 md:right-[-10%] w-[40%] h-auto scale-y-[-1] rotate-90 drop-shadow-2xl"
               />
