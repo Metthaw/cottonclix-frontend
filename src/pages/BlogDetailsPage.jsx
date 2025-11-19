@@ -65,16 +65,22 @@ export default function BlogDetailsPage() {
       className="bg-gray-50"
     >
       <div
-      className="flex  w-full justify-center  "
+        className="flex  w-full justify-center "
         // className="w-[80%]  h-80 md:h-[500px] bg-cover bg-center"
         // style={{ backgroundImage: `url(${post.acf.cover_image})` }}
-        
       >
-        
-        <div
-        className="flex w-[90%]  h-full md:h-[500px]   bg-origin-border  bg-center bg-cover rounded-lg "
-        style={{ backgroundImage: `url(${post.acf.cover_image})` }}
-      ></div> 
+        <div className="flex w-[60%] aspect-[4/3] md:aspect-[16/9]">
+          <img
+            src={post.acf.cover_image}
+            alt={post.title.rendered}
+            className="w-full h-full object-contain rounded-lg bg-gray-100"
+          />
+        </div>
+
+        {/* <div
+          className="flex w-[90%]  h-full md:h-[500px]   bg-origin-border  bg-center bg-cover rounded-lg "
+          style={{ backgroundImage: `url(${post.acf.cover_image})` }}
+        ></div> */}
       </div>
 
       <article className="max-w-4xl mx-auto px-6 py-16">
@@ -98,7 +104,7 @@ export default function BlogDetailsPage() {
         <section className="">
           <div className="container mx-auto px-6 py-16">
             <h2 className="text-3xl font-serif text-center mb-8 text-black">
-              Recent 
+              Recent
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {recentPosts.map((recent) => (

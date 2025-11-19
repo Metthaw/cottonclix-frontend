@@ -11,7 +11,7 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
   const subHeaderRef = useRef(null);
   const branchRef = useRef(null);
   const containerRef = useRef(null);
-  const lineRef = useRef(null);
+  // const lineRef = useRef(null);
 
   // Data for the component
   const data = {
@@ -73,22 +73,22 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
           { y: 20, opacity: 0, duration: 1, ease: "sine.inOut" },
           { y: 0, opacity: 1, duration: 1, ease: "sine.inOut" }
         );
-        gsap.fromTo(
-          lineRef.current,
-          {
-            y: 20,
-            opacity: 0,
-            duration: 1,
-            ease: "sine.inOut",
-          },
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "sine.inOut",
-          }
-        );
+        // gsap.fromTo(
+        //   lineRef.current,
+        //   {
+        //     y: 20,
+        //     opacity: 0,
+        //     duration: 1,
+        //     ease: "sine.inOut",
+        //   },
+        //   {
+        //     x: 0,
+        //     y: 0,
+        //     opacity: 1,
+        //     duration: 1,
+        //     ease: "sine.inOut",
+        //   }
+        // );
       };
 
       const handleBlur = () => {
@@ -111,12 +111,12 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
           duration: 1,
           ease: "sine.inOut",
         });
-        gsap.to(lineRef.current, {
-          y: 20,
-          opacity: 0,
-          duration: 1,
-          ease: "sine.inOut",
-        });
+        // gsap.to(lineRef.current, {
+        //   y: 20,
+        //   opacity: 0,
+        //   duration: 1,
+        //   ease: "sine.inOut",
+        // });
       };
 
       const observer = new IntersectionObserver(
@@ -193,7 +193,7 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
           </div>
         </div>
       </div>
-      <hr ref={lineRef} className="border-stone-200" />
+      {/* <hr ref={lineRef} className="border-stone-200" /> */}
     </section>
   );
 };

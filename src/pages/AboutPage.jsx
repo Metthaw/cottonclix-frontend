@@ -54,11 +54,19 @@ export default function AboutPage() {
     >
       <div className="container mx-auto px-6 py-16">
         {/* ส่วนรูปภาพหลัก */}
-        <div
+        <div className="w-[60%] mx-auto aspect-[4/3] md:aspect-[16/9]">
+          <img
+            src={featuredImageUrl}
+            alt={pageTitle}
+            className="w-full h-full object-contain rounded-lg shadow-md bg-gray-100"
+          />
+        </div>
+
+        {/* <div
           className="w-full h-64 md:h-96 bg-cover bg-center rounded-lg shadow-md"
           style={{ backgroundImage: `url(${featuredImageUrl})` }}
           aria-label={pageTitle}
-        ></div>
+        ></div> */}
 
         {/* ส่วนเนื้อหา */}
         <article className="max-w-3xl mx-auto mt-12">

@@ -230,54 +230,73 @@ export default function HomePage() {
       { ref: socialInfoRef, name: "social" },
     ];
 
-    // Observer for regular sections
+    // Use consistent 0.6 threshold for both flower animation and scroll focus
+    const scrollThresholds = {
+      hero: 0.6,
+      catalog: 0.6,
+      storybook: 0.6,
+      upperstory: 0.6,
+      lowerstory: 0.6,
+      blog: 0.6,
+      contact: 0.6,
+      social: 0.6,
+    };
+
+    // Flag to prevent scroll conflicts
+    let isAutoScrolling = false;
+    let autoScrollTimeout = null;
+
+    const performAutoScroll = (element) => {
+      if (isAutoScrolling) return;
+      isAutoScrolling = true;
+      if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
+
+      // Subtle nudge instead of full scroll
+      const rect = element.getBoundingClientRect();
+      const targetY = window.pageYOffset + rect.top - 100; // Leave 100px margin
+
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+
+      autoScrollTimeout = setTimeout(() => {
+        isAutoScrolling = false;
+      }, 1500);
+    };
+
+    // Observer for regular sections with smooth focus scroll
     const mainObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.dataset.sectionName);
+          const sectionName = entry.target.dataset.sectionName;
+          const threshold = scrollThresholds[sectionName] || 0.6;
+
+          if (entry.intersectionRatio >= threshold) {
+            setActiveSection(sectionName);
+
+            // Auto scroll to focus section when threshold is reached
+            if (!isAutoScrolling) {
+              const element = entry.target;
+              const rect = element.getBoundingClientRect();
+              const isInView =
+                rect.top >= 0 && rect.top <= window.innerHeight * 0.3;
+
+              if (!isInView && entry.intersectionRatio < 0.8) {
+                performAutoScroll(element);
+              }
+            }
           }
         });
       },
       {
         root: null,
-        threshold: 0.6,
+        threshold: Object.values(scrollThresholds),
         rootMargin: "0px",
       }
     );
 
-    // Special observer for OurStory section
-    const ourStoryObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const isSmallScreen = window.innerWidth < 768;
-          const isLandscape = window.innerHeight < window.innerWidth;
-
-          // Adjust threshold based on screen orientation and size
-          if (isSmallScreen && isLandscape) {
-            // For landscape mobile, use a lower threshold
-            if (entry.intersectionRatio > 0.2) {
-              setActiveSection(entry.target.dataset.sectionName);
-            }
-          } else {
-            // For portrait and larger screens, use normal threshold
-            if (entry.intersectionRatio > 0.3) {
-              setActiveSection(entry.target.dataset.sectionName);
-            }
-          }
-        });
-      },
-      {
-        root: null,
-        // More granular thresholds for smoother detection
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-        // Adjust root margin based on screen orientation
-        rootMargin:
-          window.innerHeight < window.innerWidth ? "-5% 0px" : "-10% 0px",
-      }
-    );
-
-    // Observe sections with appropriate observer
+    // Observe all sections with main observer
     sections.forEach((section) => {
       if (section.ref.current) {
         section.ref.current.dataset.sectionName = section.name;
@@ -288,7 +307,6 @@ export default function HomePage() {
     // Cleanup
     return () => {
       mainObserver.disconnect();
-      ourStoryObserver.disconnect();
     };
   }, []);
 

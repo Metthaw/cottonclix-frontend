@@ -1,8 +1,8 @@
 // src/components/layout/Footer.jsx
 
 import React, { useState, useEffect } from "react";
-import lineArtImg from "../../img/element2.png";
-import paperPlane from "../../img/paperPlane.svg";
+// import lineArtImg from "../../img/element2.png";
+// import paperPlane from "../../img/paperPlane.svg";
 import { Alert } from "antd"; // Import Alert component from Ant Design
 import { Link } from "react-router-dom";
 

@@ -7,57 +7,48 @@ import "swiper/css/effect-fade";
 import circleleavesImg from "../../img/Dicut-Cotton_Flower-15.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Carousel, Skeleton } from "antd";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { Button, Skeleton, ConfigProvider } from "antd";
+import "swiper/css";
+import "swiper/css/pagination";
 
-const carouselStyles = `
- .custom-carousel .slick-dots {
-    bottom: -30px;
-    height: 12px;
-    line-height: 12px;
+const swiperStyles = `
+  .custom-pagination {
+    position: relative !important;
+    bottom: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    width: 100% !important;
   }
-  .custom-carousel .slick-dots li {
-    width: 8px;
-    height: 8px;
-    margin: 0 4px;
-  }
-  .custom-carousel .slick-dots li button {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border-radius: 50%;
-    background: #8B4513 !important;
-    opacity: 0.5;
-    transition: all 0.3s ease;
-    border: none;
-  }
-  .custom-carousel .slick-dots li.slick-active {
-    width: 8px;
-  }
-  .custom-carousel .slick-dots li.slick-active button {
-    width: 8px;
-    height: 8px;
-    background: #8B4513 !important;
-    opacity: 1;
-    transform: none;
-  }
-  .custom-carousel .slick-dots li button:before {
-    display: none;
-  }
-  .custom-carousel .slick-dots li button:focus {
-    outline: none;
-    box-shadow: none;
-  }
-  .custom-carousel *:focus {
-    outline: none !important;
-  }
-  .custom-carousel .slick-slide {
-    outline: none !important;
-  }
-  /* Ensure dots are perfectly circular */
-  .custom-carousel .slick-dots li,
-  .custom-carousel .slick-dots li button {
+  
+  .custom-dot {
+    width: 12px !important;
+    height: 12px !important;
+    margin: 0 6px !important;
+    background-color: #8B4513 !important;
+    opacity: 0.5 !important;
     border-radius: 50% !important;
-    overflow: hidden;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+  }
+  
+  .custom-dot.swiper-pagination-bullet-active {
+    background-color: #8B4513 !important;
+    opacity: 1 !important;
+    transform: scale(1.25) !important;
+  }
+  
+  .custom-dot:hover {
+    opacity: 0.8 !important;
+  }
+  
+  .custom-dot.swiper-pagination-bullet-active:hover {
+    opacity: 1 !important;
   }
 `;
 
@@ -234,98 +225,123 @@ const CatalogSlider = ({
   );
 
   useEffect(() => {
-    const styleElement = document.createElement("style");
-    styleElement.innerHTML = carouselStyles;
-    document.head.appendChild(styleElement);
-
+    const style = document.createElement("style");
+    style.textContent = swiperStyles;
+    document.head.appendChild(style);
     return () => {
-      styleElement.remove();
+      document.head.removeChild(style);
     };
   }, []);
 
   return (
-    <section
-      ref={mainRef}
-      className="w-full max-w-full min-h-fit bg-white flex md:items-center z-0 overflow-hidden"
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#8B4513",
+          colorPrimaryHover: "#6B3410",
+        },
+      }}
     >
-      <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
-        <div className="flex relative md:items-center w-full md:aspect-[3/1]">
-          <div className="w-full px-4 md:px-14 py-8 md:py-12">
-            {loading ? (
-              <SkeletonContent />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div
-                  ref={carouselRef}
-                  className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
-                >
-                  <div className="absolute left-[-20%] top-[25%] inset-0 flex justify-start items-center pointer-events-none">
-                    <img
-                      ref={leavesRef}
-                      src={circleleavesImg}
-                      alt="Decorative Leaves"
-                      className="w-[70%] h-auto object-contain"
+      <section
+        ref={mainRef}
+        className="w-full max-w-full min-h-fit bg-white flex md:items-center z-0 overflow-hidden"
+      >
+        <div className="w-full max-w-full mx-auto px-4 py-12 md:py-0">
+          <div className="flex relative md:items-center w-full md:aspect-[3/1]">
+            <div className="w-full px-4 md:px-14 py-8 md:py-12">
+              {loading ? (
+                <SkeletonContent />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                  <div
+                    ref={carouselRef}
+                    className="w-full h-auto order-2 md:order-1 max-w-full mx-auto"
+                  >
+                    <div className="absolute left-[-20%] top-[25%] inset-0 flex justify-start items-center pointer-events-none">
+                      <img
+                        ref={leavesRef}
+                        src={circleleavesImg}
+                        alt="Decorative Leaves"
+                        className="w-[70%] h-auto object-contain"
+                      />
+                    </div>
+                    <div className="relative">
+                      <Swiper
+                        modules={[Pagination]}
+                        spaceBetween={0}
+                        slidesPerView={1}
+                        onSlideChange={(swiper) => {
+                          if (collections?.length > 0) {
+                            setActiveCollection(
+                              collections[swiper.activeIndex]
+                            );
+                          }
+                        }}
+                        pagination={{
+                          clickable: true,
+                          el: ".custom-pagination",
+                          renderBullet: (index, className) => {
+                            return `<span class="${className} custom-dot"></span>`;
+                          },
+                        }}
+                        className="z-30 w-full"
+                        allowTouchMove={true}
+                        resistance={true}
+                        resistanceRatio={0}
+                      >
+                        {collections?.map((collection) => (
+                          <SwiperSlide key={collection?.id}>
+                            <div
+                              className="!flex items-center justify-center"
+                              onClick={() => onClickBook(collection?.id)}
+                            >
+                              <img
+                                src={collection?.coverImage}
+                                alt={collection?.name}
+                                className="w-full h-auto max-h-[60vh] object-contain"
+                              />
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                      {collections?.length > 1 && (
+                        <div className="custom-pagination flex justify-center mt-4 space-x-2"></div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    ref={detailRef}
+                    className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2"
+                  >
+                    {activeCollection?.id && (
+                      <div className="flex flex-col">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8C5F31] break-words">
+                          {activeCollection?.name}
+                        </h2>
+                        <p className="text-xl lg:text-2xl text-[#C59F78] mt-4 break-words">
+                          {activeCollection?.subtitle}
+                        </p>
+
+                        <Button
+                          onClick={() => onOpenBook(activeCollection?.id)}
+                          className=" bg-[#8B4513] hover:bg-[#6B3410] text-white text-2xl p-6 rounded-md mx-auto my-4"
+                        >
+                          {"Open"}
+                        </Button>
+                      </div>
+                    )}
+                    <div
+                      ref={flowerLocatorRef}
+                      className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
                     />
                   </div>
-                  <Carousel
-                    autoplay={false}
-                    draggable
-                    slidesToShow={1}
-                    slidesToScroll={1}
-                    infinite={false}
-                    afterChange={(current) => {
-                      if (collections?.length > 0) {
-                        setActiveCollection(collections[current]);
-                      }
-                    }}
-                    className="z-30 custom-carousel w-full"
-                  >
-                    {collections?.map((collection) => (
-                      <div
-                        key={collection?.id}
-                        className="!flex items-center justify-center"
-                        onClick={() => onClickBook(collection?.id)}
-                      >
-                        <img
-                          src={collection?.coverImage}
-                          alt={collection?.name}
-                          className="w-full h-auto max-h-[60vh] object-contain"
-                        />
-                      </div>
-                    ))}
-                  </Carousel>
                 </div>
-                <div
-                  ref={detailRef}
-                  className="flex flex-col relative items-center w-full md:text-left order-1 md:order-2"
-                >
-                  {activeCollection?.id && (
-                    <div className="flex flex-col">
-                      <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#8C5F31] break-words">
-                        {activeCollection?.name}
-                      </h2>
-                      <p className="text-xl lg:text-2xl text-[#C59F78] mt-4 break-words">
-                        {activeCollection?.subtitle}
-                      </p>
-                      <button
-                        onClick={() => onOpenBook(activeCollection?.id)}
-                        className="mt-6 inline-block text-[#8C5F31] hover:underline text-2xl lg:text-3xl py-4 md:py-6 w-fit mx-auto md:mx-0"
-                      >
-                        {"<<< Open"}
-                      </button>
-                    </div>
-                  )}
-                  <div
-                    ref={flowerLocatorRef}
-                    className="absolute right-[30%] md:left-[40%] bottom-[40%] pointer-events-none"
-                  />
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </ConfigProvider>
   );
 };
 

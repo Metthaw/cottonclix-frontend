@@ -170,12 +170,8 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold ">
-                    Address
-                  </h3>
-                  <p className="text-sm sm:text-base ">
-                    {staticInfo.address}
-                  </p>
+                  <h3 className="text-sm sm:text-base font-bold ">Address</h3>
+                  <p className="text-sm sm:text-base ">{staticInfo.address}</p>
                 </div>
               </div>
 
@@ -202,12 +198,8 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold ">
-                    Phone
-                  </h3>
-                  <p className="text-sm sm:text-base ">
-                    {staticInfo.phone}
-                  </p>
+                  <h3 className="text-sm sm:text-base font-bold ">Phone</h3>
+                  <p className="text-sm sm:text-base ">{staticInfo.phone}</p>
                 </div>
               </div>
 
@@ -218,18 +210,13 @@ export default function SocialInfo({ flowerLocatorRef }) {
                   className="md:w-8 md:h-auto w-4 h-4 flex-shrink-0"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold ">
-                    Email
-                  </h3>
-                  <p className="text-sm sm:text-base ">
-                    {staticInfo.email}
-                  </p>
+                  <h3 className="text-sm sm:text-base font-bold ">Email</h3>
+                  <p className="text-sm sm:text-base ">{staticInfo.email}</p>
                 </div>
               </div>
 
               {/* Social Media Links */}
               <div className="pt-4 sm:pt-6">
-                
                 <div className="flex items-center gap-2 ml-10">
                   {socialLinks.map((social) => (
                     <a

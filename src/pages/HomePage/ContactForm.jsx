@@ -205,23 +205,16 @@ export default function ContactForm({ flowerLocatorRef }) {
           ref={flowerLocatorRef}
           className="absolute pointer-events-none top-[-3%] sm:top-[-5%] md:top-[-6%] right-[30%] sm:right-[32%] md:right-[35%] -z-50"
         />
-        <div className="absolute left-[-10%] inset-0 flex justify-start items-center pointer-events-none">
-          <img
-            ref={bushRef}
-            src={bushFlower2}
-            alt="Decorative Leaves"
-            className="w-[25%] max-w-full scale-x-[-1] h-auto object-contain rotate-[30deg]"
-          />
-        </div>
+
         <div
           ref={formRef}
           className="w-full max-w-[92%] sm:max-w-[85%] md:max-w-xl lg:max-w-2xl relative bg-stone-50 p-2 sm:p-3 md:p-4 lg:p-8 rounded-lg shadow-md z-50"
         >
-          <div className="absolute bottom-0 left-0 w-full h-auto z-0 pointer-events-none">
+          <div className="absolute bottom-[0%] left-[27%] w-full h-auto z-0 pointer-events-none">
             <img
-              src={element1}
+              src={bushFlower2}
               alt="Branch Decoration"
-              className="w-full h-auto drop-shadow-xl opacity-50 sm:opacity-70 md:opacity-90"
+              className="w-[50%] h-auto drop-shadow-xl opacity-50 sm:opacity-70 md:opacity-90"
             />
           </div>
           <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-medium text-left text-[#8C5F31] mb-2 sm:mb-3 md:mb-4 z-10 relative">
