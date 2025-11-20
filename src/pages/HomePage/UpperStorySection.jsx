@@ -17,9 +17,9 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
   const data = {
     heading: "Our Story",
     leftParagraph:
-      "In a world that moves faster every day, small gifts made with care have become more meaningful than we often realize. And that... is the inspiration behind Cottonclix.",
+      "At Cottonclix, we believe that the smallest gifts often carry the greatest meaning when they’re made with intention, care, and purposeful design.",
     rightParagraph:
-      "Cottonclix was born from a love for fabric, a passion for nature-inspired patterns, and the belief that 'a good gift doesn't have to be big, it just has to be meaningful.'",
+      "Founded from a deep appreciation for high-quality fabrics and the serene beauty of nature, Cottonclix specializes in crafting charming, fabric-based keepsakes that transform everyday items into heartfelt expressions. From soft cotton scrunchies and mini totes to delicate pouches, each piece is thoughtfully designed with attention to detail, premium materials, and our signature warm presentation.",
   };
 
   // Text styling function
@@ -144,7 +144,7 @@ const UpperStorySection = ({ flowerLocatorRef }) => {
           className="relative min-h-[50vh] flex flex-col md:grid md:grid-cols-4 gap-32 md:gap-8"
         >
           {/* Logo & Heading - Mobile: Top, Desktop: Right */}
-          <div className="flex flex-col items-center md:my-[20%] md:justify-between md:items-end md:col-span-2 order-1 md:order-2">
+          <div className="flex flex-col items-center md:my-[10%] md:justify-between md:items-end md:col-span-2 order-1 md:order-2">
             <div className="flex flex-col items-center md:items-end gap-4 md:gap-2">
               <div className="flex items-center justify-center md:justify-end">
                 <img

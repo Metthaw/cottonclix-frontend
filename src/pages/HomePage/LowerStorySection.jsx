@@ -16,19 +16,13 @@ const LowerStorySection = ({ flowerLocatorRef }) => {
   // Data for the component
   const data = {
     leftParagraphs: [
-      "We use high quality cotton blends, warm and cheerful patterns, and simple-yet-premium designs to create special little gifts – whether it's a fabric scrunchie, a small pouch, a mini tote, or a tiny keepsake full of love.",
-      "What we're proud of isn't just the 'thing' you receive, but the 'feeling' that comes with it.",
+      "We care not just about what you receive, but how you feel when you receive it. Because to us, a gift isn’t just a product. It’s an experience.",
     ],
-    rightList: [
-      "Homemade warmth.",
-      "Hand-wrapped cuteness.",
-      "Care in every stitch.",
-    ],
+    rightList: ["A quiet message that says: “we care.”"],
     rightParagraphs: [
-      "Because we believe the best gifts aren't just objects they're the feelings that make someone smile.",
-      "Cottonclix wants to be a small part of those moments — when you want someone to know",
+      "With a commitment to thoughtful design and sustainable packaging, Cottonclix is proud to be a trusted companion for travelers, gift-givers, and anyone who believes that even the smallest gestures can leave a lasting impact.",
     ],
-    quote: "“I care.”",
+    quote: "“We care.”",
     vector: Vector,
   };
 
