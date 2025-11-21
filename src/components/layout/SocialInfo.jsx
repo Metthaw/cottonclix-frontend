@@ -18,8 +18,8 @@ const API_URL = "https://cms.cottonclix.com/wp-json/wp/v2/linktree_link";
 const staticInfo = {
   address: "3 Floor, Terminal 21 Asoke Bangkok, Thailand",
   openingHours: "10:00 am - 10:00 pm",
-  phone: "+66 123 4568",
-  email: "cottonclix.official@gmail.com",
+  phone: "080-2829229",
+  email: "admin@cottonclix.com",
   mapLocation:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.566100709205!2d100.5567683153437!3d13.746400601309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29edcfb15ae2b%3A0xb4e0e5a4fca3f7a5!2sTerminal%2021%20Asok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth",
 };
