@@ -108,95 +108,65 @@ const Navbar = () => {
   const leftMenuItems = ["Our Story", "Blog", "Contact"];
   const rightMenuItems = ["Subscribe", "Index"];
 
-  const renderMenuItem = (item) => {
-    const className = "hover:text-amber-800 transition-colors duration-300";
+  const smoothScrollTo = (targetId) => {
+    if (!targetId) return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (!targetElement) return;
+    
+    // Temporarily add a class to indicate programmatic scroll
+    document.body.classList.add('programmatic-scroll');
+    
+    window.scrollTo({
+      top: targetElement.offsetTop - 100, // 100px offset from top
+      behavior: 'smooth'
+    });
+    
+    // Remove the class after scroll completes
+    setTimeout(() => {
+      document.body.classList.remove('programmatic-scroll');
+    }, 1000);
+  };
 
-    switch (item) {
-      case "Our Story":
-        return (
-          <Link
-            key={item}
-            to="/about"
-            className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
-          >
-            {item}
-          </Link>
-        );
-      case "Blog":
-        return (
-          <Link
-            key={item}
-            to="/blog"
-            className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
-          >
-            {item}
-          </Link>
-        );
-      case "Contact":
-        return (
-          <Link
-            key={item}
-            to="/#contact-form"
-            className={className}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {item}
-          </Link>
-        );
-      case "Subscribe":
-        return (
-          <Link
-            key={item}
-            to="/#subscribe-form"
-            className={className}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {item}
-          </Link>
-        );
-      case "Index":
-        return (
-          <Link
-            key={item}
-            to="/index"
-            className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
-          >
-            {item}
-          </Link>
-        );
-      case "Privacy Policy":
-        return (
-          <Link
-            key={item}
-            to="/policy"
-            className={className}
-            onClick={() => {
-              setIsMenuOpen(false);
-            }}
-          >
-            {item}
-          </Link>
-        );
-      default:
-        return (
-          <a
-            key={item}
-            href={`#${item.toLowerCase().replace(" ", "-")}`}
-            className={className}
-          >
-            {item}
-          </a>
-        );
+  const handleNavClick = (e, target) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    
+    if (target.startsWith('#')) {
+      smoothScrollTo(target);
+    } else {
+      window.location.href = target;
     }
+  };
+
+  const renderMenuItem = (item) => {
+    const className = "hover:text-amber-800 transition-colors duration-300 cursor-pointer";
+    
+    const getHref = () => {
+      switch (item) {
+        case "Our Story": return "/about";
+        case "Blog": return "/blog";
+        case "Contact": return "#contact-form";
+        case "Subscribe": return "#subscribe-form";
+        case "Index": return "/index";
+        case "Privacy Policy": return "/policy";
+        default: return `#${item.toLowerCase().replace(" ", "-")}`;
+      }
+    };
+    
+    const href = getHref();
+    
+    return (
+      <a
+        key={item}
+        href={href}
+        className={className}
+        onClick={(e) => handleNavClick(e, href)}
+      >
+        {item}
+      </a>
+    );
+  
   };
 
   return (

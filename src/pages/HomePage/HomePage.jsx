@@ -247,7 +247,12 @@ export default function HomePage() {
     let autoScrollTimeout = null;
 
     const performAutoScroll = (element) => {
-      if (isAutoScrolling) return;
+      if (
+        isAutoScrolling ||
+        document.body.classList.contains("programmatic-scroll")
+      ) {
+        return;
+      }
       isAutoScrolling = true;
       if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
 
