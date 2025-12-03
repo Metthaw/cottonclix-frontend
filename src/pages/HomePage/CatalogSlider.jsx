@@ -324,7 +324,7 @@ const CatalogSlider = ({
 
                         <Button
                           onClick={() => onOpenBook(activeCollection?.id)}
-                          className=" bg-[#8B4513] hover:bg-[#6B3410] text-white text-2xl p-6 rounded-md mx-auto my-4"
+                          className="bg-[#8C5F31] text-white text-base font-bold rounded-lg h-10 w-32 self-center my-4 hover:bg-[#A7723C] transition-colors"
                         >
                           {"Open"}
                         </Button>

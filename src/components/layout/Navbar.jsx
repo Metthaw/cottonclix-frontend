@@ -110,63 +110,67 @@ const Navbar = () => {
 
   const smoothScrollTo = (targetId) => {
     if (!targetId) return;
-    
+
     const targetElement = document.querySelector(targetId);
     if (!targetElement) return;
-    
+
     // Temporarily add a class to indicate programmatic scroll
-    document.body.classList.add('programmatic-scroll');
-    
+    document.body.classList.add("programmatic-scroll");
+
     window.scrollTo({
       top: targetElement.offsetTop - 100, // 100px offset from top
-      behavior: 'smooth'
+      behavior: "smooth",
     });
-    
+
     // Remove the class after scroll completes
     setTimeout(() => {
-      document.body.classList.remove('programmatic-scroll');
+      document.body.classList.remove("programmatic-scroll");
     }, 1000);
   };
 
   const handleNavClick = (e, target) => {
-    e.preventDefault();
-    setIsMenuOpen(false);
-    
-    if (target.startsWith('#')) {
+    if (target.startsWith("#")) {
+      e.preventDefault();
       smoothScrollTo(target);
-    } else {
-      window.location.href = target;
     }
+    setIsMenuOpen(false);
   };
 
   const renderMenuItem = (item) => {
-    const className = "hover:text-amber-800 transition-colors duration-300 cursor-pointer";
-    
+    const className =
+      "hover:text-amber-800 transition-colors duration-300 cursor-pointer";
+
     const getHref = () => {
       switch (item) {
-        case "Our Story": return "/about";
-        case "Blog": return "/blog";
-        case "Contact": return "#contact-form";
-        case "Subscribe": return "#subscribe-form";
-        case "Index": return "/index";
-        case "Privacy Policy": return "/policy";
-        default: return `#${item.toLowerCase().replace(" ", "-")}`;
+        case "Our Story":
+          return "/about";
+        case "Blog":
+          return "/blog";
+        case "Contact":
+          return "#contact-form";
+        case "Subscribe":
+          return "#subscribe-form";
+        case "Index":
+          return "/index";
+        case "Privacy Policy":
+          return "/policy";
+        default:
+          return `#${item.toLowerCase().replace(" ", "-")}`;
       }
     };
-    
+
     const href = getHref();
-    
+
     return (
-      <a
+      <Link
         key={item}
-        href={href}
+        to={href}
         className={className}
         onClick={(e) => handleNavClick(e, href)}
       >
         {item}
-      </a>
+      </Link>
     );
-  
   };
 
   return (
@@ -197,19 +201,19 @@ const Navbar = () => {
               {/* Social Icons */}
               <div className="flex items-center gap-1 lg:gap-1 xl:gap-2">
                 {socialLinks.map((social) => (
-                  <a
+                  <Link
                     key={social.name}
-                    href={social.href}
+                    to={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-4 w-4 sm:h-8 sm:w-8 lg:h-10 lg:w-10 hover:text-amber-800 "
+                    className="h-4 w-4 sm:h-8 sm:w-8 lg:h-10 lg:w-10 hover:text-amber-800"
                   >
                     <img
                       src={social.icon}
                       alt={`${social.name} icon`}
                       className="h-auto w-auto object-contain"
                     />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -245,9 +249,9 @@ const Navbar = () => {
 
             <div className="flex justify-center space-x-6 mt-6 pt-4 border-t border-gray-200">
               {socialLinks.map((social) => (
-                <a
+                <Link
                   key={social.name}
-                  href={social.href}
+                  to={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 text-stone-700 hover:text-amber-800"
@@ -257,7 +261,7 @@ const Navbar = () => {
                     alt={`${social.name} icon`}
                     className="h-full w-full"
                   />
-                </a>
+                </Link>
               ))}
             </div>
           </div>
